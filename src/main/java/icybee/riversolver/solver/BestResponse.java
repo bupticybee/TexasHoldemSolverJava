@@ -271,7 +271,7 @@ public class BestResponse {
 
         for(int i = 0;i < player_combs.length;i ++){
             RiverCombs one_player_comb = player_combs[i];
-            if(one_player_comb.rank > oppo_combs[j].rank){
+            while (one_player_comb.rank < oppo_combs[j].rank){
                 RiverCombs one_oppo_comb = player_combs[j];
                 winsum += reach_probs[oppo][one_oppo_comb.reach_prob_index];
 
@@ -294,7 +294,7 @@ public class BestResponse {
         j = oppo_combs.length - 1;
         for(int i = player_combs.length - 1;i >= 0;i --){
             RiverCombs one_player_comb = player_combs[i];
-            if(one_player_comb.rank < oppo_combs[j].rank){
+            while (one_player_comb.rank > oppo_combs[j].rank){
                 RiverCombs one_oppo_comb = player_combs[j];
                 losssum += reach_probs[oppo][one_oppo_comb.reach_prob_index];
 

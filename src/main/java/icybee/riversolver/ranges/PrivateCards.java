@@ -15,6 +15,7 @@ public class PrivateCards {
         this.card1 = card1;
         this.card2 = card2;
         this.weight = weight;
+        this.relative_prob = 0;
     }
 
     @Override
