@@ -11,6 +11,7 @@ public class PrivateCards {
     public int card2;
     public float weight;
     public float relative_prob;
+
     PrivateCards(int card1, int card2, float weight){
         this.card1 = card1;
         this.card2 = card2;

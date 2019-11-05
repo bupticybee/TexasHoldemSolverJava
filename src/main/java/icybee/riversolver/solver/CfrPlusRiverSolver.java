@@ -112,7 +112,11 @@ public class CfrPlusRiverSolver extends Solver{
     void setTrainable(GameTreeNode root){
         if(root instanceof ActionNode){
             ActionNode action_node = (ActionNode)root;
-            action_node.setTrainable(new CfrPlusTrainable(action_node));
+
+            int player = action_node.getPlayer();
+            PrivateCards[] player_privates = this.getPlayerPrivateCard(player);
+
+            action_node.setTrainable(new CfrPlusTrainable(action_node,player_privates));
 
             List<GameTreeNode> childrens =  action_node.getChildrens();
             for(GameTreeNode one_child:childrens) setTrainable(one_child);
@@ -167,34 +171,53 @@ public class CfrPlusRiverSolver extends Solver{
         float[] payoffs = new float[player_private_cards.length];
         List<GameTreeNode> children =  node.getChildrens();
         List<GameActions> actions =  node.getActions();
-        if(node.getPlayer() == player){
-            // node的player是当前cfr循环的player
-            float[] current_strategy = trainable.getcurrentStrategy();
-            float[][] new_reach_prob = new float[this.player_number][];
-            if (current_strategy.length != actions.size() * player_private_cards.length) throw new RuntimeException("length not match");
-            new_reach_prob[oppo] = reach_probs[oppo];
-            for(int action_id = 0;action_id < actions.size(); action_id++) {
-                float[] player_new_reach = new float[reach_probs[player].length];
-                for(int hand_id = 0;hand_id < player_new_reach.length;hand_id ++){
-                    float strategy_prob = current_strategy[hand_id + action_id * player_private_cards.length];
-                    player_new_reach[hand_id] = reach_probs[player][hand_id] * strategy_prob;
-                }
-                new_reach_prob[player] = player_new_reach;
-                float[] action_utilities = this.cfr(player,children.get(action_id),new_reach_prob,iter);
 
-                // cfr结果是每手牌的收益，payoffs代表的也是每手牌的收益，他们的长度理应相等
-                if(action_utilities.length != payoffs.length) throw new RuntimeException("action and payoff length not match");
+        // node的player是当前cfr循环的player
 
-                for(int hand_id = 0;hand_id < player_new_reach.length;hand_id ++){
+        float[] current_strategy = trainable.getcurrentStrategy();
+        float[][] new_reach_prob = new float[this.player_number][];
+        if (current_strategy.length != actions.size() * player_private_cards.length) throw new RuntimeException("length not match");
+        new_reach_prob[oppo] = reach_probs[oppo];
+
+        //为了节省计算成本将action regret 存在一位数组而不是二维数组中，两个纬度分别是（该infoset有多少动作,该palyer有多少holecard）
+        float[] regrets = new float[actions.size() * player_private_cards.length];
+
+        float[][] all_action_utility = new float[actions.size()][];
+        for(int action_id = 0;action_id < actions.size(); action_id++) {
+            float[] player_new_reach = new float[reach_probs[player].length];
+            for(int hand_id = 0;hand_id < player_new_reach.length;hand_id ++){
+                float strategy_prob = current_strategy[hand_id + action_id * player_private_cards.length];
+                player_new_reach[hand_id] = reach_probs[player][hand_id] * strategy_prob;
+            }
+            new_reach_prob[player] = player_new_reach;
+            float[] action_utilities = this.cfr(player,children.get(action_id),new_reach_prob,iter);
+            all_action_utility[action_id] = action_utilities;
+
+            // cfr结果是每手牌的收益，payoffs代表的也是每手牌的收益，他们的长度理应相等
+            if(action_utilities.length != payoffs.length) throw new RuntimeException("action and payoff length not match");
+
+            for(int hand_id = 0;hand_id < player_new_reach.length;hand_id ++){
+                if(player == node.getPlayer()) {
                     float strategy_prob = current_strategy[hand_id + action_id * player_private_cards.length];
                     payoffs[hand_id] += strategy_prob * action_utilities[hand_id];
+                }else{
+                    payoffs[hand_id] += action_utilities[hand_id];
                 }
             }
-            // TODO finish here 完成regret matching
-            return payoffs;
-        }else{
-
         }
+
+        for(int action_id = 0;action_id < actions.size(); action_id++) {
+            // 下面是regret计算的伪代码
+            // regret[action_id * player_hc: (action_id + 1) * player_hc]
+            //     = all_action_utilitiy[action_id] - payoff[action_id]
+            for(int i = 0;i < player_private_cards.length;i ++){
+                regrets[action_id * player_private_cards.length + i] = all_action_utility[action_id][i] - payoffs[action_id];
+            }
+            // 完成regret matching
+            trainable.updateRegrets(regrets,iter);
+        }
+
+
         return payoffs;
     }
 
