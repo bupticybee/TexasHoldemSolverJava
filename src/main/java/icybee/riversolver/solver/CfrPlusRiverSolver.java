@@ -74,7 +74,8 @@ public class CfrPlusRiverSolver extends Solver{
     public void noDuplicateRange(PrivateCards[] private_range){
         Map<Integer,Boolean> rangekv = new HashMap<>();
         for(PrivateCards one_range:private_range){
-            if(rangekv.get(one_range.hashCode()))
+            if(one_range == null) throw new RuntimeException();
+            if(rangekv.get(one_range.hashCode()) != null)
                 throw new RuntimeException(String.format("duplicated key %d",one_range.toString()));
             rangekv.put(one_range.hashCode(),Boolean.TRUE);
         }

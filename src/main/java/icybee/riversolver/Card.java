@@ -174,6 +174,10 @@ public class Card {
         }
     }
 
+    static String[] getRanks(){
+        return new String[]{"2","3","4","5","6","7","8","9","T","J","Q","K","A"};
+    }
+
     static int suitToInt(char suit)
     {
         switch(suit)
@@ -184,6 +188,10 @@ public class Card {
             case 's': return 3;
             default: return 0;
         }
+    }
+
+    public static String[] getSuits(){
+        return new String[]{"c","d","h","s"};
     }
 
 }

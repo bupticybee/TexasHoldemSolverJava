@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/utils/PrivateRangeConverter.java" afterDir="false" />
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":construction: writting cfr solver">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCards.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrPlusTrainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrPlusTrainable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/Trainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/Trainable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/utils/PrivateRangeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/utils/PrivateRangeConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -414,8 +414,16 @@
       <workItem from="1570267330936" duration="148326000" />
       <workItem from="1572241096991" duration="144000" />
       <workItem from="1572315006128" duration="39405000" />
-      <workItem from="1572701268852" duration="6469000" />
+      <workItem from="1572701268852" duration="11922000" />
     </task>
+    <task id="LOCAL-00001" summary=":construction: writting cfr solver">
+      <created>1572969628615</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1572969628615</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -441,6 +449,10 @@
     <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
       <collection />
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value=":construction: writting cfr solver" />
+    <option name="LAST_COMMIT_MESSAGE" value=":construction: writting cfr solver" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />

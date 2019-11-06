@@ -12,7 +12,7 @@ public class PrivateCards {
     public float weight;
     public float relative_prob;
 
-    PrivateCards(int card1, int card2, float weight){
+    public PrivateCards(int card1, int card2, float weight){
         this.card1 = card1;
         this.card2 = card2;
         this.weight = weight;
@@ -52,7 +52,4 @@ public class PrivateCards {
             return new int[]{card2,card1};
         }
     }
-
-
-
 }
