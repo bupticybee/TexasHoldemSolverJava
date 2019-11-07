@@ -13,6 +13,8 @@ import icybee.riversolver.ranges.PrivateCards;
 import icybee.riversolver.ranges.RiverCombs;
 import icybee.riversolver.utils.Range;
 
+import java.util.Arrays;
+
 /**
  * Created by huangxuefeng on 2019/10/12.
  * best response calculator
@@ -64,7 +66,7 @@ public class BestResponse {
             System.out.println(String.format("player %d exploitability %f", player_id, player_exploitability));
         }
         float total_exploitability = exploitible / this.player_number / initial_pot * 100;
-        System.out.println(String.format("Total exploitability %f ", total_exploitability));
+        System.out.println(String.format("Total exploitability %f precent", total_exploitability));
     }
 
     public float getBestReponseEv(GameTreeNode node, int player, float[][] reach_probs, int[] initialBoard) throws BoardNotFoundException{
@@ -141,19 +143,25 @@ public class BestResponse {
             }
 
             float[] node_strategy = node.getTrainable().getAverageStrategy();
-            if(node_strategy.length != node.getChildrens().size())
+            if(node_strategy.length != node.getChildrens().size() * reach_probs[node.getPlayer()].length)
                 throw new RuntimeException(String.format("strategy size not match %d - %d",
-                        node_strategy.length,node.getChildrens().size()));
+                        node_strategy.length,node.getChildrens().size() * reach_probs[node.getPlayer()].length));
 
             // 构造reach probs矩阵
             for(int action_ind = 0;action_ind < node.getChildrens().size();action_ind ++){
                 float[][] next_reach_probs = new float[this.player_number][];
                 for(int i = 0;i < this.player_number;i ++){
-                    float[] next_reach_probs_current_player = new float[reach_probs.length];
-                    for(int j = 0;j < reach_probs.length;j ++){
-                        next_reach_probs_current_player[j] = reach_probs[node.getPlayer()][j] * node_strategy[action_ind];
+                    if(i == node.getPlayer()) {
+                        int private_combo_numbers = reach_probs[i].length;
+                        float[] next_reach_probs_current_player = new float[private_combo_numbers];
+                        for (int j = 0; j < private_combo_numbers; j++) {
+                            next_reach_probs_current_player[j] =
+                                    reach_probs[node.getPlayer()][j] * node_strategy[action_ind * private_combo_numbers + j];
+                        }
+                        next_reach_probs[i] = next_reach_probs_current_player;
+                    }else{
+                        next_reach_probs[i] = reach_probs[i];
                     }
-                    next_reach_probs[i] = next_reach_probs_current_player;
                 }
 
 
@@ -184,7 +192,6 @@ public class BestResponse {
     */
 
     public float[] terminalBestReponse(TerminalNode node, int player, float[][] reach_probs, int[] board) throws BoardNotFoundException{
-        // TODO finish this
         long board_long = Card.boardInts2long(board);
 
         Double player_payoff = node.get_payoffs()[player];
@@ -233,7 +240,6 @@ public class BestResponse {
                         ) * player_payoff.floatValue();
             }
         }
-
 
         return payoffs;
     }

@@ -146,6 +146,11 @@ public class CfrPlusRiverSolver extends Solver{
         for(int i = 0;i < this.iteration_number;i++){
             for(int player_id = 0;player_id < this.player_number;player_id ++) {
                 cfr(player_id,this.tree.getRoot(),reach_probs,i);
+
+            }
+            if(i % 100 == 0 || i < 30) {
+                System.out.println("-------------------");
+                br.printExploitability(tree.getRoot(), i + 1, tree.getRoot().getPot().floatValue(), board);
             }
         }
     }

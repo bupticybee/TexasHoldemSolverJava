@@ -25,6 +25,12 @@ public class CfrPlusTrainable extends Trainable{
         this.privateCards = privateCards;
         this.action_number = action_node.getChildrens().size();
         this.card_number = privateCards.length;
+
+        this.r_plus = new float[this.action_number * this.card_number];
+        this.r_plus_sum = new float[this.card_number];
+
+        this.cum_r_plus = new float[this.card_number * this.card_number];
+        this.cum_r_plus_sum = new float[this.card_number];
     }
 
     private boolean isAllZeros(float[] input_array){
@@ -37,8 +43,8 @@ public class CfrPlusTrainable extends Trainable{
     @Override
     public float[] getAverageStrategy() {
         float[] retval = new float[this.action_number * this.card_number];
-        if(this.isAllZeros(this.cum_r_plus_sum)){
-            Arrays.fill(retval,1 / (this.action_number * this.card_number));
+        if(this.cum_r_plus_sum == null || this.isAllZeros(this.cum_r_plus_sum)){
+            Arrays.fill(retval,Float.valueOf(1) / (this.action_number));
         }else {
             for (int action_id = 0; action_id < action_number; action_id++) {
                 for (int private_id = 0; private_id < this.card_number; private_id++) {
@@ -53,8 +59,8 @@ public class CfrPlusTrainable extends Trainable{
     @Override
     public float[] getcurrentStrategy() {
         float[] retval = new float[this.action_number * this.card_number];
-        if(this.isAllZeros(this.r_plus_sum)){
-            Arrays.fill(retval,1 / (this.action_number * this.card_number));
+        if(this.r_plus_sum == null || this.isAllZeros(this.r_plus_sum)){
+            Arrays.fill(retval,Float.valueOf(1) / (this.action_number));
         }else {
             for (int action_id = 0; action_id < action_number; action_id++) {
                 for (int private_id = 0; private_id < this.card_number; private_id++) {

@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PrivateRangeConverter {
-    public static PrivateCards[] rangeStr2Cards(String range_str){
+    public static PrivateCards[] rangeStr2Cards(String range_str,int[] initial_boards){
         List<String> range_list = Arrays.asList(range_str.split(","));
         List<PrivateCards> private_cards = new ArrayList<PrivateCards>();
 
@@ -36,41 +36,63 @@ public class PrivateRangeConverter {
                         int card1 = Card.strCard2int(rank1 + one_suit);
                         int card2 = Card.strCard2int(rank2 + one_suit);
                         this_card = new PrivateCards(card1,card2,weight);
+                        private_cards.add(this_card);
                     }
 
                 }else if(one_range.charAt(2) == 'o'){
                     char rank1 = one_range.charAt(0);
                     char rank2 = one_range.charAt(1);
 
-                    for(String one_suit :Card.getSuits()){
-                        for(String another_suit :Card.getSuits()) {
-                            if(one_suit == another_suit){
+                    String[] suits = Card.getSuits();
+                    for(int i = 0;i < suits.length;i++){
+                        String one_suit = suits[i];
+                        int begin_index = rank1 == rank2 ? i:0;
+                        for(int j = begin_index;j < suits.length;j++){
+                            String another_suit = suits[j];
+                            if(one_suit == another_suit && rank1 == rank2){
                                 continue;
                             }
                             int card1 = Card.strCard2int(rank1 + one_suit);
                             int card2 = Card.strCard2int(rank2 + another_suit);
+                            if(Card.boardsHasIntercept(
+                                    Card.boardInts2long(new int[]{card1,card2}),
+                                    Card.boardInts2long(initial_boards)
+                            )){
+                                continue;
+                            }
                             this_card = new PrivateCards(card1, card2, weight);
+                            private_cards.add(this_card);
                         }
                     }
                 }else{
-
+                    throw new RuntimeException("format not recognize");
                 }
             }else if(range_len == 2){
                 char rank1 = one_range.charAt(0);
                 char rank2 = one_range.charAt(1);
-                for(String one_suit :Card.getSuits()){
-                    for(String another_suit :Card.getSuits()) {
+                String[] suits = Card.getSuits();
+                for(int i = 0;i < suits.length;i++){
+                    String one_suit = suits[i];
+                    int begin_index = rank1 == rank2 ? i:0;
+                    for(int j = begin_index;j < suits.length;j++){
+                        String another_suit = suits[j];
                         if(one_suit == another_suit && rank1 == rank2){
                             continue;
                         }
                         int card1 = Card.strCard2int(rank1 + one_suit);
                         int card2 = Card.strCard2int(rank2 + another_suit);
+                        if(Card.boardsHasIntercept(
+                                Card.boardInts2long(new int[]{card1,card2}),
+                                Card.boardInts2long(initial_boards)
+                        )){
+                            continue;
+                        }
                         this_card = new PrivateCards(card1, card2, weight);
+                        private_cards.add(this_card);
                     }
                 }
 
             }else throw new RuntimeException(String.format(" range str %s len not valid ",one_range));
-            private_cards.add(this_card);
         }
 
         // 排除初试range中重复的情况
@@ -96,7 +118,15 @@ public class PrivateRangeConverter {
         PrivateCards[] private_cards_list = new PrivateCards[private_cards.size()];
         for(int i = 0;i < private_cards.size();i ++){
             private_cards_list[i] = private_cards.get(i);
+            //System.out.print(String.format("[%s-%s]",Card.intCard2Str(private_cards_list[i].card1),Card.intCard2Str(private_cards_list[i].card2)));
         }
+        /*
+            output all private combos
+
+        System.out.println("private range number:");
+        System.out.println(private_cards.size());
+        System.out.println();
+         */
         return private_cards_list;
     }
 }

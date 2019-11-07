@@ -69,7 +69,8 @@ public class RiverRangeManager
         {
             PrivateCards preflopCombo = preflopCombos[hand];
 
-            if (!Card.boardsHasIntercept(
+
+            if (Card.boardsHasIntercept(
                     Card.boardInts2long(new int[]{preflopCombo.card1,preflopCombo.card2}), Card.boardInts2long(board)
             )){
                 continue;

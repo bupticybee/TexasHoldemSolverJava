@@ -69,15 +69,15 @@ public class Card {
         return boardInts2long(array);
     }
 
-    public static long boardInts2long(int[] board) throws BoardNotFoundException{
+    public static long boardInts2long(int[] board){
         if(board.length < 1 || board.length > 7){
-            throw new BoardNotFoundException(board.toString());
+            throw new RuntimeException(board.toString());
         }
         long board_long = 0;
         for(int one_card: board){
             // 这里hard code了一副扑克牌是52张
             if(one_card < 0 || one_card >= 52){
-                throw new CardsNotFoundException(String.format("Card with id %d not found",one_card));
+                throw new RuntimeException(String.format("Card with id %d not found",one_card));
             }
             // long d
             // long 的range 在- 2 ^ 63 - 1 ~ + 2^ 63之间,所以不用太担心溢出问题
