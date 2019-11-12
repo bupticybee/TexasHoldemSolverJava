@@ -11,8 +11,8 @@ public class ShowdownNode extends GameTreeNode{
     Double[] tie_payoffs;
     Double[][] player_payoffs;
 
-    public ShowdownNode(Double[] tie_payoffs,  Double[][] player_payoffs,GameRound round,Double pot) {
-        super(round,pot);
+    public ShowdownNode(Double[] tie_payoffs,  Double[][] player_payoffs,GameRound round,Double pot,GameTreeNode parent) {
+        super(round,pot,parent);
         this.tie_payoffs = tie_payoffs;
         this.player_payoffs = player_payoffs;
     }

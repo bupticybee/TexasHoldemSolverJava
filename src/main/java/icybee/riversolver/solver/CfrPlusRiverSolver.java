@@ -37,6 +37,7 @@ public class CfrPlusRiverSolver extends Solver{
     int player_number;
     int iteration_number;
     PrivateCardsManager pcm;
+    boolean debug;
 
     PrivateCards[] playerHands(int player){
         if(player == 0){
@@ -81,7 +82,7 @@ public class CfrPlusRiverSolver extends Solver{
         }
     }
 
-    public CfrPlusRiverSolver(GameTree tree, PrivateCards[] range1 , PrivateCards[] range2, int[] board, Compairer compairer,Deck deck) throws BoardNotFoundException{
+    public CfrPlusRiverSolver(GameTree tree, PrivateCards[] range1 , PrivateCards[] range2, int[] board, Compairer compairer,Deck deck,int iteration_number,boolean debug) throws BoardNotFoundException{
         super(tree);
         this.noDuplicateRange(range1);
         this.noDuplicateRange(range2);
@@ -100,12 +101,13 @@ public class CfrPlusRiverSolver extends Solver{
 
         this.rrm = RiverRangeManager.getInstance(compairer);
         this.player_number = 2;
-        this.iteration_number = 1000;
+        this.iteration_number = iteration_number;
 
         PrivateCards[][] private_cards = new PrivateCards[this.player_number][];
         private_cards[0] = range1;
         private_cards[1] = range2;
         pcm = new PrivateCardsManager(private_cards,this.player_number,Card.boardInts2long(this.board));
+        this.debug = debug;
 
     }
 
@@ -145,6 +147,12 @@ public class CfrPlusRiverSolver extends Solver{
 
         for(int i = 0;i < this.iteration_number;i++){
             for(int player_id = 0;player_id < this.player_number;player_id ++) {
+                if(this.debug){
+                    System.out.println(String.format(
+                            "---------------------------------     player %s --------------------------------",
+                            player_id
+                    ));
+                }
                 cfr(player_id,this.tree.getRoot(),reach_probs,i);
 
             }
@@ -219,9 +227,60 @@ public class CfrPlusRiverSolver extends Solver{
             for(int i = 0;i < player_private_cards.length;i ++){
                 regrets[action_id * player_private_cards.length + i] = all_action_utility[action_id][i] - payoffs[action_id];
             }
-            // 完成regret matching
-            trainable.updateRegrets(regrets,iter);
         }
+        // 完成regret matching
+        // TODO 调查清楚为什么 exploitable 越来越大
+        // TODO 调查call 和fold的regret差为什么不太对 :
+        /*
+            actions: CALL FOLD
+            regrets: [-2229.3416, 0.43302917]
+            r plus:[0.0, 1124.1332]
+            r plus sum:1124.1332
+            strategy: [0.0, 1.0]
+            =======================
+        */
+        if(player == node.getPlayer()) {
+            trainable.updateRegrets(regrets, iter);
+        }
+        if(player == node.getPlayer() && this.debug) {
+            System.out.println("=======================================");
+            System.out.print("actions: ");
+            for (GameActions one_action : node.getActions()) {
+                System.out.print(one_action.toString());
+                System.out.print(" ");
+            }
+            System.out.println();
+
+            System.out.print("history: ");
+            node.printHistory();
+
+            System.out.print("regrets: ");
+            System.out.println(
+                    Arrays.toString(
+                            ((CfrPlusTrainable) node.getTrainable()).getcurrentRegrets(0)
+                    )
+            );
+
+            System.out.print("r plus:");
+            System.out.println(
+                    Arrays.toString(
+                            ((CfrPlusTrainable) node.getTrainable()).getRPlus(0)
+                    )
+            );
+
+            System.out.print("r plus sum:");
+            System.out.println(
+                    ((CfrPlusTrainable) node.getTrainable()).getR_plus_sum()[0]
+            );
+
+            System.out.print("strategy: ");
+            System.out.println(
+                    Arrays.toString(
+                            ((CfrPlusTrainable) node.getTrainable()).getcurrentStrategy(0)
+                    )
+            );
+        }
+
 
 
         return payoffs;

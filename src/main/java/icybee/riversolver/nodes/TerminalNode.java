@@ -9,8 +9,8 @@ import java.util.Map;
 public class TerminalNode extends GameTreeNode{
     Double[] payoffs;
     Integer winner;
-    public TerminalNode(Double[] payoffs,Integer winner,GameTreeNode.GameRound round,Double pot) {
-        super(round,pot);
+    public TerminalNode(Double[] payoffs,Integer winner,GameTreeNode.GameRound round,Double pot,GameTreeNode parent) {
+        super(round,pot,parent);
         this.payoffs = payoffs;
         this.winner = winner;
     }

@@ -18,8 +18,8 @@ public class ActionNode extends GameTreeNode{
 
     int player;
 
-    public ActionNode(List<GameActions> actions, List<GameTreeNode> childrens, int player, GameRound round,Double pot){
-        super(round,pot);
+    public ActionNode(List<GameActions> actions, List<GameTreeNode> childrens, int player, GameRound round,Double pot,GameTreeNode parent){
+        super(round,pot,parent);
         assert(actions.size() == childrens.size());
         this.actions = actions;
         this.childrens = childrens;
@@ -45,4 +45,5 @@ public class ActionNode extends GameTreeNode{
     public void setTrainable(Trainable trainable) {
         this.trainable = trainable;
     }
+
 }

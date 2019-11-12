@@ -7,6 +7,7 @@ import icybee.riversolver.exceptions.NodeNotFoundException;
 import icybee.riversolver.exceptions.RoundNotFoundException;
 import icybee.riversolver.nodes.*;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -59,7 +60,7 @@ public class GameTree {
         return game_round;
     }
 
-    ActionNode generateActionNode(Map meta,List<String> childrens_actions, List<Map> childrens_nodes, String round){
+    ActionNode generateActionNode(Map meta,List<String> childrens_actions, List<Map> childrens_nodes, String round,GameTreeNode parent){
         if(childrens_actions.size() != childrens_nodes.size()){
             throw new NodeLengthMismatchException(
                     String.format(
@@ -123,7 +124,7 @@ public class GameTree {
                     }
                 }
             }// end of switch
-            GameTreeNode one_children_node = recurrentGenerateTreeNode(one_children_map);
+            GameTreeNode one_children_node = recurrentGenerateTreeNode(one_children_map,parent);
             childrens.add(one_children_node);
 
             GameActions game_action = new GameActions(action,amount);
@@ -138,7 +139,11 @@ public class GameTree {
                     ,actions.size()));
         }
         GameTreeNode.GameRound game_round = strToGameRound(round);
-        return new ActionNode(actions,childrens,player,game_round,pot);
+        ActionNode actionNode = new ActionNode(actions,childrens,player,game_round,pot,parent);
+        for(GameTreeNode one_node: childrens){
+            one_node.setParent(actionNode);
+        }
+        return actionNode;
     }
 
     void convertObject2Double(List<Object> from,Double[] to){
@@ -155,7 +160,7 @@ public class GameTree {
         }
     }
 
-    ShowdownNode generateShowdownNode(Map<String,Object> meta, String round){
+    ShowdownNode generateShowdownNode(Map<String,Object> meta, String round,GameTreeNode parent){
         Map<String,Object> meta_payoffs = (Map)meta.get("payoffs");
         List<Object> tmp_tie_payoffs = (List<Object>)meta_payoffs.get("tie");
         Double[] tie_payoffs = new Double[tmp_tie_payoffs.size()];
@@ -182,10 +187,10 @@ public class GameTree {
             player_payoffs[Integer.valueOf(one_player)] = player_payoff;
         }
         GameTreeNode.GameRound game_round = strToGameRound(round);
-        return new ShowdownNode(tie_payoffs,player_payoffs,game_round,pot);
+        return new ShowdownNode(tie_payoffs,player_payoffs,game_round,pot,parent);
     }
 
-    TerminalNode generateTerminalNode(Map meta, String round){
+    TerminalNode generateTerminalNode(Map meta, String round,GameTreeNode parent){
         List<Object> player_payoff_list = (List<Object>)meta.get("payoff");
         Double[] player_payoff = new Double[player_payoff_list.size()];
         for(int one_player = 0;one_player < player_payoff_list.size();one_player ++){
@@ -207,10 +212,10 @@ public class GameTree {
         // 多人游戏的时候winner就不等于当前节点的玩家了，这里要注意
         Integer player = (Integer)meta.get("player");
         if(player == null) throw new RuntimeException("player is null");
-        return new TerminalNode(player_payoff,player,game_round,pot);
+        return new TerminalNode(player_payoff,player,game_round,pot,parent);
     }
 
-    GameTreeNode recurrentGenerateTreeNode(Map<String, Map> node_json) throws NullPointerException{
+    GameTreeNode recurrentGenerateTreeNode(Map<String, Map> node_json,GameTreeNode parent) throws NullPointerException{
         Map<String,Object> meta = node_json.get("meta");
         if(meta == null){
             throw new NullPointerException("node json get meta null pointer");
@@ -255,13 +260,13 @@ public class GameTree {
                 if (childrens.size() != childrens_actions.size()) {
                     throw new NodeLengthMismatchException("action node child length mismatch");
                 }
-                return this.generateActionNode(meta, childrens_actions, childrens, round);
+                return this.generateActionNode(meta, childrens_actions, childrens, round,parent);
             }
             case "Showdown": {
-                return this.generateShowdownNode(meta, round);
+                return this.generateShowdownNode(meta, round,parent);
             }
             case "Terminal": {
-                return this.generateTerminalNode(meta, round);
+                return this.generateTerminalNode(meta, round,parent);
             }
             default:{
                 throw new NodeNotFoundException(String.format("node type %s not found",node_type));
@@ -276,7 +281,7 @@ public class GameTree {
         String file_content = readAllBytes(tree_json_dir);
         Map<String, Map> json_map = (Map<String, Map>)mapper.readValue(file_content, Map.class);
         Map<String, Map> json_root = (Map<String, Map>)json_map.get("root");
-        this.root = recurrentGenerateTreeNode(json_root);
+        this.root = recurrentGenerateTreeNode(json_root,null);
     }
 
     void recurrentPrintTree(GameTreeNode node,int depth,int depth_limit) throws ClassCastException{

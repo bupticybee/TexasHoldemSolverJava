@@ -2,6 +2,7 @@ package icybee.riversolver.nodes;
 
 import icybee.riversolver.GameTree;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,17 @@ public abstract class GameTreeNode {
 
     GameRound round;
     Double pot;
-    public GameTreeNode(GameRound round,Double pot){
+    GameTreeNode parent;
+
+    public GameTreeNode getParent() {
+        return parent;
+    }
+
+    public void setParent(GameTreeNode parent) {
+        this.parent = parent;
+    }
+
+    public GameTreeNode(GameRound round, Double pot, GameTreeNode parent){
         if(round == null){
             throw new RuntimeException("round is null in GameTreeNode");
         }
@@ -38,6 +49,7 @@ public abstract class GameTreeNode {
             throw new RuntimeException("pot is null in GameTreeNode");
         }
         this.pot = pot;
+        this.parent = parent;
 
     }
 
@@ -47,5 +59,31 @@ public abstract class GameTreeNode {
 
     public Double getPot() {
         return pot;
+    }
+
+    public void printHistory(){
+        GameTreeNode.printNodeHistory(this);
+    }
+
+    public static void printNodeHistory(GameTreeNode node){
+        while(node != null){
+            GameTreeNode parent_node = node.parent;
+            if(parent_node == null) break;
+            if(parent_node instanceof ActionNode){
+                ActionNode action_node = (ActionNode)parent_node;
+                for(int i = 0;i < action_node.getActions().size();i ++){
+                    if(action_node.getChildrens().get(i) == node){
+                        System.out.print(String.format("<- (player %s %s)",
+                                action_node.getPlayer(),
+                                action_node.getActions().get(i).toString()
+                                ));
+                    }
+                }
+            }else{
+                System.out.print(String.format("<- (%s)",node.toString()));
+            }
+            node = parent_node;
+        }
+        System.out.println();
     }
 }

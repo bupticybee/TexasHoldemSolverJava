@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":bug: fix  bug">
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":bug: fix bug causing program quit">
+      <change afterPath="$PROJECT_DIR$/src/test/resources/gametree/simple_part_tree_depthinf.km" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/yamls/rule_shortdeck_simple.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ActionNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ActionNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ShowdownNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ShowdownNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/TerminalNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/TerminalNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrPlusTrainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrPlusTrainable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/utils/PrivateRangeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/utils/PrivateRangeConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,7 +44,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/icybee/riversolver" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources/yamls" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -54,9 +57,9 @@
       <recent name="icybee.riversolver" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/resources/yamls" />
       <recent name="$PROJECT_DIR$/src/test/resources/gametree" />
       <recent name="$PROJECT_DIR$/src/test/resources/compairer" />
-      <recent name="$PROJECT_DIR$/src/test/resources/yamls" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -416,7 +419,7 @@
       <workItem from="1570267330936" duration="148326000" />
       <workItem from="1572241096991" duration="144000" />
       <workItem from="1572315006128" duration="39405000" />
-      <workItem from="1572701268852" duration="25948000" />
+      <workItem from="1572701268852" duration="40703000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -432,7 +435,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573054323796</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary=":bug: fix bug causing program quit">
+      <created>1573145969620</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1573145969620</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +472,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value=":construction: writting cfr solver" />
     <MESSAGE value=":construction: finish private cards converter" />
-    <option name="LAST_COMMIT_MESSAGE" value=":construction: finish private cards converter" />
+    <MESSAGE value=":bug: fix bug causing program quit" />
+    <option name="LAST_COMMIT_MESSAGE" value=":bug: fix bug causing program quit" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
