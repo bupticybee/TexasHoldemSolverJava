@@ -48,7 +48,7 @@ public class CfrPlusTrainable extends Trainable{
         this.r_plus = new float[this.action_number * this.card_number];
         this.r_plus_sum = new float[this.card_number];
 
-        this.cum_r_plus = new float[this.card_number * this.card_number];
+        this.cum_r_plus = new float[this.action_number * this.card_number];
         this.cum_r_plus_sum = new float[this.card_number];
     }
 
@@ -68,7 +68,11 @@ public class CfrPlusTrainable extends Trainable{
             for (int action_id = 0; action_id < action_number; action_id++) {
                 for (int private_id = 0; private_id < this.card_number; private_id++) {
                     int index = action_id * this.card_number + private_id;
-                    retval[index] = this.cum_r_plus[index] / this.cum_r_plus_sum[private_id];
+                    if(this.cum_r_plus_sum[private_id] != 0) {
+                        retval[index] = this.cum_r_plus[index] / this.cum_r_plus_sum[private_id];
+                    }else{
+                        retval[index] = Float.valueOf(1) / (this.action_number);
+                    }
                 }
             }
         }
@@ -78,13 +82,34 @@ public class CfrPlusTrainable extends Trainable{
     @Override
     public float[] getcurrentStrategy() {
         float[] retval = new float[this.action_number * this.card_number];
-        if(this.r_plus_sum == null || this.isAllZeros(this.r_plus_sum)){
+        if(this.r_plus_sum == null ){
             Arrays.fill(retval,Float.valueOf(1) / (this.action_number));
         }else {
             for (int action_id = 0; action_id < action_number; action_id++) {
                 for (int private_id = 0; private_id < this.card_number; private_id++) {
                     int index = action_id * this.card_number + private_id;
-                    retval[index] = this.r_plus[index] / this.r_plus_sum[private_id];
+                    if(this.r_plus_sum[private_id] != 0) {
+                        retval[index] = this.r_plus[index] / this.r_plus_sum[private_id];
+                    }else{
+                        retval[index] = Float.valueOf(1) / (this.action_number);
+                    }
+                    if(this.r_plus[index] != this.r_plus[index]) throw new RuntimeException();
+                    /*
+                    if(this.r_plus_sum[private_id] == 0)
+                    {
+                        System.out.println("Exception regret status, r_plus_sum == 0:");
+                        System.out.println(String.format("r plus length %s , card num %s",r_plus.length,this.card_number));
+                        for(int i = index % this.card_number;i < this.r_plus.length;i += this.card_number){
+                            System.out.print(String.format("%s:%s ",i,this.r_plus[i]));
+                            if(i == index){
+                                System.out.print("[current]");
+                            }
+                        }
+                        System.out.println();
+                        System.out.println();
+                        throw new RuntimeException();
+                    }
+                     */
                 }
             }
         }
@@ -93,7 +118,7 @@ public class CfrPlusTrainable extends Trainable{
 
     public float[] getcurrentStrategy(int private_id) {
         float[] retval = new float[this.action_number];
-        if(this.r_plus_sum == null || this.isAllZeros(this.r_plus_sum)){
+        if(this.r_plus_sum == null || this.r_plus_sum[private_id] == 0 ){
             Arrays.fill(retval,Float.valueOf(1) / (this.action_number));
         }else {
             for (int action_id = 0; action_id < action_number; action_id++) {
@@ -127,9 +152,10 @@ public class CfrPlusTrainable extends Trainable{
         this.regrets = regrets;
         if(regrets.length != this.action_number * this.card_number) throw new RuntimeException("length not match");
 
+        //Arrays.fill(this.r_plus_sum,0);
         Arrays.fill(this.r_plus_sum,0);
+        Arrays.fill(this.cum_r_plus_sum,0);
         for (int action_id = 0;action_id < action_number;action_id ++) {
-            float cum_r_plus_sum_float = 0;
             for(int private_id = 0;private_id < this.card_number;private_id ++){
                 int index = action_id * this.card_number + private_id;
                 float one_reg = regrets[index];
@@ -140,8 +166,7 @@ public class CfrPlusTrainable extends Trainable{
 
                 // 更新累计策略
                 this.cum_r_plus[index] += this.r_plus[index] * iteration_number;
-                cum_r_plus_sum_float += this.cum_r_plus[index];
-                this.cum_r_plus_sum[private_id] = cum_r_plus_sum_float;
+                this.cum_r_plus_sum[private_id] += this.cum_r_plus[index];
             }
         }
 

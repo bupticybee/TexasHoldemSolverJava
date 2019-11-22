@@ -3,6 +3,8 @@ package icybee.riversolver.ranges;
 import icybee.riversolver.Card;
 import icybee.riversolver.exceptions.BoardNotFoundException;
 
+import java.util.Arrays;
+
 /**
  * Created by huangxuefeng on 2019/10/17.
  * getting and setting private infos
@@ -11,11 +13,27 @@ public class PrivateCardsManager {
     PrivateCards[][] private_cards;
     int player_number;
     long board;
+    int[][] card_player_index;
 
     //TODO finish this
     public PrivateCardsManager(PrivateCards[][] private_cards,int player_number,long board){
         this.private_cards = private_cards;
         this.player_number = player_number;
+        this.card_player_index = new int[52 * 52][];
+        for(int i = 0;i < 52 * 52;i ++){
+            this.card_player_index[i] = new int[this.player_number];
+            Arrays.fill(this.card_player_index[i],-1);
+        }
+
+        // 用一个二维数组记录每个Private Combo的对应index,方便从一方的手牌找对方的同名卡牌的index
+        for(int player_id = 0;player_id < player_number;player_id ++){
+            PrivateCards[] privateCombos = private_cards[player_id];
+            for(int i = 0;i < privateCombos.length;i ++){
+                PrivateCards one_private_combo = privateCombos[i];
+                this.card_player_index[one_private_combo.hashCode()][player_id] = i;
+            }
+        }
+
         this.board = board;
         try {
             setRelativeProbs();
@@ -27,6 +45,17 @@ public class PrivateCardsManager {
 
     public PrivateCards[] getPreflopCards(int player){
         return this.private_cards[player];
+    }
+
+    public Integer indPlayer2Player(int from_player,int to_player,int index){
+        if(index < 0 || index >= this.getPreflopCards(from_player).length) throw new RuntimeException();
+        PrivateCards player_combo = this.getPreflopCards(from_player)[index];
+        int to_player_index = this.card_player_index[player_combo.hashCode()][to_player];
+        if(to_player_index == -1){
+            return null;
+        }else{
+            return to_player_index;
+        }
     }
 
     public float[] getInitialReachProb(int player,long board) throws BoardNotFoundException{

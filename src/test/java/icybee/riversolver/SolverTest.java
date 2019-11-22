@@ -303,11 +303,11 @@ public class SolverTest
     }
 
     @Test
-    public void cfrSolverTest(){
+    public void cfrSolverTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
 
-        String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86";
-        String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86";
+        //String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86";
+        //String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86";
 
         int[] initialBoard = new int[]{
                 Card.strCard2int("Kd"),
@@ -317,24 +317,30 @@ public class SolverTest
                 Card.strCard2int("8s")
         };
 
-        PrivateCards[] player1Range = PrivateRangeConverter.rangeStr2Cards(player1RangeStr,initialBoard);
-        PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
+        //PrivateCards[] player1Range = PrivateRangeConverter.rangeStr2Cards(player1RangeStr,initialBoard);
+        //PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
+        //PrivateCards[] player1Range = new PrivateCards[]{new PrivateCards(Card.strCard2int("As"),Card.strCard2int("Ad"),1)};
 
-        try {
-            Solver solver = new CfrPlusRiverSolver(se.game_tree
-                    , player1Range
-                    , player2Range
-                    , initialBoard
-                    , se.compairer
-                    , se.deck
-                    ,2
-                    ,true);
-            Map train_config = new HashMap();
-            solver.train(train_config);
-        }catch(Exception e){
-            e.printStackTrace();
-            assertTrue(false);
-        }
+        PrivateCards[] player1Range = new PrivateCards[]{
+                new PrivateCards(Card.strCard2int("As"),Card.strCard2int("Ad"),1)
+                ,new PrivateCards(Card.strCard2int("6s"),Card.strCard2int("6d"),1)
+        };
+        PrivateCards[] player2Range = new PrivateCards[]{
+                new PrivateCards(Card.strCard2int("6d"),Card.strCard2int("7d"),1)
+                ,new PrivateCards(Card.strCard2int("8h"),Card.strCard2int("7d"),1)
+        };
+
+        Solver solver = new CfrPlusRiverSolver(se.game_tree
+                , player1Range
+                , player2Range
+                , initialBoard
+                , se.compairer
+                , se.deck
+                ,1000000
+                ,false
+                , 20000);
+        Map train_config = new HashMap();
+        solver.train(train_config);
 
         System.out.println("end solverTest");
     }

@@ -10,6 +10,7 @@ import icybee.riversolver.nodes.GameTreeNode;
 import icybee.riversolver.nodes.ShowdownNode;
 import icybee.riversolver.nodes.TerminalNode;
 import icybee.riversolver.ranges.PrivateCards;
+import icybee.riversolver.ranges.PrivateCardsManager;
 import icybee.riversolver.ranges.RiverCombs;
 import icybee.riversolver.utils.Range;
 
@@ -26,11 +27,15 @@ public class BestResponse {
     int[] player_hands;
     int player_number;
     RiverRangeManager rrm;
+    PrivateCardsManager pcm;
+    boolean debug;
 
-    public BestResponse(RiverCombs[][] river_combos, int player_number, Compairer compairer) {
+    public BestResponse(RiverCombs[][] river_combos, int player_number, Compairer compairer, PrivateCardsManager pcm,boolean debug) {
         this.river_combos = river_combos;
         this.player_number = player_number;
         this.rrm = RiverRangeManager.getInstance(compairer);
+        this.pcm = pcm;
+        this.debug = debug;
 
         if(river_combos.length != player_number)
             throw new RuntimeException(
@@ -39,10 +44,12 @@ public class BestResponse {
         player_hands = new int[player_number];
         for(int i = 0;i < player_number;i ++) {
             player_hands[i] = river_combos[i].length;
+            /*
             int oppo = (i + 1) % player_number;
             if(river_combos[i].length != river_combos[oppo].length){
                 throw new RuntimeException("river combo length not match");
             }
+             */
         }
 
     }
@@ -134,13 +141,15 @@ public class BestResponse {
                     }
                 }
             }
+            if(this.debug) {
+                System.out.println("[action]");
+                node.printHistory();
+                System.out.println(Arrays.toString(my_exploitability));
+            }
             return my_exploitability;
         }else{
             // 如果是别人做决定，那么就按照别人的策略加权算出一个 ev
             float[] total_payoffs = new float[player_hands[player]];
-            for(int i = 0 ;i < total_payoffs.length;i ++){
-                total_payoffs[i] = 0;
-            }
 
             float[] node_strategy = node.getTrainable().getAverageStrategy();
             if(node_strategy.length != node.getChildrens().size() * reach_probs[node.getPlayer()].length)
@@ -181,6 +190,11 @@ public class BestResponse {
                     total_payoffs[i] += action_payoffs[i];//  * node_strategy[i] 的动作实际上已经在递归的时候做过了，所以这里不需要乘
                 }
             }
+            if(this.debug) {
+                System.out.println("[action]");
+                node.printHistory();
+                System.out.println(Arrays.toString(total_payoffs));
+            }
             return total_payoffs;
         }
     }
@@ -193,6 +207,7 @@ public class BestResponse {
 
     public float[] terminalBestReponse(TerminalNode node, int player, float[][] reach_probs, int[] board) throws BoardNotFoundException{
         long board_long = Card.boardInts2long(board);
+        int oppo = 1 - player;
 
         Double player_payoff = node.get_payoffs()[player];
         if(player_payoff == null) throw new RuntimeException(String.format("player %d 's payoff is not found",player));
@@ -233,14 +248,26 @@ public class BestResponse {
             if(Card.boardsHasIntercept(player_hc_long,board_long)){
                 payoffs[player_hand] = 0;
             }else{
+                Integer oppo_hand = this.pcm.indPlayer2Player(player,oppo,player_hand);
+                float add_reach_prob;
+                if(oppo_hand == null){
+                    add_reach_prob = 0;
+                }else{
+                    add_reach_prob = oppo_reach_prob[oppo_hand];
+                }
                 payoffs[player_hand] = (oppo_prob_sum
                         - oppo_card_sum[player_hc.private_cards.card1]
                         - oppo_card_sum[player_hc.private_cards.card2]
-                        + oppo_reach_prob[player_hand]
+                        + add_reach_prob
                         ) * player_payoff.floatValue();
             }
         }
 
+        if(this.debug) {
+            System.out.println("[terminal]");
+            node.printHistory();
+            System.out.println(Arrays.toString(payoffs));
+        }
         return payoffs;
     }
 
@@ -273,12 +300,12 @@ public class BestResponse {
         for(int i = 0;i < card_winsum.length;i ++) card_winsum[i] = 0;
 
         int j = 0;
-        if(player_combs.length != oppo_combs.length) throw new RuntimeException("");
+        //if(player_combs.length != oppo_combs.length) throw new RuntimeException("");
 
         for(int i = 0;i < player_combs.length;i ++){
             RiverCombs one_player_comb = player_combs[i];
-            while (one_player_comb.rank < oppo_combs[j].rank){
-                RiverCombs one_oppo_comb = player_combs[j];
+            while (j < oppo_combs.length && one_player_comb.rank < oppo_combs[j].rank){
+                RiverCombs one_oppo_comb = oppo_combs[j];
                 winsum += reach_probs[oppo][one_oppo_comb.reach_prob_index];
 
                 // TODO 这里有问题，要加上reach prob，但是reach prob的index怎么解决？
@@ -286,7 +313,7 @@ public class BestResponse {
                 card_winsum[one_oppo_comb.private_cards.card2] += reach_probs[oppo][one_oppo_comb.reach_prob_index];
                 j ++;
             }
-            payoffs[i] = (winsum
+            payoffs[one_player_comb.reach_prob_index] = (winsum
                     - card_winsum[one_player_comb.private_cards.card1]
                     - card_winsum[one_player_comb.private_cards.card2]
                     ) * win_payoff;
@@ -295,13 +322,12 @@ public class BestResponse {
         // 计算失败时的payoff
         float losssum = 0;
         float[] card_losssum = new float[52];
-        for(int i = 0;i < card_losssum.length;i ++) card_losssum[i] = 0;
 
         j = oppo_combs.length - 1;
         for(int i = player_combs.length - 1;i >= 0;i --){
             RiverCombs one_player_comb = player_combs[i];
-            while (one_player_comb.rank > oppo_combs[j].rank){
-                RiverCombs one_oppo_comb = player_combs[j];
+            while (j >= 0 && one_player_comb.rank > oppo_combs[j].rank){
+                RiverCombs one_oppo_comb = oppo_combs[j];
                 losssum += reach_probs[oppo][one_oppo_comb.reach_prob_index];
 
                 // TODO 这里有问题，要加上reach prob，但是reach prob的index怎么解决？
@@ -309,10 +335,15 @@ public class BestResponse {
                 card_losssum[one_oppo_comb.private_cards.card2] += reach_probs[oppo][one_oppo_comb.reach_prob_index];
                 j --;
             }
-            payoffs[i] -= (losssum
+            payoffs[one_player_comb.reach_prob_index] += (losssum
                     - card_losssum[one_player_comb.private_cards.card1]
                     - card_losssum[one_player_comb.private_cards.card2]
             ) * lose_payoff;
+        }
+        if(this.debug) {
+            System.out.println("[showdown]");
+            node.printHistory();
+            System.out.println(Arrays.toString(payoffs));
         }
         return payoffs;
     }
