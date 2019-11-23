@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":bug: 修复了一个bug，expliotiblity现在在一个简单情况下可以收敛到0了">
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":bug: 修复了在初始手牌和board牌有重合时处理逻辑的一个bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -474,7 +472,7 @@
       <workItem from="1573740649238" duration="12000" />
       <workItem from="1573740989823" duration="4783000" />
       <workItem from="1574040633046" duration="3280000" />
-      <workItem from="1574084118512" duration="69541000" />
+      <workItem from="1574084118512" duration="70607000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -518,7 +516,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574519784391</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary=":bug: 修复了在初始手牌和board牌有重合时处理逻辑的一个bug">
+      <created>1574525738667</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1574525738667</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -552,7 +557,8 @@
     <MESSAGE value=":bug: fix some bug" />
     <MESSAGE value=":bug: 修正了许多bug，但是expliotiblity还不收敛到0" />
     <MESSAGE value=":bug: 修复了一个bug，expliotiblity现在在一个简单情况下可以收敛到0了" />
-    <option name="LAST_COMMIT_MESSAGE" value=":bug: 修复了一个bug，expliotiblity现在在一个简单情况下可以收敛到0了" />
+    <MESSAGE value=":bug: 修复了在初始手牌和board牌有重合时处理逻辑的一个bug" />
+    <option name="LAST_COMMIT_MESSAGE" value=":bug: 修复了在初始手牌和board牌有重合时处理逻辑的一个bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
