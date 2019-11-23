@@ -152,9 +152,10 @@ public class BestResponse {
             float[] total_payoffs = new float[player_hands[player]];
 
             float[] node_strategy = node.getTrainable().getAverageStrategy();
-            if(node_strategy.length != node.getChildrens().size() * reach_probs[node.getPlayer()].length)
+            if(node_strategy.length != node.getChildrens().size() * reach_probs[node.getPlayer()].length) {
                 throw new RuntimeException(String.format("strategy size not match %d - %d",
-                        node_strategy.length,node.getChildrens().size() * reach_probs[node.getPlayer()].length));
+                        node_strategy.length, node.getChildrens().size() * reach_probs[node.getPlayer()].length));
+            }
 
             // 构造reach probs矩阵
             for(int action_ind = 0;action_ind < node.getChildrens().size();action_ind ++){

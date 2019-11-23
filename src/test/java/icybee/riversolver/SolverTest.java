@@ -326,7 +326,8 @@ public class SolverTest
                 ,new PrivateCards(Card.strCard2int("6s"),Card.strCard2int("6d"),1)
         };
         PrivateCards[] player2Range = new PrivateCards[]{
-                new PrivateCards(Card.strCard2int("6d"),Card.strCard2int("7d"),1)
+                //new PrivateCards(Card.strCard2int("6d"),Card.strCard2int("7d"),1)
+                new PrivateCards(Card.strCard2int("6d"),Card.strCard2int("8s"),1)
                 ,new PrivateCards(Card.strCard2int("8h"),Card.strCard2int("7d"),1)
         };
 

@@ -13,10 +13,7 @@ import icybee.riversolver.ranges.RiverCombs;
 import icybee.riversolver.trainable.CfrPlusTrainable;
 import icybee.riversolver.trainable.Trainable;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 
 /**
@@ -73,26 +70,38 @@ public class CfrPlusRiverSolver extends Solver{
         return retval;
     }
 
-    public void noDuplicateRange(PrivateCards[] private_range){
+    public PrivateCards[] noDuplicateRange(PrivateCards[] private_range,long board_long){
+        List<PrivateCards> range_array = new ArrayList<>();
         Map<Integer,Boolean> rangekv = new HashMap<>();
         for(PrivateCards one_range:private_range){
             if(one_range == null) throw new RuntimeException();
             if(rangekv.get(one_range.hashCode()) != null)
                 throw new RuntimeException(String.format("duplicated key %d",one_range.toString()));
             rangekv.put(one_range.hashCode(),Boolean.TRUE);
+            long hand_long = Card.boardInts2long(new int[]{
+                    one_range.card1,
+                    one_range.card2
+            });
+            if(!Card.boardsHasIntercept(hand_long,board_long)){
+                range_array.add(one_range);
+            }
         }
+        PrivateCards[] ret = new PrivateCards[range_array.size()];
+        range_array.toArray(ret);
+        return ret;
     }
 
     public CfrPlusRiverSolver(GameTree tree, PrivateCards[] range1 , PrivateCards[] range2, int[] board, Compairer compairer,Deck deck,int iteration_number,boolean debug,int print_interval) throws BoardNotFoundException{
         super(tree);
-        this.noDuplicateRange(range1);
-        this.noDuplicateRange(range2);
-        this.range1 = range1;
-        this.range2 = range2;
         // TODO currently only support river
         if(board.length != 5) throw new RuntimeException(String.format("board length %d",board.length));
         this.board = board;
         this.board_long = Card.boardInts2long(board);
+
+        range1 = this.noDuplicateRange(range1,board_long);
+        range2 = this.noDuplicateRange(range2,board_long);
+        this.range1 = range1;
+        this.range2 = range2;
         this.compairer = compairer;
 
         this.deck = deck;
