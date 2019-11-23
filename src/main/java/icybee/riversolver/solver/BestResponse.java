@@ -220,7 +220,6 @@ public class BestResponse {
 
         // TODO 写的通用一些，这里用了hard code，因为一副牌，不管是长牌还是短牌，最多扑克牌的数量都是52张
         float[] oppo_card_sum = new float[52];
-        for(int i = 0;i < oppo_card_sum.length;i ++) oppo_card_sum[i] = 0;
 
         //用于记录对手总共的手牌绝对prob之和
         float oppo_prob_sum = 0;
@@ -228,17 +227,17 @@ public class BestResponse {
 
         float[] oppo_reach_prob = reach_probs[1 - player];
         for(int oppo_hand = 0;oppo_hand < oppo_reach_prob.length; oppo_hand ++){
-            PrivateCards one_hc = oppo_combs[oppo_hand].private_cards;
-            long one_hc_long  = Card.boardInts2long(new int[]{one_hc.card1,one_hc.card2});
+            RiverCombs one_hc = oppo_combs[oppo_hand];
+            long one_hc_long  = Card.boardInts2long(new int[]{one_hc.private_cards.card1,one_hc.private_cards.card2});
 
             // 如果对手手牌和public card有重叠，那么这组牌不可能存在
             if(Card.boardsHasIntercept(one_hc_long,board_long)){
                 continue;
             }
 
-            oppo_prob_sum += oppo_reach_prob[oppo_hand];
-            oppo_card_sum[one_hc.card1] += oppo_reach_prob[oppo_hand];
-            oppo_card_sum[one_hc.card2] += oppo_reach_prob[oppo_hand];
+            oppo_prob_sum += oppo_reach_prob[one_hc.reach_prob_index];
+            oppo_card_sum[one_hc.private_cards.card1] += oppo_reach_prob[one_hc.reach_prob_index];
+            oppo_card_sum[one_hc.private_cards.card2] += oppo_reach_prob[one_hc.reach_prob_index];
         }
 
 
@@ -248,14 +247,14 @@ public class BestResponse {
             if(Card.boardsHasIntercept(player_hc_long,board_long)){
                 payoffs[player_hand] = 0;
             }else{
-                Integer oppo_hand = this.pcm.indPlayer2Player(player,oppo,player_hand);
+                Integer oppo_hand = this.pcm.indPlayer2Player(player,oppo,player_hc.reach_prob_index);
                 float add_reach_prob;
                 if(oppo_hand == null){
                     add_reach_prob = 0;
                 }else{
                     add_reach_prob = oppo_reach_prob[oppo_hand];
                 }
-                payoffs[player_hand] = (oppo_prob_sum
+                payoffs[player_hc.reach_prob_index] = (oppo_prob_sum
                         - oppo_card_sum[player_hc.private_cards.card1]
                         - oppo_card_sum[player_hc.private_cards.card2]
                         + add_reach_prob

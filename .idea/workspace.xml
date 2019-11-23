@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":bug: fix some bug">
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":bug: 修正了许多bug，但是expliotiblity还不收敛到0">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCardsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCardsManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrPlusTrainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrPlusTrainable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/gametree/simple_part_tree_depthinf.km" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/gametree/simple_part_tree_depthinf.km" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -478,7 +473,7 @@
       <workItem from="1573740649238" duration="12000" />
       <workItem from="1573740989823" duration="4783000" />
       <workItem from="1574040633046" duration="3280000" />
-      <workItem from="1574084118512" duration="57998000" />
+      <workItem from="1574084118512" duration="65703000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -508,7 +503,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573524893124</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary=":bug: 修正了许多bug，但是expliotiblity还不收敛到0">
+      <created>1574400707276</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1574400707276</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -540,7 +542,8 @@
     <MESSAGE value=":construction: finish private cards converter" />
     <MESSAGE value=":bug: fix bug causing program quit" />
     <MESSAGE value=":bug: fix some bug" />
-    <option name="LAST_COMMIT_MESSAGE" value=":bug: fix some bug" />
+    <MESSAGE value=":bug: 修正了许多bug，但是expliotiblity还不收敛到0" />
+    <option name="LAST_COMMIT_MESSAGE" value=":bug: 修正了许多bug，但是expliotiblity还不收敛到0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

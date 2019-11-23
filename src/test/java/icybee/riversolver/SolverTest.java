@@ -336,9 +336,9 @@ public class SolverTest
                 , initialBoard
                 , se.compairer
                 , se.deck
-                ,1000000
+                ,2000
                 ,false
-                , 20000);
+                , 100);
         Map train_config = new HashMap();
         solver.train(train_config);
 
