@@ -1,9 +1,13 @@
 package icybee.riversolver.trainable;
 
+import com.alibaba.fastjson.JSONObject;
 import icybee.riversolver.nodes.ActionNode;
+import icybee.riversolver.nodes.GameActions;
 import icybee.riversolver.ranges.PrivateCards;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by huangxuefeng on 2019/10/12.
@@ -178,5 +182,34 @@ public class CfrPlusTrainable extends Trainable{
             }
         }
         */
+    }
+
+    @Override
+    public JSONObject dumps(boolean with_state) {
+        if(with_state) throw new RuntimeException("state storage not implemented");
+
+        JSONObject strategy = new JSONObject();
+        float[] average_strategy = this.getAverageStrategy();
+        List<GameActions> game_actions = action_node.getActions();
+        List<String> actions_str = new ArrayList<>();
+        for(GameActions one_action:game_actions) actions_str.add(one_action.toString());
+
+        for(int i = 0;i < this.privateCards.length;i ++){
+            PrivateCards one_private_card = this.privateCards[i];
+            float[] one_strategy = new float[this.action_number];
+
+            for(int j = 0;j < this.action_number;j ++){
+                int strategy_index = j * this.privateCards.length + i;
+                one_strategy[j] = average_strategy[strategy_index];
+            }
+            strategy.put(one_private_card.toString(),
+                    one_strategy
+                    );
+        }
+
+        JSONObject retjson = new JSONObject();
+        retjson.put("actions",actions_str);
+        retjson.put("strategy",strategy);
+        return retjson;
     }
 }

@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -344,6 +346,16 @@ public class SolverTest
                 , 1000);
         Map train_config = new HashMap();
         solver.train(train_config);
+
+        String strategy_json = solver.getTree().dumps(false).toJSONString();
+
+        String strategy_fname = "src/test/resources/outputs/outputs_strategy.json";
+
+        File output_file = new File(strategy_fname);
+        FileWriter writer = new FileWriter(output_file);
+        writer.write(strategy_json);
+        writer.flush();
+        writer.close();
 
         System.out.println("end solverTest");
     }

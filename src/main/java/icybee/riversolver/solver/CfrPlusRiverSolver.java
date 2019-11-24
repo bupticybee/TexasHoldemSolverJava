@@ -119,7 +119,6 @@ public class CfrPlusRiverSolver extends Solver{
         pcm = new PrivateCardsManager(private_cards,this.player_number,Card.boardInts2long(this.board));
         this.debug = debug;
         this.print_interval = print_interval;
-
     }
 
 
@@ -172,6 +171,7 @@ public class CfrPlusRiverSolver extends Solver{
                 br.printExploitability(tree.getRoot(), i + 1, tree.getRoot().getPot().floatValue(), board);
             }
         }
+        // System.out.println(this.tree.dumps(false).toJSONString());
     }
 
     float[] cfr(int player,GameTreeNode node,float[][] reach_probs,int iter) throws BoardNotFoundException{

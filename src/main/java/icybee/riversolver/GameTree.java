@@ -1,11 +1,13 @@
 package icybee.riversolver;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import icybee.riversolver.exceptions.ActionNotFoundException;
 import icybee.riversolver.exceptions.NodeLengthMismatchException;
 import icybee.riversolver.exceptions.NodeNotFoundException;
 import icybee.riversolver.exceptions.RoundNotFoundException;
 import icybee.riversolver.nodes.*;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -360,6 +362,49 @@ public class GameTree {
             throw new RuntimeException("depth can only be -1 or positive");
         }
         recurrentPrintTree(this.root,0,depth);
+    }
+
+    private JSONObject reConvertJson(GameTreeNode node){
+        if(node instanceof ActionNode) {
+            ActionNode one_node = (ActionNode) node;
+            JSONObject retjson = new JSONObject();
+
+            List<String> actions_str = new ArrayList<>();
+            for(GameActions one_action:one_node.getActions()) actions_str.add(one_action.toString());
+
+            retjson.put("actions",actions_str);
+            retjson.put("player",one_node.getPlayer());
+
+            JSONObject childrens = null;
+
+            for(int i = 0;i < one_node.getActions().size();i ++){
+                GameActions one_action = one_node.getActions().get(i);
+                GameTreeNode one_child = one_node.getChildrens().get(i);
+
+                JSONObject one_json = this.reConvertJson(one_child);
+                if(one_json != null){
+                    if(childrens == null) childrens = new JSONObject();
+                    childrens.put(one_action.toString(),one_json);
+                }
+            }
+            if(childrens != null) {
+                retjson.put("childrens", childrens);
+            }
+            retjson.put("strategy",one_node.getTrainable().dumps(false));
+            return retjson;
+
+        }else if(node instanceof TerminalNode){
+            return null;
+        }else if(node instanceof ShowdownNode){
+            return null;
+        }else{
+            throw new RuntimeException();
+        }
+    }
+
+    public JSONObject dumps(boolean with_status){
+        if(with_status == true) throw new NotImplementedException();
+        return this.reConvertJson(this.root);
     }
 
 }
