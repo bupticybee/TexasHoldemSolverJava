@@ -15,9 +15,20 @@ import java.io.IOException;
 public class SolverEnvironment {
     Config config;
     Deck deck;
+
     Compairer compairer;
     GameTree game_tree = null;
     Solver solver;
+    static SolverEnvironment se;
+
+    public Compairer getCompairer() {
+        return compairer;
+    }
+
+    public static SolverEnvironment getInstance(){
+        return SolverEnvironment.se;
+    }
+
     SolverEnvironment(Config config) throws ClassNotFoundException,IOException,BoardNotFoundException{
         this.config = config;
         this.deck = new Deck(config.ranks,config.suits);
@@ -33,5 +44,6 @@ public class SolverEnvironment {
         if(this.config.solver_type.equals("cfrplus")){
             //solver = new CfrPlusRiverSolver(game_tree);
         }
+        SolverEnvironment.se = this;
     }
 }

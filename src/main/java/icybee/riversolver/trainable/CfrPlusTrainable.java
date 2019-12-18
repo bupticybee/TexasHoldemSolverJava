@@ -1,6 +1,9 @@
 package icybee.riversolver.trainable;
 
 import com.alibaba.fastjson.JSONObject;
+import icybee.riversolver.Card;
+import icybee.riversolver.SolverEnvironment;
+import icybee.riversolver.compairer.Compairer;
 import icybee.riversolver.nodes.ActionNode;
 import icybee.riversolver.nodes.GameActions;
 import icybee.riversolver.ranges.PrivateCards;
@@ -189,20 +192,36 @@ public class CfrPlusTrainable extends Trainable{
         if(with_state) throw new RuntimeException("state storage not implemented");
 
         JSONObject strategy = new JSONObject();
-        float[] average_strategy = this.getAverageStrategy();
+        float[] average_strategy = this.getcurrentStrategy();
         List<GameActions> game_actions = action_node.getActions();
         List<String> actions_str = new ArrayList<>();
-        for(GameActions one_action:game_actions) actions_str.add(one_action.toString());
+        for(GameActions one_action:game_actions) actions_str.add(
+                one_action.toString()
+        );
+
+        //SolverEnvironment se = SolverEnvironment.getInstance();
+        //Compairer comp = se.getCompairer();
 
         for(int i = 0;i < this.privateCards.length;i ++){
             PrivateCards one_private_card = this.privateCards[i];
             float[] one_strategy = new float[this.action_number];
 
+            /*
+            int[] initialBoard = new int[]{
+                    Card.strCard2int("Kd"),
+                    Card.strCard2int("Jd"),
+                    Card.strCard2int("Td"),
+                    Card.strCard2int("7s"),
+                    Card.strCard2int("8s")
+            };
+            int rank = comp.get_rank(new int[]{one_private_card.card1,one_private_card.card2},initialBoard);
+             */
+
             for(int j = 0;j < this.action_number;j ++){
                 int strategy_index = j * this.privateCards.length + i;
                 one_strategy[j] = average_strategy[strategy_index];
             }
-            strategy.put(one_private_card.toString(),
+            strategy.put(String.format("%s",one_private_card.toString()),
                     one_strategy
                     );
         }

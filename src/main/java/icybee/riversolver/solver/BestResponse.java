@@ -80,7 +80,7 @@ public class BestResponse {
         float ev = 0;
         //考虑（1）相对的手牌 proability,(2)被场面和对手ban掉的手牌
         float[] private_cards_evs = bestResponse(node, player, reach_probs, initialBoard);
-        // TODO finish here
+        // TODO 这里有bug，player combo的index和showdown节点所使用的private card index不同
         RiverCombs[] player_combo = this.river_combos[player];
         RiverCombs[] oppo_combo = this.river_combos[1 - player];
 
@@ -151,7 +151,7 @@ public class BestResponse {
             // 如果是别人做决定，那么就按照别人的策略加权算出一个 ev
             float[] total_payoffs = new float[player_hands[player]];
 
-            float[] node_strategy = node.getTrainable().getAverageStrategy();
+            float[] node_strategy = node.getTrainable().getcurrentStrategy();
             if(node_strategy.length != node.getChildrens().size() * reach_probs[node.getPlayer()].length) {
                 throw new RuntimeException(String.format("strategy size not match %d - %d",
                         node_strategy.length, node.getChildrens().size() * reach_probs[node.getPlayer()].length));
@@ -283,8 +283,8 @@ public class BestResponse {
         if(this.player_number != 2) throw new RuntimeException("player number is not 2");
 
         int oppo = 1 - player;
-        RiverCombs[] player_combs = this.rrm.getRiverCombos(player,this.river_combos[player],board);  //this.river_combos[player];
-        RiverCombs[] oppo_combs = this.rrm.getRiverCombos(1 - player,this.river_combos[1 - player],board);  //this.river_combos[player];
+        RiverCombs[] player_combs = this.rrm.getRiverCombos(player,this.pcm.getPreflopCards(player),board);  //this.river_combos[player];
+        RiverCombs[] oppo_combs = this.rrm.getRiverCombos(1 - player,this.pcm.getPreflopCards(1 - player),board);  //this.river_combos[player];
 
         float win_payoff = node.get_payoffs(ShowdownNode.ShowDownResult.NOTTIE,player)[player].floatValue();
         // TODO hard code, 假设了player只有两个

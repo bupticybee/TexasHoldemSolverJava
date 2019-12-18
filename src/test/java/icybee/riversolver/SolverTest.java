@@ -33,8 +33,8 @@ public class SolverTest
     @Before
     public void loadEnvironmentsTest()
     {
-        String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
-        //String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        String config_name = "yamls/rule_shortdeck_simple.yaml";
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(config_name).getFile());
 
@@ -308,8 +308,17 @@ public class SolverTest
     public void cfrSolverTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
 
-        String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86";
-        String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86";
+        String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
+        String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
+
+        // String player1RangeStr = "87";
+        // String player2RangeStr = "87";
+        /*
+        case 'c': return 0; // 梅花
+        case 'd': return 1; // 方块
+        case 'h': return 2; // 红桃
+        case 's': return 3; // 黑桃
+         */
 
         int[] initialBoard = new int[]{
                 Card.strCard2int("Kd"),
@@ -321,6 +330,7 @@ public class SolverTest
 
         PrivateCards[] player1Range = PrivateRangeConverter.rangeStr2Cards(player1RangeStr,initialBoard);
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
+        // TODO 为什么QcTc和Qc8c的策略如此不相似
         //PrivateCards[] player1Range = new PrivateCards[]{new PrivateCards(Card.strCard2int("As"),Card.strCard2int("Ad"),1)};
 
         /*
@@ -341,9 +351,9 @@ public class SolverTest
                 , initialBoard
                 , se.compairer
                 , se.deck
-                ,20000
+                ,200000
                 ,false
-                , 1000);
+                , 10000);
         Map train_config = new HashMap();
         solver.train(train_config);
 

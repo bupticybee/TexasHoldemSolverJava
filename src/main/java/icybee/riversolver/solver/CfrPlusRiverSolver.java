@@ -340,8 +340,6 @@ public class CfrPlusRiverSolver extends Solver{
             System.out.println(String.format("final payoff: %s",payoffs[0]));
         }
 
-
-
         return payoffs;
     }
 
@@ -475,6 +473,71 @@ public class CfrPlusRiverSolver extends Solver{
             System.out.println(String.format("oppo sum %s, substracted payoff %s",losssum,payoffs[0]));
         }
 
+        /*
+        float[] oppo_cardsum = new float[52];
+        float oppo_sum = 0;
+        for(int i = 0;i < this.pcm.getPreflopCards(oppo).length;i ++){
+            PrivateCards one_oppo_cards = this.pcm.getPreflopCards(oppo)[i];
+            oppo_cardsum[one_oppo_cards.card1] += reach_probs[oppo][i];
+            oppo_cardsum[one_oppo_cards.card2] += reach_probs[oppo][i];
+            oppo_sum += reach_probs[oppo][i];
+        }
+
+        for(int i = 0;i < this.pcm.getPreflopCards(player).length;i ++){
+            PrivateCards one_player_cards = this.pcm.getPreflopCards(oppo)[i];
+            float oppo_same_card_sum = 0;
+            oppo_same_card_sum += oppo_cardsum[one_player_cards.card1];
+            oppo_same_card_sum += oppo_cardsum[one_player_cards.card2];
+            oppo_same_card_sum -= reach_probs[oppo][this.pcm.indPlayer2Player(player,oppo,i)];
+            if(oppo_sum - oppo_same_card_sum == 0) throw new RuntimeException("oppo sum is zero");
+            payoffs[i] /= (oppo_sum - oppo_same_card_sum);
+        }
+        */
+
+        /*
+        if(true){
+            node.printHistory();
+            int ind = -1;
+            for(int i = 0;i < this.getPlayerPrivateCard(player).length;i ++){
+                if(this.getPlayerPrivateCard(player)[i].hashCode() ==
+                        (new PrivateCards(
+                                Card.strCard2int("Qd"),
+                                Card.strCard2int("7h"),
+                                1
+                        )).hashCode()
+                ){
+                    ind = i;
+                }
+            }
+            if(ind == -1){
+                throw new RuntimeException();
+            }
+            PrivateCards pc = this.getPlayerPrivateCard(player)[ind];
+            System.out.println(pc.toString());
+        }
+        if(true){
+            node.printHistory();
+            int ind = -1;
+            for(int i = 0;i < this.getPlayerPrivateCard(player).length;i ++){
+                if(this.getPlayerPrivateCard(player)[i].hashCode() ==
+                        (new PrivateCards(
+                                Card.strCard2int("Qc"),
+                                Card.strCard2int("7h"),
+                                1
+                        )).hashCode()
+                ){
+                    ind = i;
+                }
+            }
+            if(ind == -1){
+                throw new RuntimeException();
+            }
+            PrivateCards pc = this.getPlayerPrivateCard(player)[ind];
+            System.out.println(pc.toString());
+        }
+
+         */
+        //node.printHistory();
         return payoffs;
     }
 

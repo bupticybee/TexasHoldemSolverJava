@@ -182,10 +182,10 @@ public class Card {
     {
         switch(suit)
         {
-            case 'c': return 0;
-            case 'd': return 1;
-            case 'h': return 2;
-            case 's': return 3;
+            case 'c': return 0; // 梅花
+            case 'd': return 1; // 方块
+            case 'h': return 2; // 红桃
+            case 's': return 3; // 黑桃
             default: return 0;
         }
     }
