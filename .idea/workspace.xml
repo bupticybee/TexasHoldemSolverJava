@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":sparkles: 在一个简单局面下和piosolver精度校对一致">
-      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrTrainable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/DiscountedCfrTrainable.java" afterDir="false" />
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":sparkles: 增加CFR和discounted CFR">
+      <change afterPath="$PROJECT_DIR$/img/algs.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrPlusTrainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrPlusTrainable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/Trainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/Trainable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +37,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/icybee/riversolver" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources/gametree" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/img" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -58,6 +53,7 @@
       <recent name="icybee.riversolver.trainable" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/img" />
       <recent name="$PROJECT_DIR$/src/test/resources/gametree" />
       <recent name="$PROJECT_DIR$/src/test/resources/yamls" />
       <recent name="$PROJECT_DIR$/src/test/resources/compairer" />
@@ -484,7 +480,7 @@
       <workItem from="1574040633046" duration="3280000" />
       <workItem from="1574084118512" duration="97037000" />
       <workItem from="1574688199016" duration="26085000" />
-      <workItem from="1576589547039" duration="28087000" />
+      <workItem from="1576589547039" duration="28471000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -556,7 +552,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576677399583</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary=":sparkles: 增加CFR和discounted CFR">
+      <created>1576943130414</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1576943130414</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -594,7 +597,8 @@
     <MESSAGE value=":bug: confirm了在复杂情况下的收敛性" />
     <MESSAGE value=":sparkles: 完成strategy 落盘功能" />
     <MESSAGE value=":sparkles: 在一个简单局面下和piosolver精度校对一致" />
-    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: 在一个简单局面下和piosolver精度校对一致" />
+    <MESSAGE value=":sparkles: 增加CFR和discounted CFR" />
+    <option name="LAST_COMMIT_MESSAGE" value=":sparkles: 增加CFR和discounted CFR" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
