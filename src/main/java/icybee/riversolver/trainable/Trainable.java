@@ -9,6 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 public abstract class Trainable {
     public abstract float[] getAverageStrategy();
     public abstract float[] getcurrentStrategy();
-    public abstract void updateRegrets(float[] regrets,int iteration_number);
+    public abstract void updateRegrets(float[] regrets,int iteration_number,float[] reach_probs);
     public abstract JSONObject dumps(boolean with_state);
 }

@@ -1,9 +1,6 @@
 package icybee.riversolver.trainable;
 
 import com.alibaba.fastjson.JSONObject;
-import icybee.riversolver.Card;
-import icybee.riversolver.SolverEnvironment;
-import icybee.riversolver.compairer.Compairer;
 import icybee.riversolver.nodes.ActionNode;
 import icybee.riversolver.nodes.GameActions;
 import icybee.riversolver.ranges.PrivateCards;
@@ -16,7 +13,7 @@ import java.util.List;
  * Created by huangxuefeng on 2019/10/12.
  * trainable by cfr
  */
-public class CfrPlusTrainable extends Trainable{
+public class CfrTrainable extends Trainable{
     ActionNode action_node;
     PrivateCards[] privateCards;
     int action_number;
@@ -46,7 +43,7 @@ public class CfrPlusTrainable extends Trainable{
 
     float[] regrets = null;
 
-    public CfrPlusTrainable(ActionNode action_node, PrivateCards[] privateCards){
+    public CfrTrainable(ActionNode action_node, PrivateCards[] privateCards){
         this.action_node = action_node;
         this.privateCards = privateCards;
         this.action_number = action_node.getChildrens().size();
@@ -97,60 +94,13 @@ public class CfrPlusTrainable extends Trainable{
                 for (int private_id = 0; private_id < this.card_number; private_id++) {
                     int index = action_id * this.card_number + private_id;
                     if(this.r_plus_sum[private_id] != 0) {
-                        retval[index] = this.r_plus[index] / this.r_plus_sum[private_id];
+                        retval[index] = Math.max(this.r_plus[index],0) / this.r_plus_sum[private_id];
                     }else{
                         retval[index] = Float.valueOf(1) / (this.action_number);
                     }
                     if(this.r_plus[index] != this.r_plus[index]) throw new RuntimeException();
-                    /*
-                    if(this.r_plus_sum[private_id] == 0)
-                    {
-                        System.out.println("Exception regret status, r_plus_sum == 0:");
-                        System.out.println(String.format("r plus length %s , card num %s",r_plus.length,this.card_number));
-                        for(int i = index % this.card_number;i < this.r_plus.length;i += this.card_number){
-                            System.out.print(String.format("%s:%s ",i,this.r_plus[i]));
-                            if(i == index){
-                                System.out.print("[current]");
-                            }
-                        }
-                        System.out.println();
-                        System.out.println();
-                        throw new RuntimeException();
-                    }
-                     */
                 }
             }
-        }
-        return retval;
-    }
-
-    public float[] getcurrentStrategy(int private_id) {
-        float[] retval = new float[this.action_number];
-        if(this.r_plus_sum == null || this.r_plus_sum[private_id] == 0 ){
-            Arrays.fill(retval,Float.valueOf(1) / (this.action_number));
-        }else {
-            for (int action_id = 0; action_id < action_number; action_id++) {
-                int index = action_id * this.card_number + private_id;
-                retval[action_id] = this.r_plus[index] / this.r_plus_sum[private_id];
-            }
-        }
-        return retval;
-    }
-
-    public float[] getcurrentRegrets(int private_id) {
-        float[] retval = new float[this.action_number];
-        for (int action_id = 0; action_id < action_number; action_id++) {
-            int index = action_id * this.card_number + private_id;
-            retval[action_id] = this.regrets[index];
-        }
-        return retval;
-    }
-
-    public float[] getRPlus(int private_id) {
-        float[] retval = new float[this.action_number];
-        for (int action_id = 0; action_id < action_number; action_id++) {
-            int index = action_id * this.card_number + private_id;
-            retval[action_id] = this.r_plus[index];
         }
         return retval;
     }
@@ -169,16 +119,20 @@ public class CfrPlusTrainable extends Trainable{
                 float one_reg = regrets[index];
 
                 // 更新 R+
-                this.r_plus[index] = Math.max(0,one_reg + this.r_plus[index]);
-                this.r_plus_sum[private_id] += this.r_plus[index];
-
-                // 更新累计策略
-                this.cum_r_plus[index] += this.r_plus[index] * iteration_number;
-                this.cum_r_plus_sum[private_id] += this.cum_r_plus[index];
+                this.r_plus[index] = one_reg + this.r_plus[index];
+                this.r_plus_sum[private_id] += Math.max(0,this.r_plus[index]);
             }
         }
 
 
+        float[] current_strategy = this.getcurrentStrategy();
+        for (int action_id = 0;action_id < action_number;action_id ++) {
+            for(int private_id = 0;private_id < this.card_number;private_id ++) {
+                int index = action_id * this.card_number + private_id;
+                this.cum_r_plus[index] += current_strategy[index] * iteration_number * reach_probs[private_id];
+                this.cum_r_plus_sum[private_id] += this.cum_r_plus[index] ;
+            }
+        }
         /*
         for (int action_id = 0;action_id < action_number;action_id ++) {
             for(int private_id = 0;private_id < this.card_number;private_id ++){

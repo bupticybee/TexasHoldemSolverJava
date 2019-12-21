@@ -54,7 +54,7 @@ public class BestResponse {
 
     }
 
-    public void printExploitability(GameTreeNode root, int iterationCount, float initial_pot, int[] initialBoard) throws BoardNotFoundException{
+    public float printExploitability(GameTreeNode root, int iterationCount, float initial_pot, int[] initialBoard) throws BoardNotFoundException{
         float[][] reach_probs = new float[this.player_number][];
 
         System.out.println(String.format("Iter: %d",iterationCount));
@@ -74,6 +74,7 @@ public class BestResponse {
         }
         float total_exploitability = exploitible / this.player_number / initial_pot * 100;
         System.out.println(String.format("Total exploitability %f precent", total_exploitability));
+        return total_exploitability;
     }
 
     public float getBestReponseEv(GameTreeNode node, int player, float[][] reach_probs, int[] initialBoard) throws BoardNotFoundException{
@@ -151,7 +152,7 @@ public class BestResponse {
             // 如果是别人做决定，那么就按照别人的策略加权算出一个 ev
             float[] total_payoffs = new float[player_hands[player]];
 
-            float[] node_strategy = node.getTrainable().getcurrentStrategy();
+            float[] node_strategy = node.getTrainable().getAverageStrategy();
             if(node_strategy.length != node.getChildrens().size() * reach_probs[node.getPlayer()].length) {
                 throw new RuntimeException(String.format("strategy size not match %d - %d",
                         node_strategy.length, node.getChildrens().size() * reach_probs[node.getPlayer()].length));

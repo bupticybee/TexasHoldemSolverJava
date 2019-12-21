@@ -8,6 +8,9 @@ import icybee.riversolver.exceptions.BoardNotFoundException;
 import icybee.riversolver.ranges.PrivateCards;
 import icybee.riversolver.solver.CfrPlusRiverSolver;
 import icybee.riversolver.solver.Solver;
+import icybee.riversolver.trainable.CfrPlusTrainable;
+import icybee.riversolver.trainable.CfrTrainable;
+import icybee.riversolver.trainable.DiscountedCfrTrainable;
 import icybee.riversolver.utils.PrivateRangeConverter;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,8 +36,8 @@ public class SolverTest
     @Before
     public void loadEnvironmentsTest()
     {
-        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
-        String config_name = "yamls/rule_shortdeck_simple.yaml";
+        String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_simple.yaml";
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(config_name).getFile());
 
@@ -345,15 +348,19 @@ public class SolverTest
         };
          */
 
+        String logfile_name = "src/test/resources/outputs/outputs_log.txt";
         Solver solver = new CfrPlusRiverSolver(se.game_tree
                 , player1Range
                 , player2Range
                 , initialBoard
                 , se.compairer
                 , se.deck
-                ,200000
+                ,1000
                 ,false
-                , 10000);
+                , 1
+                ,logfile_name
+                , DiscountedCfrTrainable.class
+        );
         Map train_config = new HashMap();
         solver.train(train_config);
 

@@ -1,5 +1,6 @@
 package icybee.riversolver.solver;
 
+import com.alibaba.fastjson.JSONObject;
 import icybee.riversolver.Card;
 import icybee.riversolver.Deck;
 import icybee.riversolver.GameTree;
@@ -13,6 +14,9 @@ import icybee.riversolver.ranges.RiverCombs;
 import icybee.riversolver.trainable.CfrPlusTrainable;
 import icybee.riversolver.trainable.Trainable;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 
@@ -36,6 +40,8 @@ public class CfrPlusRiverSolver extends Solver{
     PrivateCardsManager pcm;
     boolean debug;
     int print_interval;
+    String logfile;
+    Class<?> trainer;
 
     PrivateCards[] playerHands(int player){
         if(player == 0){
@@ -91,15 +97,30 @@ public class CfrPlusRiverSolver extends Solver{
         return ret;
     }
 
-    public CfrPlusRiverSolver(GameTree tree, PrivateCards[] range1 , PrivateCards[] range2, int[] board, Compairer compairer,Deck deck,int iteration_number,boolean debug,int print_interval) throws BoardNotFoundException{
+    public CfrPlusRiverSolver(
+            GameTree tree,
+            PrivateCards[] range1 ,
+            PrivateCards[] range2,
+            int[] board,
+            Compairer compairer,
+            Deck deck,
+            int iteration_number,
+            boolean debug,
+            int print_interval,
+            String logfile,
+            Class<?> trainer
+    ) throws BoardNotFoundException{
         super(tree);
         // TODO currently only support river
         if(board.length != 5) throw new RuntimeException(String.format("board length %d",board.length));
         this.board = board;
         this.board_long = Card.boardInts2long(board);
+        this.logfile = logfile;
+        this.trainer = trainer;
 
         range1 = this.noDuplicateRange(range1,board_long);
         range2 = this.noDuplicateRange(range2,board_long);
+
         this.range1 = range1;
         this.range2 = range2;
         this.compairer = compairer;
@@ -122,14 +143,14 @@ public class CfrPlusRiverSolver extends Solver{
     }
 
 
-    void setTrainable(GameTreeNode root){
+    void setTrainable(GameTreeNode root) throws NoSuchMethodException, InvocationTargetException,IllegalAccessException,InstantiationException {
         if(root instanceof ActionNode){
             ActionNode action_node = (ActionNode)root;
 
             int player = action_node.getPlayer();
             PrivateCards[] player_privates = this.getPlayerPrivateCard(player);
 
-            action_node.setTrainable(new CfrPlusTrainable(action_node,player_privates));
+            action_node.setTrainable((Trainable) this.trainer.getConstructor(ActionNode.class,PrivateCards[].class).newInstance(action_node,player_privates));
 
             List<GameTreeNode> childrens =  action_node.getChildrens();
             for(GameTreeNode one_child:childrens) setTrainable(one_child);
@@ -142,7 +163,7 @@ public class CfrPlusRiverSolver extends Solver{
     }
 
     @Override
-    public void train(Map training_config) throws BoardNotFoundException {
+    public void train(Map training_config) throws Exception {
         setTrainable(tree.getRoot());
 
         RiverCombs[][] player_rivers = new RiverCombs[this.player_number][];
@@ -154,7 +175,10 @@ public class CfrPlusRiverSolver extends Solver{
         br.printExploitability(tree.getRoot(), 0, tree.getRoot().getPot().floatValue(), board);
 
         float[][] reach_probs = this.getReachProbs();
+        FileWriter fileWriter = new FileWriter(this.logfile);
 
+        long begintime = System.currentTimeMillis();
+        long endtime = System.currentTimeMillis();
         for(int i = 0;i < this.iteration_number;i++){
             for(int player_id = 0;player_id < this.player_number;player_id ++) {
                 if(this.debug){
@@ -166,11 +190,23 @@ public class CfrPlusRiverSolver extends Solver{
                 cfr(player_id,this.tree.getRoot(),reach_probs,i);
 
             }
-            if(i % this.print_interval == 0 || i < 30) {
+            if(i % this.print_interval == 0) {
                 System.out.println("-------------------");
-                br.printExploitability(tree.getRoot(), i + 1, tree.getRoot().getPot().floatValue(), board);
+                endtime = System.currentTimeMillis();
+                float expliotibility = br.printExploitability(tree.getRoot(), i + 1, tree.getRoot().getPot().floatValue(), board);
+                if(this.logfile != null){
+                    long time_ms = endtime - begintime;
+                    JSONObject jo = new JSONObject();
+                    jo.put("iteration",i);
+                    jo.put("exploitibility",expliotibility);
+                    jo.put("time_ms",time_ms);
+                    fileWriter.write(String.format("%s\n",jo.toJSONString()));
+                }
+                begintime = System.currentTimeMillis();
             }
         }
+        fileWriter.flush();
+        fileWriter.close();
         // System.out.println(this.tree.dumps(false).toJSONString());
     }
 
@@ -277,68 +313,9 @@ public class CfrPlusRiverSolver extends Solver{
                     regrets[action_id * node_player_private_cards.length + i] = all_action_utility[action_id][i] - payoffs[i];
                 }
             }
-            trainable.updateRegrets(regrets, iter);
+            trainable.updateRegrets(regrets, iter + 1, reach_probs[player]);
         }
         //if(this.debug && player == node.getPlayer()) {
-        if(this.debug) {
-            int card_id = 0;
-
-            System.out.println("[ACTIONS]============");
-            System.out.println("=======================================");
-            System.out.println(String.format("player %s card %s",player,getPlayerPrivateCard(player)[card_id]));
-            System.out.print("actions: ");
-            for (GameActions one_action : node.getActions()) {
-                System.out.print(one_action.toString());
-                System.out.print(" ");
-            }
-            System.out.println();
-
-            System.out.println("Strategys:");
-            for(int i = 0;i < node.getActions().size(); i++) {
-                float one_strategy = current_strategy[0 + i * node_player_private_cards.length];
-                System.out.print(String.format(" %s:%s ",node.getActions().get(i),one_strategy));
-            }
-            System.out.println();
-
-            System.out.print("history: ");
-            node.printHistory();
-
-            System.out.print("payoffs : ");
-            for(float[] one_action_utility: all_action_utility) {
-                System.out.print(one_action_utility[card_id]);
-                System.out.print(" ");
-            }
-            System.out.println();
-
-            if(player  == node.getPlayer()) {
-                System.out.print("regrets: ");
-                System.out.println(
-                        Arrays.toString(
-                                ((CfrPlusTrainable) node.getTrainable()).getcurrentRegrets(card_id)
-                        )
-                );
-
-                System.out.print("r plus:");
-                System.out.println(
-                        Arrays.toString(
-                                ((CfrPlusTrainable) node.getTrainable()).getRPlus(card_id)
-                        )
-                );
-
-                System.out.print("r plus sum:");
-                System.out.println(
-                        ((CfrPlusTrainable) node.getTrainable()).getR_plus_sum()[card_id]
-                );
-            }
-
-            System.out.print("strategy: ");
-            System.out.println(
-                    Arrays.toString(
-                            ((CfrPlusTrainable) node.getTrainable()).getcurrentStrategy(card_id)
-                    )
-            );
-            System.out.println(String.format("final payoff: %s",payoffs[0]));
-        }
 
         return payoffs;
     }
