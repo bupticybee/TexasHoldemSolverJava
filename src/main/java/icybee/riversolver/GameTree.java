@@ -24,6 +24,7 @@ import java.util.Map;
 public class GameTree {
     String tree_json_dir;
     GameTreeNode root = null;
+    Deck deck;
 
     public GameTreeNode getRoot() {
         return root;
@@ -217,6 +218,22 @@ public class GameTree {
         return new TerminalNode(player_payoff,player,game_round,pot,parent);
     }
 
+    ChanceNode generateChanceNode(Map meta,Map child,String round,GameTreeNode parent){
+        //节点上的下注额度
+        Double pot = ((Integer)meta.get("pot")).doubleValue();
+        List<GameTreeNode> childrens = new ArrayList<>();
+        for(Card one_card:this.deck.getCards()){
+            GameTreeNode one_node = recurrentGenerateTreeNode(child,null);
+            childrens.add(one_node);
+        }
+        GameTreeNode.GameRound game_round = strToGameRound(round);
+        ChanceNode chanceNode = new ChanceNode(childrens,game_round,pot,parent,this.deck.getCards());
+        for(GameTreeNode gameTreeNode: chanceNode.getChildrens()){
+            gameTreeNode.setParent(chanceNode);
+        }
+        return chanceNode;
+    }
+
     GameTreeNode recurrentGenerateTreeNode(Map<String, Map> node_json,GameTreeNode parent) throws NullPointerException{
         Map<String,Object> meta = node_json.get("meta");
         if(meta == null){
@@ -241,7 +258,9 @@ public class GameTree {
         }
         if (! (node_type.equals("Terminal")
                 || node_type.equals("Showdown")
-                || node_type.equals( "Action"))
+                || node_type.equals( "Action")
+                || node_type.equals( "Chance")
+        )
                 ){
             throw new NodeNotFoundException(String.format("node type %s not found",node_type));
         }
@@ -270,19 +289,25 @@ public class GameTree {
             case "Terminal": {
                 return this.generateTerminalNode(meta, round,parent);
             }
+            case "Chance": {
+                List<Map> childrens = (List<Map>) node_json.get("children");
+                if(childrens.size() != 1) throw new RuntimeException("Chance node should have only one child");
+                return this.generateChanceNode(meta, childrens.get(0), round,parent);
+            }
             default:{
                 throw new NodeNotFoundException(String.format("node type %s not found",node_type));
             }
         }
     }
 
-    public GameTree(String tree_json_dir) throws IOException{
+    public GameTree(String tree_json_dir,Deck deck) throws IOException{
         this.tree_json_dir = tree_json_dir;
         ObjectMapper mapper = new ObjectMapper();
 
         String file_content = readAllBytes(tree_json_dir);
         Map<String, Map> json_map = (Map<String, Map>)mapper.readValue(file_content, Map.class);
         Map<String, Map> json_root = (Map<String, Map>)json_map.get("root");
+        this.deck = deck;
         this.root = recurrentGenerateTreeNode(json_root,null);
     }
 
@@ -396,6 +421,9 @@ public class GameTree {
         }else if(node instanceof TerminalNode){
             return null;
         }else if(node instanceof ShowdownNode){
+            return null;
+        }else if(node instanceof ChanceNode){
+            // TODO 写这里的策略导出
             return null;
         }else{
             throw new RuntimeException();

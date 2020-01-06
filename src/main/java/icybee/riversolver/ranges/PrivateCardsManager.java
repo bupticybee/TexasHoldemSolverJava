@@ -12,11 +12,11 @@ import java.util.Arrays;
 public class PrivateCardsManager {
     PrivateCards[][] private_cards;
     int player_number;
-    long board;
+    long initialboard;
     int[][] card_player_index;
 
     //TODO finish this
-    public PrivateCardsManager(PrivateCards[][] private_cards,int player_number,long board){
+    public PrivateCardsManager(PrivateCards[][] private_cards,int player_number,long initialboard){
         this.private_cards = private_cards;
         this.player_number = player_number;
         this.card_player_index = new int[52 * 52][];
@@ -34,7 +34,7 @@ public class PrivateCardsManager {
             }
         }
 
-        this.board = board;
+        this.initialboard = initialboard;
         try {
             setRelativeProbs();
         }catch (Exception e){
@@ -58,12 +58,12 @@ public class PrivateCardsManager {
         }
     }
 
-    public float[] getInitialReachProb(int player,long board) throws BoardNotFoundException{
+    public float[] getInitialReachProb(int player,long initialboard) throws BoardNotFoundException{
         int cards_len =  this.private_cards[player].length;
         float[] probs = new float[cards_len];
         for(int i = 0;i < cards_len;i ++){
             PrivateCards pc = this.private_cards[player][i];
-            if(Card.boardsHasIntercept(board,Card.boardInts2long(new int[]{pc.card1,pc.card2}))) {
+            if(Card.boardsHasIntercept(initialboard,Card.boardInts2long(new int[]{pc.card1,pc.card2}))) {
                 probs[i] = 0;
             }else{
                 probs[i] = this.private_cards[player][i].weight;
@@ -85,14 +85,14 @@ public class PrivateCardsManager {
                 long player_long = Card.boardInts2long(new int[]{player_card.card1, player_card.card2});
 
                 //
-                if (Card.boardsHasIntercept(player_long,board)){
+                if (Card.boardsHasIntercept(player_long,initialboard)){
                     continue;
                 }
 
                 for (int j = 0; j < this.private_cards[oppo].length; j++) {
                     PrivateCards oppo_card = this.private_cards[oppo][j];
                     long oppo_long = Card.boardInts2long(new int[]{oppo_card.card1, oppo_card.card2});
-                    if (Card.boardsHasIntercept(oppo_long,this.board)
+                    if (Card.boardsHasIntercept(oppo_long,this.initialboard)
                             || Card.boardsHasIntercept(oppo_long,player_long)
                             ){
                         continue;

@@ -79,6 +79,16 @@ public abstract class GameTreeNode {
                                 ));
                     }
                 }
+            }else if(parent_node instanceof ChanceNode) {
+                ChanceNode chance_node = (ChanceNode)parent_node;
+                for(int i = 0;i < chance_node.getChildrens().size();i ++){
+                    if(chance_node.getChildrens().get(i) == node){
+                        System.out.print(String.format("<- (deal card %s)",
+                                chance_node.getCards().get(i).toString()
+                        ));
+                    }
+                }
+
             }else{
                 System.out.print(String.format("<- (%s)",node.toString()));
             }

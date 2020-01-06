@@ -2,6 +2,7 @@ package icybee.riversolver;
 
 import icybee.riversolver.exceptions.BoardNotFoundException;
 import icybee.riversolver.exceptions.CardsNotFoundException;
+import icybee.riversolver.ranges.PrivateCards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,16 @@ public class Card {
         return boardCards2long(cards_objs);
     }
 
-    public static long boardCards2long(Card[] cards) throws BoardNotFoundException{
+    public static long boardCard2long(Card card){
+        try {
+            return boardCards2long(new Card[]{card});
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    public static long boardCards2long(Card[] cards){
         int[] board_int = new int[cards.length];
         for(int i = 0;i < cards.length;i++){
             board_int[i] = Card.card2int(cards[i]);
@@ -64,9 +74,13 @@ public class Card {
         return ((board1 & board2) != 0);
     }
 
-    public static long boardInts2long(List<Integer> board) throws BoardNotFoundException {
+    public static long boardInts2long(List<Integer> board){
         int[] array = board.stream().mapToInt(i->i).toArray();
         return boardInts2long(array);
+    }
+
+    public static long privateHand2long(PrivateCards one_hand){
+        return boardInts2long(new int[]{one_hand.card1,one_hand.card2});
     }
 
     public static long boardInts2long(int[] board){
@@ -86,7 +100,7 @@ public class Card {
         return board_long;
     }
 
-    public static int[] long2board(long board_long) throws BoardNotFoundException{
+    public static int[] long2board(long board_long) {
         List<Integer> board = new ArrayList<>();
         for(int i = 0;i < 52;i ++){
             if((board_long & 1) == 1){
@@ -95,7 +109,7 @@ public class Card {
             board_long = board_long >> 1;
         }
         if (board.size() < 1 || board.size() > 7){
-            throw new BoardNotFoundException(String.format("board length not correct, board length %d, boards %s",board.size(),board.toString()));
+            throw new RuntimeException(String.format("board length not correct, board length %d, boards %s",board.size(),board.toString()));
         }
         int[] retval = new int[board.size()];
         for(int i = 0;i < board.size();i ++){
@@ -194,4 +208,9 @@ public class Card {
         return new String[]{"c","d","h","s"};
     }
 
+
+    @Override
+    public String toString() {
+        return this.card;
+    }
 }

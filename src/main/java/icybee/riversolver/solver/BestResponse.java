@@ -1,20 +1,20 @@
 package icybee.riversolver.solver;
 
 import icybee.riversolver.Card;
+import icybee.riversolver.Deck;
 import icybee.riversolver.RiverRangeManager;
 import icybee.riversolver.compairer.Compairer;
 import icybee.riversolver.exceptions.BoardNotFoundException;
 import icybee.riversolver.exceptions.NodeNotFoundException;
-import icybee.riversolver.nodes.ActionNode;
-import icybee.riversolver.nodes.GameTreeNode;
-import icybee.riversolver.nodes.ShowdownNode;
-import icybee.riversolver.nodes.TerminalNode;
+import icybee.riversolver.nodes.*;
 import icybee.riversolver.ranges.PrivateCards;
 import icybee.riversolver.ranges.PrivateCardsManager;
 import icybee.riversolver.ranges.RiverCombs;
 import icybee.riversolver.utils.Range;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by huangxuefeng on 2019/10/12.
@@ -22,28 +22,30 @@ import java.util.Arrays;
  */
 public class BestResponse {
 
+    private Deck deck;
     // player -> preflop combos
-    RiverCombs[][] river_combos;
+    PrivateCards[][] private_combos;
     int[] player_hands;
     int player_number;
     RiverRangeManager rrm;
     PrivateCardsManager pcm;
     boolean debug;
 
-    public BestResponse(RiverCombs[][] river_combos, int player_number, Compairer compairer, PrivateCardsManager pcm,boolean debug) {
-        this.river_combos = river_combos;
+    public BestResponse(PrivateCards[][] private_combos, int player_number, Compairer compairer, PrivateCardsManager pcm, RiverRangeManager rrm, Deck deck, boolean debug) {
+        this.private_combos = private_combos;
         this.player_number = player_number;
-        this.rrm = RiverRangeManager.getInstance(compairer);
+        this.rrm = rrm;
         this.pcm = pcm;
         this.debug = debug;
+        this.deck = deck;
 
-        if(river_combos.length != player_number)
+        if(private_combos.length != player_number)
             throw new RuntimeException(
-                String.format("river combo length NE player nunber: %d -- %d",river_combos.length,player_number)
+                String.format("river combo length NE player nunber: %d -- %d",private_combos.length,player_number)
             );
         player_hands = new int[player_number];
         for(int i = 0;i < player_number;i ++) {
-            player_hands[i] = river_combos[i].length;
+            player_hands[i] = private_combos[i].length;
             /*
             int oppo = (i + 1) % player_number;
             if(river_combos[i].length != river_combos[oppo].length){
@@ -54,16 +56,16 @@ public class BestResponse {
 
     }
 
-    public float printExploitability(GameTreeNode root, int iterationCount, float initial_pot, int[] initialBoard) throws BoardNotFoundException{
+    public float printExploitability(GameTreeNode root, int iterationCount, float initial_pot, long initialBoard) throws BoardNotFoundException{
         float[][] reach_probs = new float[this.player_number][];
 
         System.out.println(String.format("Iter: %d",iterationCount));
         float exploitible = 0;
         // 构造双方初始reach probs(按照手牌weights)
         for (int player_id = 0; player_id < this.player_number; player_id++) {
-            float[] reach_prob_player = new float[river_combos[player_id].length];
-            for (int hc = 0; hc < river_combos[player_id].length; hc++)
-                reach_prob_player[hc] = river_combos[player_id][hc].private_cards.weight;
+            float[] reach_prob_player = new float[private_combos[player_id].length];
+            for (int hc = 0; hc < private_combos[player_id].length; hc++)
+                reach_prob_player[hc] = private_combos[player_id][hc].weight;
             reach_probs[player_id] = reach_prob_player;
         }
 
@@ -77,33 +79,33 @@ public class BestResponse {
         return total_exploitability;
     }
 
-    public float getBestReponseEv(GameTreeNode node, int player, float[][] reach_probs, int[] initialBoard) throws BoardNotFoundException{
+    public float getBestReponseEv(GameTreeNode node, int player, float[][] reach_probs, long initialBoard) throws BoardNotFoundException{
         float ev = 0;
         //考虑（1）相对的手牌 proability,(2)被场面和对手ban掉的手牌
         float[] private_cards_evs = bestResponse(node, player, reach_probs, initialBoard);
         // TODO 这里有bug，player combo的index和showdown节点所使用的private card index不同
-        RiverCombs[] player_combo = this.river_combos[player];
-        RiverCombs[] oppo_combo = this.river_combos[1 - player];
+        PrivateCards[] player_combo = this.private_combos[player];
+        PrivateCards[] oppo_combo = this.private_combos[1 - player];
 
         for(int player_hand = 0;player_hand < player_combo.length;player_hand ++){
             float one_payoff = private_cards_evs[player_hand];
-            RiverCombs one_player_hand = player_combo[player_hand];
-            long private_long = Card.boardInts2long(new int[]{one_player_hand.private_cards.card1,one_player_hand.private_cards.card2});
-            if(Card.boardsHasIntercept(private_long,Card.boardInts2long(initialBoard))){
+            PrivateCards one_player_hand = player_combo[player_hand];
+            long private_long = one_player_hand.toBoardLong();
+            if(Card.boardsHasIntercept(private_long,initialBoard)){
                 continue;
             }
             float oppo_sum = 0;
 
             for(int oppo_hand = 0;oppo_hand < oppo_combo.length;oppo_hand ++){
-                RiverCombs one_oppo_hand = oppo_combo[oppo_hand];
-                long private_long_oppo = Card.boardInts2long(new int[]{one_oppo_hand.private_cards.card1,one_oppo_hand.private_cards.card2});
+                PrivateCards one_oppo_hand = oppo_combo[oppo_hand];
+                long private_long_oppo = one_oppo_hand.toBoardLong();
                 if(Card.boardsHasIntercept(private_long,private_long_oppo)
-                        || Card.boardsHasIntercept(private_long_oppo,Card.boardInts2long(initialBoard))){
+                        || Card.boardsHasIntercept(private_long_oppo,initialBoard)){
                     continue;
                 }
-                oppo_sum += one_oppo_hand.private_cards.weight;
+                oppo_sum += one_oppo_hand.weight;
             }
-            ev +=  one_payoff * one_player_hand.private_cards.relative_prob / oppo_sum;
+            ev +=  one_payoff * one_player_hand.relative_prob / oppo_sum;
 
         }
 
@@ -116,18 +118,79 @@ public class BestResponse {
     }
     */
 
-    public float[] bestResponse(GameTreeNode node, int player, float[][] reach_probs, int[] board) throws BoardNotFoundException{
+    public float[] bestResponse(GameTreeNode node, int player, float[][] reach_probs, long board){
         if (node instanceof ActionNode)
             return actionBestResponse((ActionNode) node, player, reach_probs, board);
         else if (node instanceof ShowdownNode)
             return showdownBestResponse((ShowdownNode) node, player, reach_probs, board);
         else if (node instanceof TerminalNode)
             return terminalBestReponse((TerminalNode) node, player, reach_probs, board);
+        else if (node instanceof ChanceNode)
+            return chanceBestReponse((ChanceNode) node, player, reach_probs, board);
         else
             throw new RuntimeException(String.format("Node type not understood %s", node.getClass().getName()));
     }
 
-    public float[] actionBestResponse(ActionNode node, int player, float[][] reach_probs, int[] board) throws BoardNotFoundException{
+    private float[] chanceBestReponse(ChanceNode node, int player, float[][] reach_probs, long current_board) {
+        List<Card> cards = this.deck.getCards();
+        if(cards.size() != node.getChildrens().size()) throw new RuntimeException();
+        //float[] cardWeights = getCardsWeights(player,reach_probs[1 - player],current_board);
+
+        int card_num = node.getCards().size();
+        // 可能的发牌情况,2代表每个人的holecard是两张
+        int possible_deals = node.getChildrens().size() - Card.long2board(current_board).length - 2;
+        float[] chance_utility = new float[reach_probs[player].length];
+        // 遍历每一种发牌的可能性
+        for(int card = 0;card < node.getCards().size();card ++){
+            GameTreeNode one_child = node.getChildrens().get(card);
+            Card one_card = node.getCards().get(card);
+            long card_long = Card.boardCards2long(new Card[]{one_card});
+
+            // 不可能发出和board重复的牌，对吧
+            if(Card.boardsHasIntercept(card_long,current_board)) continue;
+
+            if(one_child == null || one_card == null) throw new RuntimeException("child is null");
+
+            PrivateCards[] playerPrivateCard = this.pcm.getPreflopCards(player);//this.getPlayerPrivateCard(player);
+            PrivateCards[] oppoPrivateCards = this.pcm.getPreflopCards(1 - player);
+
+            float[][] new_reach_probs = new float[2][];
+
+            // TODO reach prob中需要考虑和新发的bord牌有重叠的需要ban掉
+            //new_reach_probs[player] = new float[playerPrivateCard.length];
+            if (!( reach_probs[player].length == playerPrivateCard.length))
+                throw new RuntimeException("length mismatch");
+
+            new_reach_probs[player] = new float[playerPrivateCard.length];
+            new_reach_probs[1 - player] = new float[oppoPrivateCards.length];
+
+            // 检查是否双方 hand和reach prob长度符合要求
+            if(playerPrivateCard.length !=reach_probs[player].length) throw new RuntimeException("length not match");
+            if(oppoPrivateCards.length !=reach_probs[1 - player].length) throw new RuntimeException("length not match");
+
+            for(int one_player = 0;one_player < 2;one_player ++) {
+                for (int player_hand = 0; player_hand < playerPrivateCard.length; player_hand++) {
+                    PrivateCards one_private = playerPrivateCard[player_hand];
+                    long privateBoardLong = one_private.toBoardLong();
+                    if (Card.boardsHasIntercept(card_long, privateBoardLong)) continue;
+                    new_reach_probs[one_player][player_hand] = reach_probs[one_player][player_hand] / possible_deals;
+                }
+            }
+
+            if(Card.boardsHasIntercept(current_board,card_long))
+                throw new RuntimeException("board has intercept with dealt card");
+            long new_board_long = current_board | card_long;
+
+            float[] child_utility = this.bestResponse(one_child,player,new_reach_probs,new_board_long);
+            if(child_utility.length != chance_utility.length) throw new RuntimeException("length not match");
+            for(int i = 0;i < child_utility.length;i ++)
+                chance_utility[i] += child_utility[i];
+        }
+
+        return chance_utility;
+    }
+
+    public float[] actionBestResponse(ActionNode node, int player, float[][] reach_probs, long board){
         if(player == node.getPlayer()){
             // 如果是自己在做决定，那么肯定选对自己的最有利的，反之对于对方来说，这个就是我方expliot了对方,
             // 这里可以当成"player"做决定的时候，action prob是0-1分布，因为需要使用最好的策略去expliot对方，最好的策略一定是ont-hot的
@@ -152,7 +215,8 @@ public class BestResponse {
             // 如果是别人做决定，那么就按照别人的策略加权算出一个 ev
             float[] total_payoffs = new float[player_hands[player]];
 
-            float[] node_strategy = node.getTrainable().getAverageStrategy();
+            float[] node_strategy = null;
+            node_strategy = node.getTrainable().getAverageStrategy();
             if(node_strategy.length != node.getChildrens().size() * reach_probs[node.getPlayer()].length) {
                 throw new RuntimeException(String.format("strategy size not match %d - %d",
                         node_strategy.length, node.getChildrens().size() * reach_probs[node.getPlayer()].length));
@@ -207,28 +271,28 @@ public class BestResponse {
     }
     */
 
-    public float[] terminalBestReponse(TerminalNode node, int player, float[][] reach_probs, int[] board) throws BoardNotFoundException{
-        long board_long = Card.boardInts2long(board);
+    public float[] terminalBestReponse(TerminalNode node, int player, float[][] reach_probs, long board){
+        long board_long = board;
         int oppo = 1 - player;
+        RiverCombs[] player_combs = this.rrm.getRiverCombos(player,this.pcm.getPreflopCards(player),board);  //this.river_combos[player];
+        RiverCombs[] oppo_combs = this.rrm.getRiverCombos(1 - player,this.pcm.getPreflopCards(1 - player),board);  //this.river_combos[player];
 
         Double player_payoff = node.get_payoffs()[player];
         if(player_payoff == null) throw new RuntimeException(String.format("player %d 's payoff is not found",player));
         float[] payoffs = new float[player_hands[player]];
 
-        //TODO support  more player
         if(this.player_number != 2) throw new RuntimeException("player NE 2 not supported");
         // 对手的手牌可能需要和其reach prob一样长
-        if(this.river_combos[1 - player].length != reach_probs[1 - player].length) throw new RuntimeException("length not match");
+        //TODO 把这里的bug解决
 
         // TODO 写的通用一些，这里用了hard code，因为一副牌，不管是长牌还是短牌，最多扑克牌的数量都是52张
         float[] oppo_card_sum = new float[52];
 
         //用于记录对手总共的手牌绝对prob之和
         float oppo_prob_sum = 0;
-        RiverCombs[] oppo_combs = this.river_combos[1 - player];
 
         float[] oppo_reach_prob = reach_probs[1 - player];
-        for(int oppo_hand = 0;oppo_hand < oppo_reach_prob.length; oppo_hand ++){
+        for(int oppo_hand = 0;oppo_hand < oppo_combs.length; oppo_hand ++){
             RiverCombs one_hc = oppo_combs[oppo_hand];
             long one_hc_long  = Card.boardInts2long(new int[]{one_hc.private_cards.card1,one_hc.private_cards.card2});
 
@@ -243,8 +307,8 @@ public class BestResponse {
         }
 
 
-        for(int player_hand = 0;player_hand < this.river_combos[player].length;player_hand ++) {
-            RiverCombs player_hc = this.river_combos[player][player_hand];
+        for(int player_hand = 0;player_hand < player_combs.length;player_hand ++) {
+            RiverCombs player_hc = player_combs[player_hand];
             long player_hc_long = Card.boardInts2long(new int[]{player_hc.private_cards.card1,player_hc.private_cards.card2});
             if(Card.boardsHasIntercept(player_hc_long,board_long)){
                 payoffs[player_hand] = 0;
@@ -279,7 +343,7 @@ public class BestResponse {
     }
     */
 
-    float[] showdownBestResponse(ShowdownNode node, int player, float[][] reach_probs, int[] board) throws BoardNotFoundException {
+    float[] showdownBestResponse(ShowdownNode node, int player, float[][] reach_probs, long board) {
         // TODO finish this
         if(this.player_number != 2) throw new RuntimeException("player number is not 2");
 

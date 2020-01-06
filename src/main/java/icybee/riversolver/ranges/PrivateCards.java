@@ -19,6 +19,10 @@ public class PrivateCards {
         this.relative_prob = 0;
     }
 
+    public long toBoardLong(){
+        return Card.boardInts2long(new int[]{this.card1,this.card2});
+    }
+
     @Override
     public int hashCode() {
         if (card1 > card2){

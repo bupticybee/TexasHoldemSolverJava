@@ -152,13 +152,18 @@ public class Dic5Compairer extends Compairer {
 
     @Override
     @SuppressWarnings("all")
-    public int get_rank(List<Card> private_hand, List<Card> public_board) throws CardsNotFoundException{
+    public int get_rank(List<Card> private_hand, List<Card> public_board){
         return this.getRank(merge(private_hand,public_board));
     }
 
     @Override
-    public int get_rank(int[] private_hand, int[] public_board) throws CardsNotFoundException{
+    public int get_rank(int[] private_hand, int[] public_board){
         return getRank(ArrayUtils.addAll(private_hand,public_board));
+    }
+
+    @Override
+    public int get_rank(long private_hand, long public_board) {
+        return this.get_rank(Card.long2board(private_hand),Card.long2board(public_board));
     }
 }
 

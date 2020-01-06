@@ -39,7 +39,7 @@ public class SolverEnvironment {
         }
 
         if(this.config.tree_builder){
-            this.game_tree = new GameTree(this.config.tree_builder_json);
+            this.game_tree = new GameTree(this.config.tree_builder_json,this.deck);
         }
         if(this.config.solver_type.equals("cfrplus")){
             //solver = new CfrPlusRiverSolver(game_tree);

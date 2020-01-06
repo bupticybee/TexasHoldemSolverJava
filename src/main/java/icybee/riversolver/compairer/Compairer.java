@@ -21,5 +21,6 @@ public abstract class Compairer {
     abstract public CompairResult compair(int[] private_former, int[] private_latter, int[] public_board) throws Exception;
     abstract public int get_rank(List<Card> private_hand,List<Card> public_board);
     abstract public int get_rank(int[] private_hand,int[] public_board);
+    abstract public int get_rank(long private_hand,long public_board);
 }
 
