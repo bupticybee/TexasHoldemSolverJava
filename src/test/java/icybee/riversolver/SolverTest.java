@@ -37,8 +37,9 @@ public class SolverTest
     public void loadEnvironmentsTest()
     {
         //String config_name = "yamls/rule_shortdeck_simple.yaml";
-        String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
         //String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(config_name).getFile());
 
@@ -308,7 +309,7 @@ public class SolverTest
         System.out.println("end compaierEquivlentTest");
     }
 
-    @Test
+    //@Test
     public void cfrSolverTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
 
@@ -378,7 +379,7 @@ public class SolverTest
         System.out.println("end solverTest");
     }
 
-    //@Test
+    @Test
     public void cfrTurnSolverTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
 
