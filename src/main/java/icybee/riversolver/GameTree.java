@@ -10,6 +10,7 @@ import icybee.riversolver.nodes.*;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.*;
+import javax.swing.tree.TreeNode;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -416,6 +417,7 @@ public class GameTree {
                 retjson.put("childrens", childrens);
             }
             retjson.put("strategy",one_node.getTrainable().dumps(false));
+            retjson.put("node_type","action_node");
             return retjson;
 
         }else if(node instanceof TerminalNode){
@@ -424,7 +426,27 @@ public class GameTree {
             return null;
         }else if(node instanceof ChanceNode){
             // TODO 写这里的策略导出
-            return null;
+            ChanceNode chanceNode = (ChanceNode)node;
+            List<Card> cards = chanceNode.getCards();
+            List<GameTreeNode> childerns = chanceNode.getChildrens();
+            if(cards.size() != childerns.size())
+                throw new RuntimeException("length not match");
+            JSONObject retjson = new JSONObject();
+            List<String> card_strs = new ArrayList<>();
+            for(Card card:cards)
+                card_strs.add(card.toString());
+
+            JSONObject dealcards = new JSONObject();
+            for(int i = 0;i < cards.size();i ++){
+                Card one_card = cards.get(i);
+                GameTreeNode gameTreeNode = childerns.get(i);
+                dealcards.put(one_card.toString(),this.reConvertJson(gameTreeNode));
+            }
+
+            retjson.put("deal_cards",dealcards);
+            retjson.put("deal_number",dealcards.size());
+            retjson.put("node_type","chance_node");
+            return retjson;
         }else{
             throw new RuntimeException();
         }

@@ -165,8 +165,8 @@ public class BestResponse {
             new_reach_probs[1 - player] = new float[oppoPrivateCards.length];
 
             // 检查是否双方 hand和reach prob长度符合要求
-            if(playerPrivateCard.length !=reach_probs[player].length) throw new RuntimeException("length not match");
-            if(oppoPrivateCards.length !=reach_probs[1 - player].length) throw new RuntimeException("length not match");
+            if(playerPrivateCard.length != reach_probs[player].length) throw new RuntimeException("length not match");
+            if(oppoPrivateCards.length != reach_probs[1 - player].length) throw new RuntimeException("length not match");
 
             for(int one_player = 0;one_player < 2;one_player ++) {
                 for (int player_hand = 0; player_hand < playerPrivateCard.length; player_hand++) {

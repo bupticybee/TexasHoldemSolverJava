@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":pencil: 补充文档">
-      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ChanceNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/gametree/part_tree_turn_depthinf.km" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/yamls/rule_shortdeck_turnsolver.yaml" afterDir="false" />
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment="&quot;:new: 初步完成turn solver主体&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/SolverEnvironment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/SolverEnvironment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Compairer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Compairer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Dic5Compairer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Dic5Compairer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCards.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCardsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCardsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
     </list>
@@ -495,7 +481,7 @@
       <workItem from="1574040633046" duration="3280000" />
       <workItem from="1574084118512" duration="97037000" />
       <workItem from="1574688199016" duration="26085000" />
-      <workItem from="1576589547039" duration="71990000" />
+      <workItem from="1576589547039" duration="76266000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -581,7 +567,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576943462588</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary=":construction: 正在撰写turn solver部分">
+      <created>1578321852545</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1578321852545</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -621,17 +614,12 @@
     <MESSAGE value=":sparkles: 在一个简单局面下和piosolver精度校对一致" />
     <MESSAGE value=":sparkles: 增加CFR和discounted CFR" />
     <MESSAGE value=":pencil: 补充文档" />
-    <option name="LAST_COMMIT_MESSAGE" value=":pencil: 补充文档" />
+    <MESSAGE value=":construction: 正在撰写turn solver部分" />
+    <MESSAGE value="&quot;:new: 初步完成turn solver主体&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;:new: 初步完成turn solver主体&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java</url>
-          <line>426</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint enabled="true" suspend="NONE" type="java-exception">
           <properties>
