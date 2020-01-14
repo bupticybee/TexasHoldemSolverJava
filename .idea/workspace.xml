@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment="&quot;:new: 初步完成turn solver主体&quot;">
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 测试完成flop的一种简单情况">
+      <change afterPath="$PROJECT_DIR$/src/test/resources/gametree/game_tree_flop.km" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/yamls/rule_shortdeck_flopsolver.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,7 +38,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/icybee/riversolver" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources/yamls" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources/gametree" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -51,8 +55,8 @@
       <recent name="icybee.riversolver.trainable" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/test/resources/yamls" />
       <recent name="$PROJECT_DIR$/src/test/resources/gametree" />
+      <recent name="$PROJECT_DIR$/src/test/resources/yamls" />
       <recent name="$PROJECT_DIR$/img" />
       <recent name="$PROJECT_DIR$/src/test/resources/compairer" />
     </key>
@@ -480,6 +484,8 @@
       <workItem from="1574688199016" duration="26085000" />
       <workItem from="1576589547039" duration="76266000" />
       <workItem from="1578407298226" duration="1578000" />
+      <workItem from="1578410696207" duration="6049000" />
+      <workItem from="1579020796813" duration="1214000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -579,7 +585,14 @@
       <option name="project" value="LOCAL" />
       <updated>1578407393205</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary=":new: 测试完成turn-allin情况，提交两份对应配置文件">
+      <created>1578410776267</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1578410776267</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -621,7 +634,9 @@
     <MESSAGE value=":pencil: 补充文档" />
     <MESSAGE value=":construction: 正在撰写turn solver部分" />
     <MESSAGE value="&quot;:new: 初步完成turn solver主体&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;:new: 初步完成turn solver主体&quot;" />
+    <MESSAGE value=":new: 测试完成turn-allin情况，提交两份对应配置文件" />
+    <MESSAGE value=":new: 测试完成flop的一种简单情况" />
+    <option name="LAST_COMMIT_MESSAGE" value=":new: 测试完成flop的一种简单情况" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
