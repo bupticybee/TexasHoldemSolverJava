@@ -324,8 +324,9 @@ public class CfrPlusRiverSolver extends Solver{
             if(oppoPrivateCards.length !=reach_probs[1 - player].length) throw new RuntimeException("length not match");
 
             for(int one_player = 0;one_player < 2;one_player ++) {
-                for (int player_hand = 0; player_hand < playerPrivateCard.length; player_hand++) {
-                    PrivateCards one_private = playerPrivateCard[player_hand];
+                int player_hand_len = this.getPlayerPrivateCard(one_player).length;
+                for (int player_hand = 0; player_hand < player_hand_len; player_hand++) {
+                    PrivateCards one_private = this.getPlayerPrivateCard(one_player)[player_hand];
                     long privateBoardLong = one_private.toBoardLong();
                     if (Card.boardsHasIntercept(card_long, privateBoardLong)) continue;
                     new_reach_probs[one_player][player_hand] = reach_probs[one_player][player_hand] / possible_deals;
