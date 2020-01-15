@@ -32,6 +32,19 @@ public abstract class GameTreeNode {
     Double pot;
     GameTreeNode parent;
 
+    public static int gameRound2int(GameRound gameRound){
+        if(gameRound == GameRound.PREFLOP) {
+            return 0;
+        }else if(gameRound == GameRound.FLOP){
+            return 1;
+        } else if(gameRound == GameRound.TURN) {
+            return 2;
+        } else if(gameRound == GameRound.RIVER) {
+            return 3;
+        }
+        throw new RuntimeException("round not found");
+    }
+
     public GameTreeNode getParent() {
         return parent;
     }

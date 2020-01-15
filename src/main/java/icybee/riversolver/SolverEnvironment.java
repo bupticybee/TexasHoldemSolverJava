@@ -18,7 +18,6 @@ public class SolverEnvironment {
 
     Compairer compairer;
     GameTree game_tree = null;
-    Solver solver;
     static SolverEnvironment se;
 
     public Compairer getCompairer() {

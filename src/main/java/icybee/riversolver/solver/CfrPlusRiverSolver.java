@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by huangxuefeng on 2019/10/11.
@@ -41,6 +42,13 @@ public class CfrPlusRiverSolver extends Solver{
     int print_interval;
     String logfile;
     Class<?> trainer;
+    int[] round_deal;
+
+    public enum MonteCarolAlg {
+        NONE,
+        PUBLIC
+    }
+    MonteCarolAlg monteCarolAlg;
 
     PrivateCards[] playerHands(int player){
         if(player == 0){
@@ -107,7 +115,8 @@ public class CfrPlusRiverSolver extends Solver{
             boolean debug,
             int print_interval,
             String logfile,
-            Class<?> trainer
+            Class<?> trainer,
+            MonteCarolAlg monteCarolAlg
     ) throws BoardNotFoundException{
         super(tree);
         //if(board.length != 5) throw new RuntimeException(String.format("board length %d",board.length));
@@ -138,6 +147,7 @@ public class CfrPlusRiverSolver extends Solver{
         pcm = new PrivateCardsManager(private_cards,this.player_number,Card.boardInts2long(this.initial_board));
         this.debug = debug;
         this.print_interval = print_interval;
+        this.monteCarolAlg = monteCarolAlg;
     }
 
 
@@ -194,6 +204,7 @@ public class CfrPlusRiverSolver extends Solver{
                             player_id
                     ));
                 }
+                this.round_deal = new int[]{-1,-1,-1,-1};
                 cfr(player_id,this.tree.getRoot(),reach_probs,i,this.initial_board_long);
 
             }
@@ -301,6 +312,15 @@ public class CfrPlusRiverSolver extends Solver{
 
         float[] chance_utility = new float[reach_probs[player].length];
         // 遍历每一种发牌的可能性
+        // TODO 查为什么PCS的exploitability不为0
+        int random_deal = 0,cardcount = 0;
+        if(this.monteCarolAlg==MonteCarolAlg.PUBLIC)
+            if(this.round_deal[GameTreeNode.gameRound2int(node.getRound())] == -1) {
+                random_deal = ThreadLocalRandom.current().nextInt(1, possible_deals + 1);
+                this.round_deal[GameTreeNode.gameRound2int(node.getRound())] = random_deal;
+            }else{
+                random_deal = this.round_deal[GameTreeNode.gameRound2int(node.getRound())];
+            }
         for(int card = 0;card < node.getCards().size();card ++){
             GameTreeNode one_child = node.getChildrens().get(card);
             Card one_card = node.getCards().get(card);
@@ -308,8 +328,18 @@ public class CfrPlusRiverSolver extends Solver{
 
             // 不可能发出和board重复的牌，对吧
             if(Card.boardsHasIntercept(card_long,current_board)) continue;
+            cardcount += 1;
 
             if(one_child == null || one_card == null) throw new RuntimeException("child is null");
+
+            long new_board_long = current_board | card_long;
+            if(this.monteCarolAlg == MonteCarolAlg.PUBLIC){
+                if(cardcount == random_deal){
+                    return this.cfr(player,one_child,reach_probs,iter,new_board_long);
+                }else{
+                    continue;
+                }
+            }
 
             PrivateCards[] playerPrivateCard = this.getPlayerPrivateCard(player);
             PrivateCards[] oppoPrivateCards = this.getPlayerPrivateCard(1 - player);
@@ -335,7 +365,6 @@ public class CfrPlusRiverSolver extends Solver{
 
             if(Card.boardsHasIntercept(current_board,card_long))
                 throw new RuntimeException("board has intercept with dealt card");
-            long new_board_long = current_board | card_long;
 
             float[] child_utility = this.cfr(player,one_child,new_reach_probs,iter,new_board_long);
             if(child_utility.length != chance_utility.length) throw new RuntimeException("length not match");
