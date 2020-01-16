@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":bug: 修复双方range长度不同时的chance节点bug">
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":construction: 正在撰写PCS">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/SolverEnvironment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/SolverEnvironment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
@@ -489,7 +487,7 @@
       <workItem from="1578410696207" duration="6049000" />
       <workItem from="1579020796813" duration="1214000" />
       <workItem from="1579022156490" duration="1350000" />
-      <workItem from="1579096430052" duration="5791000" />
+      <workItem from="1579096430052" duration="11596000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -610,7 +608,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579096722787</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary=":construction: 正在撰写PCS">
+      <created>1579104862583</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1579104862583</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,7 +660,8 @@
     <MESSAGE value=":new: 测试完成turn-allin情况，提交两份对应配置文件" />
     <MESSAGE value=":new: 测试完成flop的一种简单情况" />
     <MESSAGE value=":bug: 修复双方range长度不同时的chance节点bug" />
-    <option name="LAST_COMMIT_MESSAGE" value=":bug: 修复双方range长度不同时的chance节点bug" />
+    <MESSAGE value=":construction: 正在撰写PCS" />
+    <option name="LAST_COMMIT_MESSAGE" value=":construction: 正在撰写PCS" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -314,13 +314,14 @@ public class CfrPlusRiverSolver extends Solver{
         // 遍历每一种发牌的可能性
         // TODO 查为什么PCS的exploitability不为0
         int random_deal = 0,cardcount = 0;
-        if(this.monteCarolAlg==MonteCarolAlg.PUBLIC)
-            if(this.round_deal[GameTreeNode.gameRound2int(node.getRound())] == -1) {
-                random_deal = ThreadLocalRandom.current().nextInt(1, possible_deals + 1);
+        if(this.monteCarolAlg==MonteCarolAlg.PUBLIC) {
+            if (this.round_deal[GameTreeNode.gameRound2int(node.getRound())] == -1) {
+                random_deal = ThreadLocalRandom.current().nextInt(1, possible_deals + 1 + 2);
                 this.round_deal[GameTreeNode.gameRound2int(node.getRound())] = random_deal;
-            }else{
+            } else {
                 random_deal = this.round_deal[GameTreeNode.gameRound2int(node.getRound())];
             }
+        }
         for(int card = 0;card < node.getCards().size();card ++){
             GameTreeNode one_child = node.getChildrens().get(card);
             Card one_card = node.getCards().get(card);
@@ -335,7 +336,13 @@ public class CfrPlusRiverSolver extends Solver{
             long new_board_long = current_board | card_long;
             if(this.monteCarolAlg == MonteCarolAlg.PUBLIC){
                 if(cardcount == random_deal){
-                    return this.cfr(player,one_child,reach_probs,iter,new_board_long);
+                    float[] utility = this.cfr(player,one_child,reach_probs,iter,new_board_long);
+                    /*
+                    for(int i = 0;i < utility.length;i ++){
+                        utility[i] = utility[i] * possible_deals / (possible_deals + 2);
+                    }
+                     */
+                    return utility;
                 }else{
                     continue;
                 }
@@ -370,6 +377,10 @@ public class CfrPlusRiverSolver extends Solver{
             if(child_utility.length != chance_utility.length) throw new RuntimeException("length not match");
             for(int i = 0;i < child_utility.length;i ++)
                 chance_utility[i] += child_utility[i];
+        }
+
+        if(this.monteCarolAlg == MonteCarolAlg.PUBLIC) {
+            throw new RuntimeException("not possible");
         }
         return chance_utility;
     }
