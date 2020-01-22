@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":construction: 正在撰写PCS">
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 初步完成多核运算，在一个简单盘面上">
+      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParrallelCfrPlusSolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
@@ -51,6 +51,7 @@
       <recent name="icybee.riversolver" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="icybee.riversolver.solver" />
       <recent name="icybee.riversolver.nodes" />
       <recent name="icybee.riversolver.trainable" />
     </key>
@@ -487,7 +488,7 @@
       <workItem from="1578410696207" duration="6049000" />
       <workItem from="1579020796813" duration="1214000" />
       <workItem from="1579022156490" duration="1350000" />
-      <workItem from="1579096430052" duration="11596000" />
+      <workItem from="1579096430052" duration="18991000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -615,7 +616,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579104862583</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary=":bug: 修复了一个计算utility时候的bug">
+      <created>1579190786327</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1579190786327</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -661,7 +669,8 @@
     <MESSAGE value=":new: 测试完成flop的一种简单情况" />
     <MESSAGE value=":bug: 修复双方range长度不同时的chance节点bug" />
     <MESSAGE value=":construction: 正在撰写PCS" />
-    <option name="LAST_COMMIT_MESSAGE" value=":construction: 正在撰写PCS" />
+    <MESSAGE value=":bug: 修复了一个计算utility时候的bug" />
+    <option name="LAST_COMMIT_MESSAGE" value=":bug: 修复了一个计算utility时候的bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
