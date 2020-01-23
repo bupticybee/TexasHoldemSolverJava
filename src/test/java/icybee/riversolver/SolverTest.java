@@ -9,8 +9,6 @@ import icybee.riversolver.ranges.PrivateCards;
 import icybee.riversolver.solver.CfrPlusRiverSolver;
 import icybee.riversolver.solver.ParrallelCfrPlusSolver;
 import icybee.riversolver.solver.Solver;
-import icybee.riversolver.trainable.CfrPlusTrainable;
-import icybee.riversolver.trainable.CfrTrainable;
 import icybee.riversolver.trainable.DiscountedCfrTrainable;
 import icybee.riversolver.utils.PrivateRangeConverter;
 import org.junit.Before;
@@ -18,7 +16,6 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -33,31 +30,36 @@ public class SolverTest
     /**
      * Rigorous Test :-)
      */
-    static SolverEnvironment se = null;
-    @Before
-    public void loadEnvironmentsTest()
-    {
-        //String config_name = "yamls/rule_shortdeck_simple.yaml";
-        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
-        //String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
-        String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
-        //String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+    static Compairer compairer = null;
+    static Deck deck = null;
+
+    Config loadConfig(String conf_name){
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(config_name).getFile());
+        File file = new File(classLoader.getResource(conf_name).getFile());
 
         Config config = null;
         try {
             config = new Config(file.getAbsolutePath());
         }catch(Exception e){
-            e.printStackTrace();
-            assertTrue(false);
+            throw new RuntimeException();
         }
+        return config;
+    }
 
+    @Before
+    public void loadEnvironmentsTest()
+    {
+        String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
+        //String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+        Config config = this.loadConfig(config_name);
 
-        if(SolverTest.se == null) {
+        if(SolverTest.compairer == null) {
             try {
-                SolverEnvironment se = new SolverEnvironment(config);
-                SolverTest.se = se;
+                SolverTest.compairer = SolverEnvironment.compairerFromConfig(config);
+                SolverTest.deck = SolverEnvironment.deckFromConfig(config);
             } catch (Exception e) {
                 e.printStackTrace();
                 assertTrue(false);
@@ -85,7 +87,7 @@ public class SolverTest
                     new Card("9s")
             );
 
-            Compairer.CompairResult cr = SolverTest.se.compairer.compair(private1,private2,board);
+            Compairer.CompairResult cr = SolverTest.compairer.compair(private1,private2,board);
             System.out.println(cr);
             assertTrue(cr == Compairer.CompairResult.LARGER);
         } catch (Exception e) {
@@ -113,7 +115,7 @@ public class SolverTest
                     new Card("7h")
             );
 
-            Compairer.CompairResult cr = SolverTest.se.compairer.compair(private1,private2,board);
+            Compairer.CompairResult cr = SolverTest.compairer.compair(private1,private2,board);
             System.out.println(cr);
             assertTrue(cr == Compairer.CompairResult.EQUAL);
         } catch (Exception e) {
@@ -141,7 +143,7 @@ public class SolverTest
                     new Card("7h")
             );
 
-            Compairer.CompairResult cr = SolverTest.se.compairer.compair(private1,private2,board);
+            Compairer.CompairResult cr = SolverTest.compairer.compair(private1,private2,board);
             System.out.println(cr);
             assertTrue(cr == Compairer.CompairResult.SMALLER);
         } catch (Exception e) {
@@ -164,16 +166,23 @@ public class SolverTest
                 new Card("7s")
         );
 
-        int rank = SolverTest.se.compairer.get_rank(private_cards,board);
+        int rank = SolverTest.compairer.get_rank(private_cards,board);
         System.out.println(rank);
         assertTrue(rank == 687);
     }
 
     @Test
     public void printTreeTest(){
+        String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
+        //String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+        Config config = this.loadConfig(config_name);
+        GameTree game_tree = SolverEnvironment.gameTreeFromConfig(config,SolverTest.deck);
         System.out.println("The game tree :");
         try {
-            se.game_tree.printTree(-1);
+            game_tree.printTree(-1);
         }catch(Exception e){
             e.printStackTrace();
             assertTrue(false);
@@ -182,9 +191,16 @@ public class SolverTest
 
     @Test
     public void printTreeLimitDepthTest(){
+        String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
+        //String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+        Config config = this.loadConfig(config_name);
+        GameTree game_tree = SolverEnvironment.gameTreeFromConfig(config,SolverTest.deck);
         System.out.println("The depth limit game tree :");
         try {
-            se.game_tree.printTree(2);
+            game_tree.printTree(2);
         }catch(Exception e){
             e.printStackTrace();
             assertTrue(false);
@@ -298,8 +314,8 @@ public class SolverTest
                 (new Card("7s").getCardInt())
         };
         try {
-            long board_int1 = se.compairer.get_rank(board1_private,board1_public);
-            long board_int2 = se.compairer.get_rank(board2_private,board2_public);
+            long board_int1 = compairer.get_rank(board1_private,board1_public);
+            long board_int2 = compairer.get_rank(board2_private,board2_public);
             System.out.println(board_int1);
             System.out.println(board_int2);
             assertTrue(board_int1 == board_int2);
@@ -312,8 +328,16 @@ public class SolverTest
     }
 
     //@Test
-    public void cfrSolverTest() throws BoardNotFoundException,Exception{
+    public void cfrSolverTest() throws Exception{
         System.out.println("solverTest");
+
+        String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
+        //String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+        Config config = this.loadConfig(config_name);
+        GameTree game_tree = SolverEnvironment.gameTreeFromConfig(config,SolverTest.deck);
 
         String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
         String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
@@ -353,15 +377,15 @@ public class SolverTest
          */
 
         String logfile_name = "src/test/resources/outputs/outputs_log.txt";
-        Solver solver = new CfrPlusRiverSolver(se.game_tree
+        Solver solver = new CfrPlusRiverSolver(game_tree
                 , player1Range
                 , player2Range
                 , initialBoard
-                , se.compairer
-                , se.deck
-                ,2000
+                , SolverTest.compairer
+                , SolverTest.deck
+                ,100
                 ,false
-                , 100
+                , 10
                 ,logfile_name
                 , DiscountedCfrTrainable.class
                 ,CfrPlusRiverSolver.MonteCarolAlg.NONE
@@ -382,9 +406,17 @@ public class SolverTest
         System.out.println("end solverTest");
     }
 
-    //@Test
+    @Test
     public void cfrTurnSolverTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
+
+        //String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
+        //String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+        Config config = this.loadConfig(config_name);
+        GameTree game_tree = SolverEnvironment.gameTreeFromConfig(config,SolverTest.deck);
 
         String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
         String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
@@ -409,13 +441,13 @@ public class SolverTest
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
 
         String logfile_name = "src/test/resources/outputs/outputs_log.txt";
-        Solver solver = new CfrPlusRiverSolver(se.game_tree
+        Solver solver = new CfrPlusRiverSolver(game_tree
                 , player1Range
                 , player2Range
                 , initialBoard
-                , se.compairer
-                , se.deck
-                ,1000
+                , SolverTest.compairer
+                , SolverTest.deck
+                ,100
                 ,false
                 , 10
                 ,logfile_name
@@ -442,6 +474,14 @@ public class SolverTest
     public void cfrFlopSolverTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
 
+        //String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
+        String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+        Config config = this.loadConfig(config_name);
+        GameTree game_tree = SolverEnvironment.gameTreeFromConfig(config,SolverTest.deck);
+
         String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
         //String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
         String player2RangeStr = "KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
@@ -465,13 +505,13 @@ public class SolverTest
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
 
         String logfile_name = "src/test/resources/outputs/outputs_log.txt";
-        Solver solver = new CfrPlusRiverSolver(se.game_tree
+        Solver solver = new CfrPlusRiverSolver(game_tree
                 , player1Range
                 , player2Range
                 , initialBoard
-                , se.compairer
-                , se.deck
-                ,1000
+                , SolverTest.compairer
+                , SolverTest.deck
+                ,100
                 ,false
                 , 10
                 ,logfile_name
@@ -498,6 +538,14 @@ public class SolverTest
     public void cfrFlopSolverPcsTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
 
+        //String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
+        String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+        Config config = this.loadConfig(config_name);
+        GameTree game_tree = SolverEnvironment.gameTreeFromConfig(config,SolverTest.deck);
+
         String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
         String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
         //String player2RangeStr = "KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
@@ -521,15 +569,15 @@ public class SolverTest
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
 
         String logfile_name = "src/test/resources/outputs/outputs_log.txt";
-        Solver solver = new CfrPlusRiverSolver(se.game_tree
+        Solver solver = new CfrPlusRiverSolver(game_tree
                 , player1Range
                 , player2Range
                 , initialBoard
-                , se.compairer
-                , se.deck
-                ,100000
+                , SolverTest.compairer
+                , SolverTest.deck
+                ,100
                 ,false
-                , 500
+                , 10
                 ,logfile_name
                 , DiscountedCfrTrainable.class
                 ,CfrPlusRiverSolver.MonteCarolAlg.PUBLIC
@@ -551,8 +599,16 @@ public class SolverTest
     }
 
     @Test
-    public void parrallelCfrFlopSolverTest() throws BoardNotFoundException,Exception{
+    public void parrallelCfrTurnSolverTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
+
+        //String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
+        //String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+        Config config = this.loadConfig(config_name);
+        GameTree game_tree = SolverEnvironment.gameTreeFromConfig(config,SolverTest.deck);
 
         String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
         //String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
@@ -577,13 +633,13 @@ public class SolverTest
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
 
         String logfile_name = "src/test/resources/outputs/outputs_log.txt";
-        Solver solver = new ParrallelCfrPlusSolver(se.game_tree
+        Solver solver = new ParrallelCfrPlusSolver(game_tree
                 , player1Range
                 , player2Range
                 , initialBoard
-                , se.compairer
-                , se.deck
-                ,1000
+                , SolverTest.compairer
+                , SolverTest.deck
+                ,100
                 ,false
                 , 10
                 ,logfile_name

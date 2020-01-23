@@ -137,7 +137,7 @@ public class CfrPlusRiverSolver extends Solver{
         int nThreads = Runtime.getRuntime().availableProcessors();
         this.forkJoinPool = new ForkJoinPool(nThreads);
 
-        this.rrm = RiverRangeManager.getInstance(compairer);
+        this.rrm = new RiverRangeManager(compairer);
         this.player_number = 2;
         this.iteration_number = iteration_number;
 

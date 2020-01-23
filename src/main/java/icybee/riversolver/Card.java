@@ -45,7 +45,7 @@ public class Card {
         return rankToString(rank) + suitToString(suit);
     }
 
-    public static long boardCards2long(String[] cards) throws BoardNotFoundException {
+    public static long boardCards2long(String[] cards) {
         Card[] cards_objs = new Card[cards.length];
         for(int i = 0;i < cards.length;i++){
             cards_objs[i] = new Card(cards[i]);

@@ -20,7 +20,7 @@ import org.paukov.combinatorics3.IGenerator;
 public class Dic5Compairer extends Compairer {
     Map<Set<String>,Integer> cards2rank = (Map<Set<String>,Integer>)new HashMap<Set<String>,Integer>();
     Map<Long,Integer> cardslong2rank = (Map<Long,Integer>)new HashMap<Long,Integer>();
-    public Dic5Compairer(String dic_dir,int lines) throws IOException,BoardNotFoundException{
+    public Dic5Compairer(String dic_dir,int lines) throws IOException{
         super(dic_dir,lines);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(dic_dir));
         String str;

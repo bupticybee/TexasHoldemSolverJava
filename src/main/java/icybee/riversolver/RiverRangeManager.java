@@ -16,18 +16,8 @@ public class RiverRangeManager
 
     Compairer handEvaluator;
 
-    private static RiverRangeManager instance = null;
-
-    RiverRangeManager(Compairer compairer){
+    public RiverRangeManager(Compairer compairer){
         this.handEvaluator = compairer;
-    }
-
-    public static RiverRangeManager getInstance(Compairer compairer)
-    {
-        if (instance == null)
-            instance = new RiverRangeManager(compairer);
-
-        return instance;
     }
 
     public RiverCombs[] getRiverCombos(int player, RiverCombs[] riverCombos, int[] board) throws BoardNotFoundException

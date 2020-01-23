@@ -28,7 +28,7 @@ public class SolverEnvironment {
         return SolverEnvironment.se;
     }
 
-    SolverEnvironment(Config config) throws ClassNotFoundException,IOException,BoardNotFoundException{
+    SolverEnvironment(Config config) throws ClassNotFoundException,IOException{
         this.config = config;
         this.deck = new Deck(config.ranks,config.suits);
         if(config.compairer_type.equals("Dic5Compairer")) {
@@ -44,5 +44,25 @@ public class SolverEnvironment {
             //solver = new CfrPlusRiverSolver(game_tree);
         }
         SolverEnvironment.se = this;
+    }
+
+    public static GameTree gameTreeFromConfig(Config config,Deck deck){
+        try {
+            return new GameTree(config.tree_builder_json, deck);
+        }catch(IOException e){
+            throw new RuntimeException();
+        }
+    }
+
+    public static Deck deckFromConfig(Config config){
+        return new Deck(config.ranks,config.suits);
+    }
+
+    public static Compairer compairerFromConfig(Config config)throws IOException{
+        if(config.compairer_type.equals("Dic5Compairer")) {
+            return new Dic5Compairer(config.compairer_dic_dir,config.compairer_lines);
+        }else{
+            throw new RuntimeException();
+        }
     }
 }
