@@ -4,17 +4,15 @@ import icybee.riversolver.*;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import icybee.riversolver.compairer.Compairer;
 import icybee.riversolver.ranges.PrivateCards;
+import icybee.riversolver.solver.CfrPlusRiverSolver;
 import icybee.riversolver.solver.MonteCarolAlg;
-import icybee.riversolver.solver.ParrallelCfrPlusSolver;
+import icybee.riversolver.solver.ParallelCfrPlusSolver;
 import icybee.riversolver.solver.Solver;
 import icybee.riversolver.trainable.CfrPlusTrainable;
 import icybee.riversolver.trainable.CfrTrainable;
@@ -60,6 +58,9 @@ public class CommandlineSolver {
         parser.addArgument("-d", "--debug")
                 .setDefault(false)
                 .help("open debug mode");
+        parser.addArgument("-p", "--parallel")
+                .setDefault(true)
+                .help("whether to use thread pool");
         parser.addArgument("-o", "--output_strategy_file")
                 .setDefault((Object) null)
                 .help("where to output strategy json");
@@ -93,6 +94,7 @@ public class CommandlineSolver {
         int iteration_number = Integer.parseInt(ns.getString("iteration_number"));
         int print_interval = Integer.parseInt(ns.getString("print_interval"));
         boolean debug = Boolean.valueOf(ns.getString("debug"));
+        boolean parallel = Boolean.valueOf(ns.getString("parallel"));
         String output_strategy_file = ns.getString("output_strategy_file");
         String logfile = ns.getString("logfile");
 
@@ -134,20 +136,37 @@ public class CommandlineSolver {
         PrivateCards[] player1Range = PrivateRangeConverter.rangeStr2Cards(player1_range,initial_board);
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2_range,initial_board);
 
-        Solver solver = new ParrallelCfrPlusSolver(game_tree
-                , player1Range
-                , player2Range
-                , initial_board
-                , compairer
-                , deck
-                , iteration_number
-                , debug
-                , print_interval
-                , logfile
-                , algorithm
-                , monte_coral
-                , threads
-        );
+        Solver solver;
+        if(parallel) {
+            solver = new ParallelCfrPlusSolver(game_tree
+                    , player1Range
+                    , player2Range
+                    , initial_board
+                    , compairer
+                    , deck
+                    , iteration_number
+                    , debug
+                    , print_interval
+                    , logfile
+                    , algorithm
+                    , monte_coral
+                    , threads
+            );
+        }else{
+            solver = new CfrPlusRiverSolver(game_tree
+                    , player1Range
+                    , player2Range
+                    , initial_board
+                    , compairer
+                    , deck
+                    , iteration_number
+                    , debug
+                    , print_interval
+                    , logfile
+                    , algorithm
+                    , monte_coral
+            );
+        }
         Map train_config = new HashMap();
         solver.train(train_config);
 

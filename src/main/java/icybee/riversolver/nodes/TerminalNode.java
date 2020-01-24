@@ -17,4 +17,10 @@ public class TerminalNode extends GameTreeNode{
     public Double[] get_payoffs(){
         return payoffs;
     }
+
+    @Override
+    public GameTreeNodeType getType() {
+        return GameTreeNodeType.TERMINAL;
+    }
+
 }

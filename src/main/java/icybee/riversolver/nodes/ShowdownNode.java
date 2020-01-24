@@ -34,4 +34,10 @@ public class ShowdownNode extends GameTreeNode{
             return tie_payoffs;
         }
     }
+
+    @Override
+    public GameTreeNodeType getType() {
+        return GameTreeNodeType.SHOWDOWN;
+    }
+
 }

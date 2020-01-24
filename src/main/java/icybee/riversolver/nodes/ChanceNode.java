@@ -48,4 +48,9 @@ public class ChanceNode extends GameTreeNode{
         this.trainable = trainable;
     }
 
+    @Override
+    public GameTreeNodeType getType() {
+        return GameTreeNodeType.CHANCE;
+    }
+
 }

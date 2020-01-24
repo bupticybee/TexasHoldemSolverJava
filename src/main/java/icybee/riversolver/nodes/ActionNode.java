@@ -46,4 +46,10 @@ public class ActionNode extends GameTreeNode{
         this.trainable = trainable;
     }
 
+    @Override
+    public GameTreeNodeType getType() {
+        return GameTreeNodeType.ACTION;
+    }
+
+
 }

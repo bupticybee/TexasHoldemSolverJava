@@ -21,6 +21,13 @@ public abstract class GameTreeNode {
         CALL
     }
 
+    public enum GameTreeNodeType{
+        ACTION,
+        SHOWDOWN,
+        TERMINAL,
+        CHANCE
+    }
+
     public enum GameRound{
         PREFLOP,
         FLOP,
@@ -109,4 +116,6 @@ public abstract class GameTreeNode {
         }
         System.out.println();
     }
+
+    public abstract GameTreeNodeType getType();
 }

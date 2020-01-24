@@ -6,7 +6,6 @@ import icybee.riversolver.Deck;
 import icybee.riversolver.GameTree;
 import icybee.riversolver.RiverRangeManager;
 import icybee.riversolver.compairer.Compairer;
-import icybee.riversolver.exceptions.BoardNotFoundException;
 import icybee.riversolver.nodes.*;
 import icybee.riversolver.ranges.PrivateCards;
 import icybee.riversolver.ranges.PrivateCardsManager;
@@ -24,7 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Created by huangxuefeng on 2019/10/11.
  * contains code for cfr solver
  */
-public class ParrallelCfrPlusSolver extends Solver{
+public class ParallelCfrPlusSolver extends Solver{
     PrivateCards[] range1;
     PrivateCards[] range2;
     int[] initial_board;
@@ -101,7 +100,7 @@ public class ParrallelCfrPlusSolver extends Solver{
         return ret;
     }
 
-    public ParrallelCfrPlusSolver(
+    public ParallelCfrPlusSolver(
             GameTree tree,
             PrivateCards[] range1 ,
             PrivateCards[] range2,
@@ -245,9 +244,9 @@ public class ParrallelCfrPlusSolver extends Solver{
         float[][] reach_probs;
         int iter;
         long current_board;
-        ParrallelCfrPlusSolver solver_env;
+        ParallelCfrPlusSolver solver_env;
 
-        public CfrTask(int player,GameTreeNode node, float[][] reach_probs, int iter, long current_board, ParrallelCfrPlusSolver solver_env) {
+        public CfrTask(int player,GameTreeNode node, float[][] reach_probs, int iter, long current_board, ParallelCfrPlusSolver solver_env) {
             this.player = player;
             this.node = node;
             this.reach_probs = reach_probs;
@@ -262,6 +261,7 @@ public class ParrallelCfrPlusSolver extends Solver{
         }
 
         float[] cfr(int player,GameTreeNode node,float[][] reach_probs,int iter,long current_board){
+            /*
             float[] utility = null;
             if(this.solver_env.player_number != 2) throw new RuntimeException("player number is not 2");
             if(node instanceof ActionNode) {
@@ -274,6 +274,19 @@ public class ParrallelCfrPlusSolver extends Solver{
                 utility = chanceUtility(player,(ChanceNode) node,reach_probs,iter,current_board);
             }
             return utility;
+             */
+            switch(node.getType()){
+                case ACTION:
+                    return actionUtility(player, (ActionNode) node,reach_probs, iter,current_board);
+                case SHOWDOWN:
+                    return showdownUtility(player,(ShowdownNode)node,reach_probs,iter,current_board);
+                case TERMINAL:
+                    return terminalUtility(player,(TerminalNode) node,reach_probs,iter,current_board);
+                case CHANCE:
+                    return chanceUtility(player,(ChanceNode) node,reach_probs,iter,current_board);
+                default:
+                    throw new RuntimeException("node type unknown");
+            }
         }
 
         float[] chanceUtility(int player,ChanceNode node,float[][]reach_probs,int iter,long current_board){

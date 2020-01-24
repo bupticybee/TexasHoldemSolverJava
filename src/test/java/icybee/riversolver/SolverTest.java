@@ -8,7 +8,7 @@ import icybee.riversolver.exceptions.BoardNotFoundException;
 import icybee.riversolver.ranges.PrivateCards;
 import icybee.riversolver.solver.CfrPlusRiverSolver;
 import icybee.riversolver.solver.MonteCarolAlg;
-import icybee.riversolver.solver.ParrallelCfrPlusSolver;
+import icybee.riversolver.solver.ParallelCfrPlusSolver;
 import icybee.riversolver.solver.Solver;
 import icybee.riversolver.trainable.DiscountedCfrTrainable;
 import icybee.riversolver.utils.PrivateRangeConverter;
@@ -634,7 +634,7 @@ public class SolverTest
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
 
         String logfile_name = "src/test/resources/outputs/outputs_log.txt";
-        Solver solver = new ParrallelCfrPlusSolver(game_tree
+        Solver solver = new ParallelCfrPlusSolver(game_tree
                 , player1Range
                 , player2Range
                 , initialBoard

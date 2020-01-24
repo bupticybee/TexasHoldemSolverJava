@@ -225,18 +225,33 @@ public class CfrPlusRiverSolver extends Solver{
     }
 
     float[] cfr(int player,GameTreeNode node,float[][] reach_probs,int iter,long current_board) throws BoardNotFoundException{
-        float[] utility = null;
-        if(this.player_number != 2) throw new RuntimeException("player number is not 2");
+        //float[] utility = null;
+        //if(this.player_number != 2) throw new RuntimeException("player number is not 2");
+        /*
         if(node instanceof ActionNode) {
-            utility = actionUtility(player, (ActionNode) node,reach_probs, iter,current_board);
+            return actionUtility(player, (ActionNode) node,reach_probs, iter,current_board);
         }else if(node instanceof ShowdownNode){
-            utility = showdownUtility(player,(ShowdownNode)node,reach_probs,iter,current_board);
+            return showdownUtility(player,(ShowdownNode)node,reach_probs,iter,current_board);
         }else if(node instanceof TerminalNode){
-            utility = terminalUtility(player,(TerminalNode) node,reach_probs,iter,current_board);
+            return terminalUtility(player,(TerminalNode) node,reach_probs,iter,current_board);
         }else if(node instanceof ChanceNode){
-            utility = chanceUtility(player,(ChanceNode) node,reach_probs,iter,current_board);
+            return chanceUtility(player,(ChanceNode) node,reach_probs,iter,current_board);
+        }else{
+            throw new RuntimeException("node type unknown");
         }
-        return utility;
+         */
+        switch(node.getType()){
+            case ACTION:
+                return actionUtility(player, (ActionNode) node,reach_probs, iter,current_board);
+            case SHOWDOWN:
+                return showdownUtility(player,(ShowdownNode)node,reach_probs,iter,current_board);
+            case TERMINAL:
+                return terminalUtility(player,(TerminalNode) node,reach_probs,iter,current_board);
+            case CHANCE:
+                return chanceUtility(player,(ChanceNode) node,reach_probs,iter,current_board);
+            default:
+                throw new RuntimeException("node type unknown");
+        }
     }
 
     float[] getCardsWeights(int player,float[] oppo_reach_probs,long current_board){
