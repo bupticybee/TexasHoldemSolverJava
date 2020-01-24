@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="resources">
+    <output-path>$PROJECT_DIR$/out/artifacts/RiverSolver_jar/resources</output-path>
+    <root id="root">
+      <element id="dir-copy" path="$PROJECT_DIR$/src/test/resources" />
+    </root>
+  </artifact>
+</component>

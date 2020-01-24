@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="RiverSolver:jar" />
+      <artifact name="bash" />
+      <artifact name="resources" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":bug: 修复一个在重复运行solver时会触发的bug">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_argparse4j_argparse4j_0_8_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/commandline/CommandlineSolver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/MonteCarolAlg.java" afterDir="false" />
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 提交命令行工具">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/RiverSolver_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/bash.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/resources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/bash/replace.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/bash/riversolver.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RiverSolver.iml" beforeDir="false" afterPath="$PROJECT_DIR$/RiverSolver.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParrallelCfrPlusSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParrallelCfrPlusSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,8 +48,8 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/icybee/riversolver" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources/gametree" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources/bash/riversolver.sh" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
@@ -66,6 +69,7 @@
       <recent name="icybee.riversolver.trainable" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/resources/bash" />
       <recent name="$PROJECT_DIR$/src/test/resources/gametree" />
       <recent name="$PROJECT_DIR$/src/test/resources/yamls" />
       <recent name="$PROJECT_DIR$/img" />
@@ -513,7 +517,8 @@
       <workItem from="1578410696207" duration="6049000" />
       <workItem from="1579020796813" duration="1214000" />
       <workItem from="1579022156490" duration="1350000" />
-      <workItem from="1579096430052" duration="40312000" />
+      <workItem from="1579096430052" duration="41768000" />
+      <workItem from="1579870261018" duration="3800000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -662,7 +667,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579799316814</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary=":new: 提交命令行工具">
+      <created>1579859145191</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1579859145191</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -711,7 +723,8 @@
     <MESSAGE value=":bug: 修复了一个计算utility时候的bug" />
     <MESSAGE value=":new: 初步完成多核运算，在一个简单盘面上校对了精度" />
     <MESSAGE value=":bug: 修复一个在重复运行solver时会触发的bug" />
-    <option name="LAST_COMMIT_MESSAGE" value=":bug: 修复一个在重复运行solver时会触发的bug" />
+    <MESSAGE value=":new: 提交命令行工具" />
+    <option name="LAST_COMMIT_MESSAGE" value=":new: 提交命令行工具" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

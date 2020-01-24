@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact name="bash">
+    <output-path>$PROJECT_DIR$/out/artifacts/RiverSolver_jar</output-path>
+    <root id="root">
+      <element id="file-copy" path="$PROJECT_DIR$/src/test/resources/bash/replace.sh" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/test/resources/bash/riversolver.sh" />
+    </root>
+  </artifact>
+</component>
