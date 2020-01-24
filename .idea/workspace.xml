@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 初步完成多核运算，在一个简单盘面上校对了精度">
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":bug: 修复一个在重复运行solver时会触发的bug">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sourceforge_argparse4j_argparse4j_0_8_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/commandline/CommandlineSolver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/MonteCarolAlg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/SolverEnvironment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/SolverEnvironment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Dic5Compairer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Dic5Compairer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RiverSolver.iml" beforeDir="false" afterPath="$PROJECT_DIR$/RiverSolver.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParrallelCfrPlusSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParrallelCfrPlusSolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
@@ -55,6 +57,9 @@
       <recent name="icybee.riversolver.compairer" />
       <recent name="icybee.riversolver" />
     </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="icybee.riversolver.solver" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="icybee.riversolver.solver" />
       <recent name="icybee.riversolver.nodes" />
@@ -79,7 +84,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.testRiverSolver">
+  <component name="RunManager" selected="Application.CommandlineSolver">
     <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -231,6 +236,20 @@
     </configuration>
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CommandlineSolver" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="icybee.riversolver.commandline.CommandlineSolver" />
+      <module name="RiverSolver" />
+      <option name="PROGRAM_PARAMETERS" value="-c &quot;src/test/resources/yamls/rule_shortdeck_turnriversolver.yaml&quot; -p1 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -p2 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -b &quot;Kd,Jd,Td,7s,8s&quot; -n 100 -i 10 -d false -o &quot;src/test/resources/outputs/outputs_strategy.json&quot; -l &quot;src/test/resources/outputs/outputs_log.txt&quot; -a &quot;discounted_cfr&quot; -m &quot;none&quot; -t 2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="icybee.riversolver.commandline.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -457,6 +476,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.CommandlineSolver" />
       <item itemvalue="JUnit.testRiverSolver" />
       <item itemvalue="Maven.TestCases" />
       <item itemvalue="Maven.riversolver [test]" />
@@ -493,7 +513,7 @@
       <workItem from="1578410696207" duration="6049000" />
       <workItem from="1579020796813" duration="1214000" />
       <workItem from="1579022156490" duration="1350000" />
-      <workItem from="1579096430052" duration="30240000" />
+      <workItem from="1579096430052" duration="40312000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -635,7 +655,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579689751225</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary=":bug: 修复一个在重复运行solver时会触发的bug">
+      <created>1579799316814</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1579799316814</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -683,7 +710,8 @@
     <MESSAGE value=":construction: 正在撰写PCS" />
     <MESSAGE value=":bug: 修复了一个计算utility时候的bug" />
     <MESSAGE value=":new: 初步完成多核运算，在一个简单盘面上校对了精度" />
-    <option name="LAST_COMMIT_MESSAGE" value=":new: 初步完成多核运算，在一个简单盘面上校对了精度" />
+    <MESSAGE value=":bug: 修复一个在重复运行solver时会触发的bug" />
+    <option name="LAST_COMMIT_MESSAGE" value=":bug: 修复一个在重复运行solver时会触发的bug" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

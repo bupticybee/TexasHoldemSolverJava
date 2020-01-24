@@ -44,10 +44,6 @@ public class CfrPlusRiverSolver extends Solver{
     Class<?> trainer;
     int[] round_deal;
 
-    public enum MonteCarolAlg {
-        NONE,
-        PUBLIC
-    }
     MonteCarolAlg monteCarolAlg;
 
     PrivateCards[] playerHands(int player){

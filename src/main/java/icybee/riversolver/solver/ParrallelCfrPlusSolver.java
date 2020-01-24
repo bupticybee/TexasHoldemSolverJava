@@ -45,10 +45,6 @@ public class ParrallelCfrPlusSolver extends Solver{
     int nthreads;
     ForkJoinPool pool;
 
-    public enum MonteCarolAlg {
-        NONE,
-        PUBLIC
-    }
     MonteCarolAlg monteCarolAlg;
 
     PrivateCards[] playerHands(int player){
@@ -119,7 +115,7 @@ public class ParrallelCfrPlusSolver extends Solver{
             Class<?> trainer,
             MonteCarolAlg monteCarolAlg,
             int nthreads
-    ) throws BoardNotFoundException{
+    ) {
         super(tree);
         //if(board.length != 5) throw new RuntimeException(String.format("board length %d",board.length));
         this.initial_board = initial_board;

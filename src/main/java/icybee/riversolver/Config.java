@@ -27,7 +27,7 @@ public class Config {
     String tree_builder_json = null;
     String solver_type;
 
-    Config(String input_file) throws FileNotFoundException,ClassNotFoundException{
+    public Config(String input_file) throws FileNotFoundException,ClassNotFoundException{
         Yaml yaml_reader = new Yaml();
         File config_file = new File(input_file);
         FileInputStream fileInputStream = new FileInputStream(config_file);

@@ -7,6 +7,7 @@ import icybee.riversolver.compairer.Compairer;
 import icybee.riversolver.exceptions.BoardNotFoundException;
 import icybee.riversolver.ranges.PrivateCards;
 import icybee.riversolver.solver.CfrPlusRiverSolver;
+import icybee.riversolver.solver.MonteCarolAlg;
 import icybee.riversolver.solver.ParrallelCfrPlusSolver;
 import icybee.riversolver.solver.Solver;
 import icybee.riversolver.trainable.DiscountedCfrTrainable;
@@ -388,7 +389,7 @@ public class SolverTest
                 , 10
                 ,logfile_name
                 , DiscountedCfrTrainable.class
-                ,CfrPlusRiverSolver.MonteCarolAlg.NONE
+                ,MonteCarolAlg.NONE
         );
         Map train_config = new HashMap();
         solver.train(train_config);
@@ -452,7 +453,7 @@ public class SolverTest
                 , 10
                 ,logfile_name
                 , DiscountedCfrTrainable.class
-                ,CfrPlusRiverSolver.MonteCarolAlg.NONE
+                ,MonteCarolAlg.NONE
         );
         Map train_config = new HashMap();
         solver.train(train_config);
@@ -516,7 +517,7 @@ public class SolverTest
                 , 10
                 ,logfile_name
                 , DiscountedCfrTrainable.class
-                ,CfrPlusRiverSolver.MonteCarolAlg.NONE
+                ,MonteCarolAlg.NONE
         );
         Map train_config = new HashMap();
         solver.train(train_config);
@@ -580,7 +581,7 @@ public class SolverTest
                 , 10
                 ,logfile_name
                 , DiscountedCfrTrainable.class
-                ,CfrPlusRiverSolver.MonteCarolAlg.PUBLIC
+                ,MonteCarolAlg.PUBLIC
         );
         Map train_config = new HashMap();
         solver.train(train_config);
@@ -644,7 +645,7 @@ public class SolverTest
                 , 10
                 ,logfile_name
                 , DiscountedCfrTrainable.class
-                ,ParrallelCfrPlusSolver.MonteCarolAlg.NONE
+                , MonteCarolAlg.NONE
                 ,2
         );
         Map train_config = new HashMap();
