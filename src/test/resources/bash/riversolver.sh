@@ -12,6 +12,8 @@ java -jar RiverSolver.jar -c \
 10 \
 -d \
 false \
+-p \
+true \
 -o \
 "resources/outputs/outputs_strategy.json" \
 -l \

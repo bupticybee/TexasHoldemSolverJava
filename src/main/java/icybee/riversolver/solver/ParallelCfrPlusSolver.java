@@ -24,6 +24,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * contains code for cfr solver
  */
 public class ParallelCfrPlusSolver extends Solver{
+    PrivateCards[][] ranges;
     PrivateCards[] range1;
     PrivateCards[] range2;
     int[] initial_board;
@@ -50,16 +51,6 @@ public class ParallelCfrPlusSolver extends Solver{
         if(player == 0){
             return range1;
         }else if (player == 1){
-            return range2;
-        }else{
-            throw new RuntimeException("player not found");
-        }
-    }
-
-    PrivateCards[] getPlayerPrivateCard(int player){
-        if(player == 0){
-            return range1;
-        }else if(player == 1){
             return range2;
         }else{
             throw new RuntimeException("player not found");
@@ -127,12 +118,15 @@ public class ParallelCfrPlusSolver extends Solver{
 
         this.range1 = range1;
         this.range2 = range2;
+        this.player_number = 2;
+        this.ranges = new PrivateCards[this.player_number][];
+        this.ranges[0] = range1;
+        this.ranges[1] = range2;
         this.compairer = compairer;
 
         this.deck = deck;
 
         this.rrm = new RiverRangeManager(compairer);
-        this.player_number = 2;
         this.iteration_number = iteration_number;
 
         PrivateCards[][] private_cards = new PrivateCards[this.player_number][];
@@ -160,7 +154,7 @@ public class ParallelCfrPlusSolver extends Solver{
             ActionNode action_node = (ActionNode)root;
 
             int player = action_node.getPlayer();
-            PrivateCards[] player_privates = this.getPlayerPrivateCard(player);
+            PrivateCards[] player_privates = this.ranges[player];
 
             action_node.setTrainable((Trainable) this.trainer.getConstructor(ActionNode.class,PrivateCards[].class).newInstance(action_node,player_privates));
 
@@ -334,8 +328,8 @@ public class ParallelCfrPlusSolver extends Solver{
                     }
                 }
 
-                PrivateCards[] playerPrivateCard = this.solver_env.getPlayerPrivateCard(player);
-                PrivateCards[] oppoPrivateCards = this.solver_env.getPlayerPrivateCard(1 - player);
+                PrivateCards[] playerPrivateCard = this.solver_env.ranges[player];
+                PrivateCards[] oppoPrivateCards = this.solver_env.ranges[1 - player];
 
                 float[][] new_reach_probs = new float[2][];
 
@@ -349,9 +343,9 @@ public class ParallelCfrPlusSolver extends Solver{
                     throw new RuntimeException("length not match");
 
                 for (int one_player = 0; one_player < 2; one_player++) {
-                    int player_hand_len = this.solver_env.getPlayerPrivateCard(one_player).length;
+                    int player_hand_len = this.solver_env.ranges[one_player].length;
                     for (int player_hand = 0; player_hand < player_hand_len; player_hand++) {
-                        PrivateCards one_private = this.solver_env.getPlayerPrivateCard(one_player)[player_hand];
+                        PrivateCards one_private = this.solver_env.ranges[one_player][player_hand];
                         long privateBoardLong = one_private.toBoardLong();
                         if (Card.boardsHasIntercept(card_long, privateBoardLong)) continue;
                         new_reach_probs[one_player][player_hand] = reach_probs[one_player][player_hand] / possible_deals;
@@ -386,10 +380,10 @@ public class ParallelCfrPlusSolver extends Solver{
         float[] actionUtility(int player,ActionNode node,float[][]reach_probs,int iter,long current_board){
             // TODO 检查regret 是否符合期望
             int oppo = 1 - player;
-            PrivateCards[] node_player_private_cards = this.solver_env.getPlayerPrivateCard(node.getPlayer());
+            PrivateCards[] node_player_private_cards = this.solver_env.ranges[node.getPlayer()];
             Trainable trainable = node.getTrainable();
 
-            float[] payoffs = new float[this.solver_env.getPlayerPrivateCard(player).length];
+            float[] payoffs = new float[this.solver_env.ranges[player].length];
             List<GameTreeNode> children =  node.getChildrens();
             List<GameActions> actions =  node.getActions();
 
@@ -500,8 +494,8 @@ public class ParallelCfrPlusSolver extends Solver{
             int oppo = 1 - player;
             float win_payoff = node.get_payoffs(ShowdownNode.ShowDownResult.NOTTIE,player)[player].floatValue();
             float lose_payoff = node.get_payoffs(ShowdownNode.ShowDownResult.NOTTIE,oppo)[player].floatValue();
-            PrivateCards[] player_private_cards = this.solver_env.getPlayerPrivateCard(player);
-            PrivateCards[] oppo_private_cards = this.solver_env.getPlayerPrivateCard(oppo);
+            PrivateCards[] player_private_cards = this.solver_env.ranges[player];
+            PrivateCards[] oppo_private_cards = this.solver_env.ranges[oppo];
 
             RiverCombs[] player_combs = this.solver_env.rrm.getRiverCombos(player,player_private_cards,current_board);
             RiverCombs[] oppo_combs = this.solver_env.rrm.getRiverCombos(oppo,oppo_private_cards,current_board);
@@ -539,7 +533,7 @@ public class ParallelCfrPlusSolver extends Solver{
                             System.out.print(String.format("[%s]%s:%s-%s(%s) "
                                     ,j
                                     ,one_oppo_comb.private_cards.toString()
-                                    ,this.solver_env.getPlayerPrivateCard(oppo)[one_oppo_comb.reach_prob_index].weight
+                                    ,this.solver_env.ranges[oppo][one_oppo_comb.reach_prob_index].weight
                                     ,winsum
                                     ,one_oppo_comb.rank
                             ));
@@ -587,7 +581,7 @@ public class ParallelCfrPlusSolver extends Solver{
                         if (one_player_comb.reach_prob_index == 0) {
                             System.out.print(String.format("lose %s:%s "
                                     ,one_oppo_comb.private_cards.toString()
-                                    ,this.solver_env.getPlayerPrivateCard(oppo)[one_oppo_comb.reach_prob_index].weight
+                                    ,this.solver_env.ranges[oppo][one_oppo_comb.reach_prob_index].weight
                             ));
                         }
                     }

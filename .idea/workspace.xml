@@ -8,17 +8,12 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 完善输出生成链">
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 优化cfr函数速度">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/commandline/CommandlineSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/commandline/CommandlineSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ActionNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ActionNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ChanceNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ChanceNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ShowdownNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ShowdownNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/TerminalNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/TerminalNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParrallelCfrPlusSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParallelCfrPlusSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParallelCfrPlusSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParallelCfrPlusSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/bash/riversolver.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/bash/riversolver.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
     </list>
@@ -250,7 +245,7 @@
     <configuration name="CommandlineSolver" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="icybee.riversolver.commandline.CommandlineSolver" />
       <module name="RiverSolver" />
-      <option name="PROGRAM_PARAMETERS" value="-c &quot;src/test/resources/yamls/rule_shortdeck_turnriversolver.yaml&quot; -p1 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -p2 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -b &quot;Kd,Jd,Td,7s,8s&quot; -n 200 -i 50 -d false -p true -o &quot;src/test/resources/outputs/outputs_strategy.json&quot; -l &quot;src/test/resources/outputs/outputs_log.txt&quot; -a &quot;discounted_cfr&quot; -m &quot;none&quot; -t 2" />
+      <option name="PROGRAM_PARAMETERS" value="-c &quot;src/test/resources/yamls/rule_shortdeck_turnsolver_withallin.yaml&quot; -p1 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -p2 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -b &quot;Kd,Jd,Td,7s,8s&quot; -n 200 -i 50 -d false -p true -o &quot;src/test/resources/outputs/outputs_strategy.json&quot; -l &quot;src/test/resources/outputs/outputs_log.txt&quot; -a &quot;discounted_cfr&quot; -m &quot;none&quot; -t 2" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="icybee.riversolver.commandline.*" />
@@ -522,7 +517,7 @@
       <workItem from="1579022156490" duration="1350000" />
       <workItem from="1579096430052" duration="41768000" />
       <workItem from="1579870261018" duration="4669000" />
-      <workItem from="1579882254431" duration="7218000" />
+      <workItem from="1579882254431" duration="16373000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -685,7 +680,14 @@
       <option name="project" value="LOCAL" />
       <updated>1579875374184</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary=":new: 优化cfr函数速度">
+      <created>1579894085749</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1579894085749</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -736,7 +738,8 @@
     <MESSAGE value=":bug: 修复一个在重复运行solver时会触发的bug" />
     <MESSAGE value=":new: 提交命令行工具" />
     <MESSAGE value=":new: 完善输出生成链" />
-    <option name="LAST_COMMIT_MESSAGE" value=":new: 完善输出生成链" />
+    <MESSAGE value=":new: 优化cfr函数速度" />
+    <option name="LAST_COMMIT_MESSAGE" value=":new: 优化cfr函数速度" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

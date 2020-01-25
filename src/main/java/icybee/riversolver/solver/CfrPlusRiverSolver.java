@@ -26,6 +26,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * contains code for cfr solver
  */
 public class CfrPlusRiverSolver extends Solver{
+    PrivateCards[][] ranges;
     PrivateCards[] range1;
     PrivateCards[] range2;
     int[] initial_board;
@@ -56,6 +57,7 @@ public class CfrPlusRiverSolver extends Solver{
         }
     }
 
+    /*
     PrivateCards[] getPlayerPrivateCard(int player){
         if(player == 0){
             return range1;
@@ -65,6 +67,7 @@ public class CfrPlusRiverSolver extends Solver{
             throw new RuntimeException("player not found");
         }
     }
+     */
 
     float[][] getReachProbs(){
         float[][] retval = new float[this.player_number][];
@@ -126,6 +129,11 @@ public class CfrPlusRiverSolver extends Solver{
 
         this.range1 = range1;
         this.range2 = range2;
+        this.player_number = 2;
+        this.ranges = new PrivateCards[this.player_number][];
+        this.ranges[0] = range1;
+        this.ranges[1] = range2;
+
         this.compairer = compairer;
 
         this.deck = deck;
@@ -134,7 +142,6 @@ public class CfrPlusRiverSolver extends Solver{
         this.forkJoinPool = new ForkJoinPool(nThreads);
 
         this.rrm = new RiverRangeManager(compairer);
-        this.player_number = 2;
         this.iteration_number = iteration_number;
 
         PrivateCards[][] private_cards = new PrivateCards[this.player_number][];
@@ -152,7 +159,7 @@ public class CfrPlusRiverSolver extends Solver{
             ActionNode action_node = (ActionNode)root;
 
             int player = action_node.getPlayer();
-            PrivateCards[] player_privates = this.getPlayerPrivateCard(player);
+            PrivateCards[] player_privates = this.ranges[player];
 
             action_node.setTrainable((Trainable) this.trainer.getConstructor(ActionNode.class,PrivateCards[].class).newInstance(action_node,player_privates));
 
@@ -255,8 +262,8 @@ public class CfrPlusRiverSolver extends Solver{
     }
 
     float[] getCardsWeights(int player,float[] oppo_reach_probs,long current_board){
-        PrivateCards[] playerPrivateCard = this.getPlayerPrivateCard(player);
-        PrivateCards[] oppoPrivateCard = this.getPlayerPrivateCard(1 - player);
+        PrivateCards[] playerPrivateCard = this.ranges[player];
+        PrivateCards[] oppoPrivateCard = this.ranges[1 - player];
         // 二维数组替代品 ，对应二维数组 float[playerPrivateCard.length][52]
         float[] card_weight = new float[playerPrivateCard.length * 52];
         float oppo_reach_sum = 0;
@@ -359,8 +366,8 @@ public class CfrPlusRiverSolver extends Solver{
                 }
             }
 
-            PrivateCards[] playerPrivateCard = this.getPlayerPrivateCard(player);
-            PrivateCards[] oppoPrivateCards = this.getPlayerPrivateCard(1 - player);
+            PrivateCards[] playerPrivateCard = this.ranges[player];
+            PrivateCards[] oppoPrivateCards = this.ranges[1 - player];
 
             float[][] new_reach_probs = new float[2][];
 
@@ -372,9 +379,9 @@ public class CfrPlusRiverSolver extends Solver{
             if(oppoPrivateCards.length !=reach_probs[1 - player].length) throw new RuntimeException("length not match");
 
             for(int one_player = 0;one_player < 2;one_player ++) {
-                int player_hand_len = this.getPlayerPrivateCard(one_player).length;
+                int player_hand_len = this.ranges[one_player].length;
                 for (int player_hand = 0; player_hand < player_hand_len; player_hand++) {
-                    PrivateCards one_private = this.getPlayerPrivateCard(one_player)[player_hand];
+                    PrivateCards one_private = this.ranges[one_player][player_hand];
                     long privateBoardLong = one_private.toBoardLong();
                     if (Card.boardsHasIntercept(card_long, privateBoardLong)) continue;
                     new_reach_probs[one_player][player_hand] = reach_probs[one_player][player_hand] / possible_deals;
@@ -399,10 +406,10 @@ public class CfrPlusRiverSolver extends Solver{
     float[] actionUtility(int player,ActionNode node,float[][]reach_probs,int iter,long current_board) throws BoardNotFoundException{
         // TODO 检查regret 是否符合期望
         int oppo = 1 - player;
-        PrivateCards[] node_player_private_cards = this.getPlayerPrivateCard(node.getPlayer());
+        PrivateCards[] node_player_private_cards = this.ranges[node.getPlayer()];
         Trainable trainable = node.getTrainable();
 
-        float[] payoffs = new float[this.getPlayerPrivateCard(player).length];
+        float[] payoffs = new float[this.ranges[player].length];
         List<GameTreeNode> children =  node.getChildrens();
         List<GameActions> actions =  node.getActions();
 
@@ -498,8 +505,8 @@ public class CfrPlusRiverSolver extends Solver{
         int oppo = 1 - player;
         float win_payoff = node.get_payoffs(ShowdownNode.ShowDownResult.NOTTIE,player)[player].floatValue();
         float lose_payoff = node.get_payoffs(ShowdownNode.ShowDownResult.NOTTIE,oppo)[player].floatValue();
-        PrivateCards[] player_private_cards = this.getPlayerPrivateCard(player);
-        PrivateCards[] oppo_private_cards = this.getPlayerPrivateCard(oppo);
+        PrivateCards[] player_private_cards = this.ranges[player];
+        PrivateCards[] oppo_private_cards = this.ranges[oppo];
 
         RiverCombs[] player_combs = this.rrm.getRiverCombos(player,player_private_cards,current_board);
         RiverCombs[] oppo_combs = this.rrm.getRiverCombos(oppo,oppo_private_cards,current_board);
@@ -537,7 +544,7 @@ public class CfrPlusRiverSolver extends Solver{
                         System.out.print(String.format("[%s]%s:%s-%s(%s) "
                                 ,j
                                 ,one_oppo_comb.private_cards.toString()
-                                ,this.getPlayerPrivateCard(oppo)[one_oppo_comb.reach_prob_index].weight
+                                ,this.ranges[oppo][one_oppo_comb.reach_prob_index].weight
                                 ,winsum
                                 ,one_oppo_comb.rank
                         ));
@@ -585,7 +592,7 @@ public class CfrPlusRiverSolver extends Solver{
                     if (one_player_comb.reach_prob_index == 0) {
                         System.out.print(String.format("lose %s:%s "
                                 ,one_oppo_comb.private_cards.toString()
-                                ,this.getPlayerPrivateCard(oppo)[one_oppo_comb.reach_prob_index].weight
+                                ,this.ranges[oppo][one_oppo_comb.reach_prob_index].weight
                         ));
                     }
                 }
@@ -622,72 +629,6 @@ public class CfrPlusRiverSolver extends Solver{
              */
             System.out.println(String.format("oppo sum %s, substracted payoff %s",losssum,payoffs[0]));
         }
-
-        /*
-        float[] oppo_cardsum = new float[52];
-        float oppo_sum = 0;
-        for(int i = 0;i < this.pcm.getPreflopCards(oppo).length;i ++){
-            PrivateCards one_oppo_cards = this.pcm.getPreflopCards(oppo)[i];
-            oppo_cardsum[one_oppo_cards.card1] += reach_probs[oppo][i];
-            oppo_cardsum[one_oppo_cards.card2] += reach_probs[oppo][i];
-            oppo_sum += reach_probs[oppo][i];
-        }
-
-        for(int i = 0;i < this.pcm.getPreflopCards(player).length;i ++){
-            PrivateCards one_player_cards = this.pcm.getPreflopCards(oppo)[i];
-            float oppo_same_card_sum = 0;
-            oppo_same_card_sum += oppo_cardsum[one_player_cards.card1];
-            oppo_same_card_sum += oppo_cardsum[one_player_cards.card2];
-            oppo_same_card_sum -= reach_probs[oppo][this.pcm.indPlayer2Player(player,oppo,i)];
-            if(oppo_sum - oppo_same_card_sum == 0) throw new RuntimeException("oppo sum is zero");
-            payoffs[i] /= (oppo_sum - oppo_same_card_sum);
-        }
-        */
-
-        /*
-        if(true){
-            node.printHistory();
-            int ind = -1;
-            for(int i = 0;i < this.getPlayerPrivateCard(player).length;i ++){
-                if(this.getPlayerPrivateCard(player)[i].hashCode() ==
-                        (new PrivateCards(
-                                Card.strCard2int("Qd"),
-                                Card.strCard2int("7h"),
-                                1
-                        )).hashCode()
-                ){
-                    ind = i;
-                }
-            }
-            if(ind == -1){
-                throw new RuntimeException();
-            }
-            PrivateCards pc = this.getPlayerPrivateCard(player)[ind];
-            System.out.println(pc.toString());
-        }
-        if(true){
-            node.printHistory();
-            int ind = -1;
-            for(int i = 0;i < this.getPlayerPrivateCard(player).length;i ++){
-                if(this.getPlayerPrivateCard(player)[i].hashCode() ==
-                        (new PrivateCards(
-                                Card.strCard2int("Qc"),
-                                Card.strCard2int("7h"),
-                                1
-                        )).hashCode()
-                ){
-                    ind = i;
-                }
-            }
-            if(ind == -1){
-                throw new RuntimeException();
-            }
-            PrivateCards pc = this.getPlayerPrivateCard(player)[ind];
-            System.out.println(pc.toString());
-        }
-
-         */
-        //node.printHistory();
         return payoffs;
     }
 
