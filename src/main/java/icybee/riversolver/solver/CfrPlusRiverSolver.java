@@ -116,7 +116,7 @@ public class CfrPlusRiverSolver extends Solver{
             String logfile,
             Class<?> trainer,
             MonteCarolAlg monteCarolAlg
-    ) throws BoardNotFoundException{
+    ){
         super(tree);
         //if(board.length != 5) throw new RuntimeException(String.format("board length %d",board.length));
         this.initial_board = initial_board;

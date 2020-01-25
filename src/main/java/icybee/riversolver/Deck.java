@@ -16,7 +16,7 @@ public class Deck {
     }
 
     List<Card> cards = new ArrayList<Card>();
-    Deck(List<String> ranks, List<String> suits){
+    public Deck(List<String> ranks, List<String> suits){
         this.ranks = ranks;
         this.suits = suits;
         for(String one_rank : ranks){

@@ -54,10 +54,25 @@ public class SolverEnvironment {
         }
     }
 
+    public static GameTree gameTreeFromJson(String json_path,Deck deck){
+        try {
+            return new GameTree(json_path, deck);
+        }catch(IOException e){
+            throw new RuntimeException();
+        }
+    }
+
     public static Deck deckFromConfig(Config config){
         return new Deck(config.ranks,config.suits);
     }
 
+    public static Compairer compairerFromFile(String compairer_type,String compairer_dic_dir,int compairer_lines)throws IOException{
+        if(compairer_type.equals("Dic5Compairer")) {
+            return new Dic5Compairer(compairer_dic_dir,compairer_lines);
+        }else{
+            throw new RuntimeException();
+        }
+    }
     public static Compairer compairerFromConfig(Config config)throws IOException{
         if(config.compairer_type.equals("Dic5Compairer")) {
             return new Dic5Compairer(config.compairer_dic_dir,config.compairer_lines);

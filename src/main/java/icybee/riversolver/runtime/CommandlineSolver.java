@@ -1,4 +1,4 @@
-package icybee.riversolver.commandline;
+package icybee.riversolver.runtime;
 
 import icybee.riversolver.*;
 

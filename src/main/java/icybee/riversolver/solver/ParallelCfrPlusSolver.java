@@ -15,9 +15,7 @@ import icybee.riversolver.trainable.Trainable;
 import java.io.FileWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.RecursiveTask;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.*;
 
 /**
  * Created by huangxuefeng on 2019/10/11.
@@ -43,7 +41,6 @@ public class ParallelCfrPlusSolver extends Solver{
     Class<?> trainer;
     int[] round_deal;
     int nthreads;
-    ForkJoinPool pool;
 
     MonteCarolAlg monteCarolAlg;
 
@@ -139,13 +136,13 @@ public class ParallelCfrPlusSolver extends Solver{
         if(nthreads >= 1) {
             this.nthreads = nthreads;
         }else if(nthreads == -1){
-            nthreads = Runtime.getRuntime().availableProcessors();
+            this.nthreads = Runtime.getRuntime().availableProcessors();
         }else{
             throw new RuntimeException("nthread not correct");
         }
 
-        this.forkJoinPool = new ForkJoinPool(nthreads);
-        this.nthreads = nthreads;
+        this.forkJoinPool = new ForkJoinPool(this.nthreads);
+        System.out.println(String.format("Using %s threads",this.nthreads));
     }
 
 
@@ -204,13 +201,8 @@ public class ParallelCfrPlusSolver extends Solver{
                 }
                 this.round_deal = new int[]{-1,-1,-1,-1};
 
-                //cfr(player_id,this.tree.getRoot(),reach_probs,i,this.initial_board_long);
-
                 CfrTask task = new CfrTask(player_id,this.tree.getRoot(),reach_probs,i,this.initial_board_long,this);
-                task.fork();
-                task.join();
-
-
+                forkJoinPool.invoke(task);
             }
             if(i % this.print_interval == 0) {
                 System.out.println("-------------------");
@@ -229,6 +221,7 @@ public class ParallelCfrPlusSolver extends Solver{
         }
         fileWriter.flush();
         fileWriter.close();
+        forkJoinPool.shutdown();
         // System.out.println(this.tree.dumps(false).toJSONString());
     }
 
