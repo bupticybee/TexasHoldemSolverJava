@@ -41,6 +41,7 @@ public class ParallelCfrPlusSolver extends Solver{
     Class<?> trainer;
     int[] round_deal;
     int nthreads;
+    double forkprob;
 
     MonteCarolAlg monteCarolAlg;
 
@@ -101,7 +102,8 @@ public class ParallelCfrPlusSolver extends Solver{
             String logfile,
             Class<?> trainer,
             MonteCarolAlg monteCarolAlg,
-            int nthreads
+            int nthreads,
+            double forkprob
     ) {
         super(tree);
         //if(board.length != 5) throw new RuntimeException(String.format("board length %d",board.length));
@@ -142,6 +144,9 @@ public class ParallelCfrPlusSolver extends Solver{
         }
 
         this.forkJoinPool = new ForkJoinPool(this.nthreads);
+        if(forkprob > 1 || forkprob < 0)
+            throw new RuntimeException(String.format("forkprob not between [0,1] : %s",forkprob));
+        this.forkprob = forkprob;
         System.out.println(String.format("Using %s threads",this.nthreads));
     }
 
@@ -314,8 +319,8 @@ public class ParallelCfrPlusSolver extends Solver{
                     if (cardcount == random_deal) {
                         // crete job
                         CfrTask task = new CfrTask(this.player, one_child, reach_probs, iter, new_board_long, this.solver_env);
-                        task.fork();
-                        return task.join();
+                        //task.fork();
+                        return task.compute();
                     } else {
                         continue;
                     }
@@ -351,14 +356,14 @@ public class ParallelCfrPlusSolver extends Solver{
                 //this.cfr(player,one_child,reach_probs,iter,new_board_long);
                 //float[] child_utility = this.solver_env.cfr(player,one_child,new_reach_probs,iter,new_board_long);
                 CfrTask task = new CfrTask(this.player, one_child, new_reach_probs, iter, new_board_long, this.solver_env);
-                task.fork();
+                //task.fork();
                 tasklist[card] = task;
             }
 
             for(int card = 0;card < node.getCards().size();card ++) {
                 CfrTask task = tasklist[card];
                 if(task == null)continue;
-                float[] child_utility = task.join();
+                float[] child_utility = task.compute();
                 if(child_utility.length != chance_utility.length) throw new RuntimeException("length not match");
                 for(int i = 0;i < child_utility.length;i ++)
                     chance_utility[i] += child_utility[i];
@@ -379,6 +384,11 @@ public class ParallelCfrPlusSolver extends Solver{
             float[] payoffs = new float[this.solver_env.ranges[player].length];
             List<GameTreeNode> children =  node.getChildrens();
             List<GameActions> actions =  node.getActions();
+
+            boolean forkAt = false;
+            if(this.solver_env.forkprob == 1 || Math.random() < this.solver_env.forkprob){
+                forkAt = true;
+            }
 
             float[] current_strategy = trainable.getcurrentStrategy();
             if(this.solver_env.debug){
@@ -412,9 +422,11 @@ public class ParallelCfrPlusSolver extends Solver{
             float[] regrets = new float[actions.size() * node_player_private_cards.length];
 
             float[][] all_action_utility = new float[actions.size()][];
+            //Future<float[]>[] futures = new Future[actions.size()];
             int node_player = node.getPlayer();
 
             CfrTask[] tasklist = new CfrTask[actions.size()];
+            //List<CfrTask> taskarray = new ArrayList<>();
 
             for(int action_id = 0;action_id < actions.size(); action_id++) {
                 float[][] new_reach_prob = new float[this.solver_env.player_number][];
@@ -429,7 +441,13 @@ public class ParallelCfrPlusSolver extends Solver{
                 //= this.solver_env.cfr(player,children.get(action_id),new_reach_prob,iter,current_board);
 
                 CfrTask task = new CfrTask(this.player, children.get(action_id), new_reach_prob, iter, current_board, this.solver_env);
-                task.fork();
+
+                if(forkAt) {
+                    //Future<float[]> fut = null;
+                    //this.solver_env.forkJoinPool.invoke(task);
+                    //futures[action_id] = fut;
+                    task.fork();
+                }
                 tasklist[action_id] = task;
             }
 
@@ -437,7 +455,19 @@ public class ParallelCfrPlusSolver extends Solver{
                 CfrTask task = tasklist[action_id];
                 if(task == null)continue;
 
-                float[] action_utilities = task.join();
+                float[] action_utilities;
+                if(forkAt) {
+                    try {
+                        //Future<float[]> fut = futures[action_id];
+                        //action_utilities = task.getRawResult();
+                        //action_utilities = this.solver_env.forkJoinPool.invoke(task);
+                        action_utilities = task.join();
+                    }catch(Exception e){
+                        throw new RuntimeException("future get error");
+                    }
+                }else{
+                    action_utilities = task.compute();
+                }
                 all_action_utility[action_id] = action_utilities;
 
                 // cfr结果是每手牌的收益，payoffs代表的也是每手牌的收益，他们的长度理应相等

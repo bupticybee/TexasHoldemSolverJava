@@ -75,6 +75,9 @@ public class CommandlineSolver {
         parser.addArgument("-t", "--threads")
                 .setDefault(-1)
                 .help("multi thread thread number");
+        parser.addArgument("-f", "--fork_at")
+                .setDefault(1)
+                .help("using multithread in each node with this prob");
 
         Namespace ns = null;
         try {
@@ -92,6 +95,7 @@ public class CommandlineSolver {
         int[] initial_board = Arrays.stream(initial_board_arr).map(e -> Card.strCard2int(e)).mapToInt(i->i).toArray();
         int iteration_number = Integer.parseInt(ns.getString("iteration_number"));
         int print_interval = Integer.parseInt(ns.getString("print_interval"));
+        float fork_at = Float.parseFloat(ns.getString("fork_at"));
         boolean debug = Boolean.valueOf(ns.getString("debug"));
         boolean parallel = Boolean.valueOf(ns.getString("parallel"));
         String output_strategy_file = ns.getString("output_strategy_file");
@@ -150,6 +154,7 @@ public class CommandlineSolver {
                     , algorithm
                     , monte_coral
                     , threads
+                    , fork_at
             );
         }else{
             solver = new CfrPlusRiverSolver(game_tree

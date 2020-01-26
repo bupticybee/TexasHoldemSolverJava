@@ -647,6 +647,7 @@ public class SolverTest
                 , DiscountedCfrTrainable.class
                 , MonteCarolAlg.NONE
                 ,2
+                ,1
         );
         Map train_config = new HashMap();
         solver.train(train_config);

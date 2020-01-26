@@ -59,7 +59,8 @@ public class PokerSolver {
             String logfile,
             String algorithm,
             String monte_carol,
-            int threads
+            int threads,
+            float fork_at
     ) throws Exception {
         if(this.tree == null)
             throw new RuntimeException("tree not initized");
@@ -110,6 +111,7 @@ public class PokerSolver {
                     , algorithm_class
                     , monte_coral_alg
                     , threads
+                    , fork_at
             );
         }else{
             solver = new CfrPlusRiverSolver(this.tree
