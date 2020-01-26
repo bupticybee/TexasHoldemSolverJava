@@ -43,6 +43,7 @@ public class ParallelCfrPlusSolver extends Solver{
     int nthreads;
     double forkprob_action;
     double forkprob_chance;
+    int fork_every_n_depth;
 
     MonteCarolAlg monteCarolAlg;
 
@@ -105,7 +106,8 @@ public class ParallelCfrPlusSolver extends Solver{
             MonteCarolAlg monteCarolAlg,
             int nthreads,
             double forkprob_action,
-            double forkprob_chance
+            double forkprob_chance,
+            int fork_between
     ) {
         super(tree);
         //if(board.length != 5) throw new RuntimeException(String.format("board length %d",board.length));
@@ -152,6 +154,7 @@ public class ParallelCfrPlusSolver extends Solver{
             throw new RuntimeException(String.format("forkprob chance not between [0,1] : %s",forkprob_chance));
         this.forkprob_action = forkprob_action;
         this.forkprob_chance = forkprob_chance;
+        this.fork_every_n_depth = fork_between;
         System.out.println(String.format("Using %s threads",this.nthreads));
     }
 
@@ -316,6 +319,7 @@ public class ParallelCfrPlusSolver extends Solver{
             }else if(Math.random() < this.solver_env.forkprob_chance){
                 forkAt = true;
             }
+            if(node.depth % this.solver_env.fork_every_n_depth != 0) forkAt = false;
             for(int card = 0;card < node.getCards().size();card ++) {
                 GameTreeNode one_child = node.getChildrens().get(card);
                 Card one_card = node.getCards().get(card);
@@ -411,6 +415,7 @@ public class ParallelCfrPlusSolver extends Solver{
             }else if(Math.random() < this.solver_env.forkprob_action){
                 forkAt = true;
             }
+            if(node.depth % this.solver_env.fork_every_n_depth != 0) forkAt = false;
 
             float[] current_strategy = trainable.getcurrentStrategy();
             if(this.solver_env.debug){

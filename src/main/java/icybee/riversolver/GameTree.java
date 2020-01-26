@@ -235,6 +235,21 @@ public class GameTree {
         return chanceNode;
     }
 
+    void recurrentSetDepth(GameTreeNode node,int depth){
+        node.depth = depth;
+        if(node instanceof ActionNode) {
+            ActionNode actionNode = (ActionNode) node;
+            for(GameTreeNode one_child:actionNode.getChildrens()){
+                this.recurrentSetDepth(one_child,depth + 1);
+            }
+        }else if(node instanceof ChanceNode){
+            ChanceNode chanceNode = (ChanceNode) node;
+            for(GameTreeNode one_child:chanceNode.getChildrens()){
+                this.recurrentSetDepth(one_child,depth + 1);
+            }
+        }
+    }
+
     GameTreeNode recurrentGenerateTreeNode(Map<String, Map> node_json,GameTreeNode parent) throws NullPointerException{
         Map<String,Object> meta = node_json.get("meta");
         if(meta == null){
@@ -310,6 +325,7 @@ public class GameTree {
         Map<String, Map> json_root = (Map<String, Map>)json_map.get("root");
         this.deck = deck;
         this.root = recurrentGenerateTreeNode(json_root,null);
+        this.recurrentSetDepth(this.root,0);
     }
 
     void recurrentPrintTree(GameTreeNode node,int depth,int depth_limit) throws ClassCastException{

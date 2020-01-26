@@ -29,4 +29,5 @@ ps.train(
     8, # threads
     1, # action fork prob
     0, # chance fork prob
+    1 # fork every n tree layers
 )

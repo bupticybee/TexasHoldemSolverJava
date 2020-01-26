@@ -81,6 +81,9 @@ public class CommandlineSolver {
         parser.addArgument("-fc", "--fork_at_chance")
                 .setDefault(1)
                 .help("using multi-thread in each chance node with this prob");
+        parser.addArgument("-fe", "--fork_every_n_depth")
+                .setDefault(1)
+                .help("fork in between n layer of trees, default 1");
 
         Namespace ns = null;
         try {
@@ -133,6 +136,8 @@ public class CommandlineSolver {
                 throw new RuntimeException(String.format("monte coral type not found :%s",monte_coral_str));
         }
         int threads = Integer.parseInt(ns.getString("threads"));
+        int fork_every_n_depth = Integer.parseInt(ns.getString("fork_every_n_depth"));
+
 
 
         Config config = loadConfig(config_file);
@@ -160,6 +165,7 @@ public class CommandlineSolver {
                     , threads
                     , fork_at_action
                     , fork_at_chance
+                    , fork_every_n_depth
             );
         }else{
             solver = new CfrPlusRiverSolver(game_tree
