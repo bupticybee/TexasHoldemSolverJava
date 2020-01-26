@@ -648,6 +648,7 @@ public class SolverTest
                 , MonteCarolAlg.NONE
                 ,2
                 ,1
+                ,0
         );
         Map train_config = new HashMap();
         solver.train(train_config);

@@ -41,7 +41,8 @@ public class ParallelCfrPlusSolver extends Solver{
     Class<?> trainer;
     int[] round_deal;
     int nthreads;
-    double forkprob;
+    double forkprob_action;
+    double forkprob_chance;
 
     MonteCarolAlg monteCarolAlg;
 
@@ -103,7 +104,8 @@ public class ParallelCfrPlusSolver extends Solver{
             Class<?> trainer,
             MonteCarolAlg monteCarolAlg,
             int nthreads,
-            double forkprob
+            double forkprob_action,
+            double forkprob_chance
     ) {
         super(tree);
         //if(board.length != 5) throw new RuntimeException(String.format("board length %d",board.length));
@@ -144,9 +146,12 @@ public class ParallelCfrPlusSolver extends Solver{
         }
 
         this.forkJoinPool = new ForkJoinPool(this.nthreads);
-        if(forkprob > 1 || forkprob < 0)
-            throw new RuntimeException(String.format("forkprob not between [0,1] : %s",forkprob));
-        this.forkprob = forkprob;
+        if(forkprob_action > 1 || forkprob_action < 0)
+            throw new RuntimeException(String.format("forkprob action not between [0,1] : %s",forkprob_action));
+        if(forkprob_chance > 1 || forkprob_chance < 0)
+            throw new RuntimeException(String.format("forkprob chance not between [0,1] : %s",forkprob_chance));
+        this.forkprob_action = forkprob_action;
+        this.forkprob_chance = forkprob_chance;
         System.out.println(String.format("Using %s threads",this.nthreads));
     }
 
@@ -303,6 +308,14 @@ public class ParallelCfrPlusSolver extends Solver{
                 }
             }
             CfrTask[] tasklist = new CfrTask[node.getCards().size()];
+            boolean forkAt = false;
+            if(this.solver_env.forkprob_chance == 1) {
+                forkAt = true;
+            }else if(this.solver_env.forkprob_chance == 0) {
+                forkAt = false;
+            }else if(Math.random() < this.solver_env.forkprob_chance){
+                forkAt = true;
+            }
             for(int card = 0;card < node.getCards().size();card ++) {
                 GameTreeNode one_child = node.getChildrens().get(card);
                 Card one_card = node.getCards().get(card);
@@ -356,14 +369,19 @@ public class ParallelCfrPlusSolver extends Solver{
                 //this.cfr(player,one_child,reach_probs,iter,new_board_long);
                 //float[] child_utility = this.solver_env.cfr(player,one_child,new_reach_probs,iter,new_board_long);
                 CfrTask task = new CfrTask(this.player, one_child, new_reach_probs, iter, new_board_long, this.solver_env);
-                //task.fork();
+                if (forkAt) task.fork();
                 tasklist[card] = task;
             }
 
             for(int card = 0;card < node.getCards().size();card ++) {
                 CfrTask task = tasklist[card];
                 if(task == null)continue;
-                float[] child_utility = task.compute();
+                float[] child_utility;
+                if (forkAt) {
+                    child_utility = task.join();
+                } else {
+                    child_utility = task.compute();
+                }
                 if(child_utility.length != chance_utility.length) throw new RuntimeException("length not match");
                 for(int i = 0;i < child_utility.length;i ++)
                     chance_utility[i] += child_utility[i];
@@ -386,7 +404,11 @@ public class ParallelCfrPlusSolver extends Solver{
             List<GameActions> actions =  node.getActions();
 
             boolean forkAt = false;
-            if(this.solver_env.forkprob == 1 || Math.random() < this.solver_env.forkprob){
+            if(this.solver_env.forkprob_action == 1) {
+                forkAt = true;
+            }else if(this.solver_env.forkprob_action == 0) {
+                forkAt = false;
+            }else if(Math.random() < this.solver_env.forkprob_action){
                 forkAt = true;
             }
 
