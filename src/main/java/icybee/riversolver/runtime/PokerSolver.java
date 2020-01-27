@@ -62,7 +62,8 @@ public class PokerSolver {
             int threads,
             float fork_at_action,
             float fork_at_chance,
-            int fork_every_n_depth
+            int fork_every_n_depth,
+            int no_fork_subtree_size
     ) throws Exception {
         if(this.tree == null)
             throw new RuntimeException("tree not initized");
@@ -116,6 +117,7 @@ public class PokerSolver {
                     , fork_at_action
                     , fork_at_chance
                     , fork_every_n_depth
+                    , no_fork_subtree_size
             );
         }else{
             solver = new CfrPlusRiverSolver(this.tree

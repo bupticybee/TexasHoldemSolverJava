@@ -235,19 +235,26 @@ public class GameTree {
         return chanceNode;
     }
 
-    void recurrentSetDepth(GameTreeNode node,int depth){
+    int recurrentSetDepth(GameTreeNode node,int depth){
         node.depth = depth;
         if(node instanceof ActionNode) {
             ActionNode actionNode = (ActionNode) node;
+            int subtree_size = 1;
             for(GameTreeNode one_child:actionNode.getChildrens()){
-                this.recurrentSetDepth(one_child,depth + 1);
+                subtree_size += this.recurrentSetDepth(one_child,depth + 1);
             }
+            node.subtree_size = subtree_size;
         }else if(node instanceof ChanceNode){
             ChanceNode chanceNode = (ChanceNode) node;
+            int subtree_size = 1;
             for(GameTreeNode one_child:chanceNode.getChildrens()){
-                this.recurrentSetDepth(one_child,depth + 1);
+                subtree_size += this.recurrentSetDepth(one_child,depth + 1);
             }
+            node.subtree_size = subtree_size;
+        }else{
+            node.subtree_size = 1;
         }
+        return node.subtree_size;
     }
 
     GameTreeNode recurrentGenerateTreeNode(Map<String, Map> node_json,GameTreeNode parent) throws NullPointerException{

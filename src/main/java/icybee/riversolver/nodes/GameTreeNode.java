@@ -39,6 +39,7 @@ public abstract class GameTreeNode {
     Double pot;
     GameTreeNode parent;
     public int depth;
+    public int subtree_size;
 
     public static int gameRound2int(GameRound gameRound){
         if(gameRound == GameRound.PREFLOP) {

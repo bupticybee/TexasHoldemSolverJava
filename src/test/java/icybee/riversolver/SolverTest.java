@@ -650,6 +650,7 @@ public class SolverTest
                 ,1
                 ,0
                 , 1
+                , 0
         );
         Map train_config = new HashMap();
         solver.train(train_config);

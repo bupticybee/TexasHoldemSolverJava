@@ -84,6 +84,9 @@ public class CommandlineSolver {
         parser.addArgument("-fe", "--fork_every_n_depth")
                 .setDefault(1)
                 .help("fork in between n layer of trees, default 1");
+        parser.addArgument("-fs", "--no_fork_subtree_size")
+                .setDefault(0)
+                .help("fork minimal subtree size, default 0");
 
         Namespace ns = null;
         try {
@@ -137,6 +140,7 @@ public class CommandlineSolver {
         }
         int threads = Integer.parseInt(ns.getString("threads"));
         int fork_every_n_depth = Integer.parseInt(ns.getString("fork_every_n_depth"));
+        int no_fork_subtree_size = Integer.parseInt(ns.getString("no_fork_subtree_size"));
 
 
 
@@ -166,6 +170,7 @@ public class CommandlineSolver {
                     , fork_at_action
                     , fork_at_chance
                     , fork_every_n_depth
+                    , no_fork_subtree_size
             );
         }else{
             solver = new CfrPlusRiverSolver(game_tree

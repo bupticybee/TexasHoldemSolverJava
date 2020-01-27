@@ -8,7 +8,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 增加action和chance的多进程控制开关">
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 支持每隔一定深度再fork">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" afterDir="false" />
@@ -247,7 +247,7 @@
     <configuration name="CommandlineSolver" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="icybee.riversolver.runtime.CommandlineSolver" />
       <module name="RiverSolver" />
-      <option name="PROGRAM_PARAMETERS" value="-c &quot;src/test/resources/yamls/rule_shortdeck_turnsolver_withallin.yaml&quot; -p1 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -p2 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -b &quot;Kd,Jd,Td,7s,8s&quot; -n 200 -i 50 -d false -p true -o &quot;src/test/resources/outputs/outputs_strategy.json&quot; -l &quot;src/test/resources/outputs/outputs_log.txt&quot; -a &quot;discounted_cfr&quot; -m &quot;none&quot; -t 2 -fa 1 -fc 1 -fe 1" />
+      <option name="PROGRAM_PARAMETERS" value="-c &quot;src/test/resources/yamls/rule_shortdeck_turnsolver_withallin.yaml&quot; -p1 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -p2 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -b &quot;Kd,Jd,Td,7s,8s&quot; -n 200 -i 50 -d false -p true -o &quot;src/test/resources/outputs/outputs_strategy.json&quot; -l &quot;src/test/resources/outputs/outputs_log.txt&quot; -a &quot;discounted_cfr&quot; -m &quot;none&quot; -t 2 -fa 1 -fc 1 -fe 1 -fs 0" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="icybee.riversolver.runtime.*" />
@@ -519,7 +519,7 @@
       <workItem from="1579022156490" duration="1350000" />
       <workItem from="1579096430052" duration="41768000" />
       <workItem from="1579870261018" duration="4669000" />
-      <workItem from="1579882254431" duration="43555000" />
+      <workItem from="1579882254431" duration="45472000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -717,7 +717,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580034346978</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary=":new: 支持每隔一定深度再fork">
+      <created>1580058323440</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1580058323440</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -745,7 +752,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value=":bug: fix bug causing program quit" />
     <MESSAGE value=":bug: fix some bug" />
     <MESSAGE value=":bug: 修正了许多bug，但是expliotiblity还不收敛到0" />
     <MESSAGE value=":bug: 修复了一个bug，expliotiblity现在在一个简单情况下可以收敛到0了" />
@@ -770,7 +776,8 @@
     <MESSAGE value=":new: 完成python接口" />
     <MESSAGE value=":new: 更改了一些逻辑，现在在8cpu上可以达到66%的利用率（turn）" />
     <MESSAGE value=":new: 增加action和chance的多进程控制开关" />
-    <option name="LAST_COMMIT_MESSAGE" value=":new: 增加action和chance的多进程控制开关" />
+    <MESSAGE value=":new: 支持每隔一定深度再fork" />
+    <option name="LAST_COMMIT_MESSAGE" value=":new: 支持每隔一定深度再fork" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
