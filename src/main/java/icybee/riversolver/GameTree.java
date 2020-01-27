@@ -64,6 +64,18 @@ public class GameTree {
         return game_round;
     }
 
+    Double getValue(Map<String,Object> meta,String key){
+        Object value = meta.get(key);
+        if(value instanceof Integer){
+            return ((Integer)value).doubleValue();
+        }else if(value instanceof Double){
+            return (Double)value;
+        }else{
+            throw new RuntimeException(String.format("data type %s not underestood",value.toString()));
+        }
+
+    }
+
     ActionNode generateActionNode(Map meta,List<String> childrens_actions, List<Map> childrens_nodes, String round,GameTreeNode parent){
         if(childrens_actions.size() != childrens_nodes.size()){
             throw new NodeLengthMismatchException(
@@ -135,7 +147,7 @@ public class GameTree {
             actions.add(game_action);
         }
         Integer player = (Integer)meta.get("player");
-        Double pot = ((Integer)meta.get("pot")).doubleValue();
+        Double pot = this.getValue(meta,"pot");
         if(player == null) throw new RuntimeException("player is null");
         if(childrens.size() != actions.size()){
             throw new NodeLengthMismatchException(String.format("childrens length %d, actions length %d"
@@ -172,7 +184,7 @@ public class GameTree {
 
         // meta_payoffs 的key有 n个玩家+1个平局,代表某个玩家赢了的时候如何分配payoff
         Double[][] player_payoffs = new Double[meta_payoffs.keySet().size() - 1][meta_payoffs.keySet().size() - 1];
-        Double pot = ((Integer)meta.get("pot")).doubleValue();
+        Double pot = this.getValue(meta,"pot");
 
         for(String one_player : meta_payoffs.keySet()){
             if(one_player.equals("tie")){
@@ -210,7 +222,7 @@ public class GameTree {
         }
 
         //节点上的下注额度
-        Double pot = ((Integer)meta.get("pot")).doubleValue();
+        Double pot = this.getValue(meta,"pot");
 
         GameTreeNode.GameRound game_round = strToGameRound(round);
         // 多人游戏的时候winner就不等于当前节点的玩家了，这里要注意
@@ -221,7 +233,7 @@ public class GameTree {
 
     ChanceNode generateChanceNode(Map meta,Map child,String round,GameTreeNode parent){
         //节点上的下注额度
-        Double pot = ((Integer)meta.get("pot")).doubleValue();
+        Double pot = this.getValue(meta,"pot");
         List<GameTreeNode> childrens = new ArrayList<>();
         for(Card one_card:this.deck.getCards()){
             GameTreeNode one_node = recurrentGenerateTreeNode(child,null);
