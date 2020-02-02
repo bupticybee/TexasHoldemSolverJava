@@ -328,7 +328,7 @@ public class SolverTest
         System.out.println("end compaierEquivlentTest");
     }
 
-    //@Test
+    @Test
     public void cfrSolverTest() throws Exception{
         System.out.println("solverTest");
 
@@ -394,6 +394,7 @@ public class SolverTest
         Map train_config = new HashMap();
         solver.train(train_config);
 
+        /*
         String strategy_json = solver.getTree().dumps(false).toJSONString();
 
         String strategy_fname = "src/test/resources/outputs/outputs_strategy.json";
@@ -405,6 +406,7 @@ public class SolverTest
         writer.close();
 
         System.out.println("end solverTest");
+         */
     }
 
     @Test

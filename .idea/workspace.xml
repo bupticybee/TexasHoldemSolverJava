@@ -8,16 +8,12 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 支持扑克树cfr线程最小分割">
-      <change afterPath="$PROJECT_DIR$/src/test/resources/gametree/generated_tree.km" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/python/TreeBuilder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/python/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/yamls/general_rule.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/resources/yamls/rule_generated_game.yaml" afterDir="false" />
+    <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 串联Poker树生成和求解">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/python/java_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/python/java_interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +84,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.CommandlineSolver">
+  <component name="RunManager" selected="JUnit.testRiverSolver">
     <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -519,7 +515,9 @@
       <workItem from="1579022156490" duration="1350000" />
       <workItem from="1579096430052" duration="41768000" />
       <workItem from="1579870261018" duration="4669000" />
-      <workItem from="1579882254431" duration="49447000" />
+      <workItem from="1579882254431" duration="100775000" />
+      <workItem from="1580544208144" duration="1757000" />
+      <workItem from="1580564164521" duration="4683000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -731,7 +729,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580105731447</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary=":new: 串联Poker树生成和求解">
+      <created>1580138885153</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1580138885153</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -759,7 +764,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value=":bug: 修正了许多bug，但是expliotiblity还不收敛到0" />
     <MESSAGE value=":bug: 修复了一个bug，expliotiblity现在在一个简单情况下可以收敛到0了" />
     <MESSAGE value=":bug: 修复了在初始手牌和board牌有重合时处理逻辑的一个bug" />
     <MESSAGE value=":bug: confirm了在复杂情况下的收敛性" />
@@ -784,7 +788,8 @@
     <MESSAGE value=":new: 增加action和chance的多进程控制开关" />
     <MESSAGE value=":new: 支持每隔一定深度再fork" />
     <MESSAGE value=":new: 支持扑克树cfr线程最小分割" />
-    <option name="LAST_COMMIT_MESSAGE" value=":new: 支持扑克树cfr线程最小分割" />
+    <MESSAGE value=":new: 串联Poker树生成和求解" />
+    <option name="LAST_COMMIT_MESSAGE" value=":new: 串联Poker树生成和求解" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

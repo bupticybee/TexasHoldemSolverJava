@@ -38,10 +38,12 @@ public class RiverRangeManager
     {
         Map<Long, RiverCombs[]> riverRanges;
 
-        if (player == 1)
+        if (player == 0)
             riverRanges = p1RiverRanges;
-        else
+        else if(player == 1)
             riverRanges = p2RiverRanges;
+        else
+            throw new RuntimeException("error range  player");
 
         long key = board_long;
 
