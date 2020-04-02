@@ -7,7 +7,6 @@ import icybee.riversolver.exceptions.NodeLengthMismatchException;
 import icybee.riversolver.exceptions.NodeNotFoundException;
 import icybee.riversolver.exceptions.RoundNotFoundException;
 import icybee.riversolver.nodes.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.swing.*;
 import javax.swing.tree.TreeNode;
@@ -488,7 +487,7 @@ public class GameTree {
     }
 
     public JSONObject dumps(boolean with_status){
-        if(with_status == true) throw new NotImplementedException();
+        if(with_status == true) throw new RuntimeException();
         return this.reConvertJson(this.root);
     }
 
