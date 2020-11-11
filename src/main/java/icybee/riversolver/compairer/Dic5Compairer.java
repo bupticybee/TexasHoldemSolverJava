@@ -22,6 +22,10 @@ public class Dic5Compairer extends Compairer {
     Map<Long,Integer> cardslong2rank = (Map<Long,Integer>)new HashMap<Long,Integer>();
     public Dic5Compairer(String dic_dir,int lines) throws IOException{
         super(dic_dir,lines);
+
+        cards2rank = (Map<Set<String>,Integer>)new Hashtable<Set<String>,Integer>(lines * 50);
+        cardslong2rank = (Map<Long,Integer>)new Hashtable<Long,Integer>(lines * 50);
+
         BufferedReader bufferedReader = new BufferedReader(new FileReader(dic_dir));
         String str;
         ProgressBar pb = new ProgressBar("Dic5Comapirer Load",lines);

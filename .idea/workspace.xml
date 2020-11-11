@@ -9,17 +9,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 串联Poker树生成和求解">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/TexasHoldemSolverTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/compairer/card5_dic_sorted.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/yamls/rule_holdem_simple.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Dic5Compairer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Dic5Compairer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/SolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/ShortDeckSolverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -38,8 +47,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
   <component name="ProjectId" id="1SrHsHLRkbt1Qz7Ulm6mRfXvgWI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -49,7 +67,7 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -60,31 +78,26 @@
       <recent name="icybee.riversolver.solver" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="icybee.riversolver" />
       <recent name="icybee.riversolver.solver" />
       <recent name="icybee.riversolver.nodes" />
       <recent name="icybee.riversolver.trainable" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\icybee\IdeaProjects\ShortdeckSolverJava\src\test\resources\yamls" />
+      <recent name="C:\Users\icybee\IdeaProjects\ShortdeckSolverJava\src\test\resources\compairer" />
       <recent name="$PROJECT_DIR$/src/test/resources/yamls" />
       <recent name="$PROJECT_DIR$/src/test/resources/python" />
       <recent name="$PROJECT_DIR$/src/test/resources/gametree" />
-      <recent name="$PROJECT_DIR$/src/test/resources/bash" />
-      <recent name="$PROJECT_DIR$/img" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="JUnit.testRiverSolver">
+  <component name="RunManager" selected="Maven.riversolver [test]">
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -104,36 +117,6 @@
       </option>
       <envs />
       <patterns />
-      <method />
-    </configuration>
-    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="TestNGTestDiscovery" factoryName="TestNG Test Discovery" changeList="All">
@@ -164,22 +147,7 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="uTestRunConfiguration" factoryName="utest">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <setting name="path" value="" />
-      <setting name="package" value="" />
-      <setting name="vmparams" value="" />
-      <setting name="params" value="" />
-      <setting name="workingDirectory" value="" />
-      <setting name="searchForTest" value="Across module dependencies" />
-      <setting name="testName" value="" />
-      <setting name="testKind" value="Class" />
-      <setting name="showProgressMessages" value="true" />
-      <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="AndroidRunConfigurationType">
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -208,7 +176,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType">
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
       <option name="TESTING_TYPE" value="0" />
       <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
       <option name="METHOD_NAME" value="" />
@@ -232,12 +200,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration name="CommandlineSolver" type="Application" factoryName="Application" nameIsGenerated="true">
@@ -292,6 +254,7 @@
       <setting name="vmparams" value="" />
       <setting name="cmdLine" value="run-app" />
       <setting name="passParentEnv" value="true" />
+      <setting name="grailsApplicationRoot" value="" />
       <setting name="launchBrowser" value="false" />
       <setting name="launchBrowserUrl" value="" />
       <setting name="depsClasspath" value="false" />
@@ -305,10 +268,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="testRiverSolver" type="JUnit" factoryName="JUnit">
+    <configuration name="testHoldemSolver" type="JUnit" factoryName="JUnit">
       <module name="RiverSolver" />
+      <useClassPathOnly />
       <option name="PACKAGE_NAME" value="icybee.riversolver" />
-      <option name="MAIN_CLASS_NAME" value="icybee.riversolver.SolverTest" />
+      <option name="MAIN_CLASS_NAME" value="icybee.riversolver.TexasHoldemSolverTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="testShortDeckSolver" type="JUnit" factoryName="JUnit">
+      <module name="RiverSolver" />
+      <useClassPathOnly />
+      <option name="PACKAGE_NAME" value="icybee.riversolver" />
+      <option name="MAIN_CLASS_NAME" value="icybee.riversolver.ShortDeckSolverTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <option name="PARAMETERS" value="" />
@@ -477,15 +454,11 @@
     </configuration>
     <list>
       <item itemvalue="Application.CommandlineSolver" />
-      <item itemvalue="JUnit.testRiverSolver" />
+      <item itemvalue="JUnit.testHoldemSolver" />
+      <item itemvalue="JUnit.testShortDeckSolver" />
       <item itemvalue="Maven.TestCases" />
       <item itemvalue="Maven.riversolver [test]" />
     </list>
-  </component>
-  <component name="SbtLocalSettings">
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -518,6 +491,13 @@
       <workItem from="1579882254431" duration="100775000" />
       <workItem from="1580544208144" duration="1757000" />
       <workItem from="1580564164521" duration="4683000" />
+      <workItem from="1582449449668" duration="2529000" />
+      <workItem from="1582639890831" duration="557000" />
+      <workItem from="1582641605670" duration="603000" />
+      <workItem from="1582642220718" duration="707000" />
+      <workItem from="1585836525622" duration="1872000" />
+      <workItem from="1605094028045" duration="2141000" />
+      <workItem from="1605100991891" duration="5138000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -736,7 +716,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580138885153</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary=":bug: 修复一个兼容性bug">
+      <created>1585836922954</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1585836922954</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -764,7 +751,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value=":bug: 修复了一个bug，expliotiblity现在在一个简单情况下可以收敛到0了" />
     <MESSAGE value=":bug: 修复了在初始手牌和board牌有重合时处理逻辑的一个bug" />
     <MESSAGE value=":bug: confirm了在复杂情况下的收敛性" />
     <MESSAGE value=":sparkles: 完成strategy 落盘功能" />
@@ -789,7 +775,42 @@
     <MESSAGE value=":new: 支持每隔一定深度再fork" />
     <MESSAGE value=":new: 支持扑克树cfr线程最小分割" />
     <MESSAGE value=":new: 串联Poker树生成和求解" />
-    <option name="LAST_COMMIT_MESSAGE" value=":new: 串联Poker树生成和求解" />
+    <MESSAGE value=":bug: 修复一个兼容性bug" />
+    <option name="LAST_COMMIT_MESSAGE" value=":bug: 修复一个兼容性bug" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605105465487">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605105465487" />
+    <state x="689" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605103119406">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="689" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605103119406" />
+    <state width="1877" height="360" key="GridCell.Tab.0.bottom" timestamp="1605105858088">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="360" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605105858088" />
+    <state width="1877" height="360" key="GridCell.Tab.0.center" timestamp="1605105858088">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="360" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605105858088" />
+    <state width="1877" height="360" key="GridCell.Tab.0.left" timestamp="1605105858088">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="360" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605105858088" />
+    <state width="1877" height="360" key="GridCell.Tab.0.right" timestamp="1605105858088">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="360" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605105858088" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1605106356734">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605106356734" />
+    <state x="636" y="253" width="647" height="534" key="find.popup" timestamp="1605101638504">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="636" y="253" width="647" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605101638504" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
