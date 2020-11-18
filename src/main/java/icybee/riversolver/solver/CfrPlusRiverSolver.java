@@ -333,12 +333,7 @@ public class CfrPlusRiverSolver extends Solver{
         // TODO 查为什么PCS的exploitability不为0
         int random_deal = 0,cardcount = 0;
         if(this.monteCarolAlg==MonteCarolAlg.PUBLIC) {
-            if (this.round_deal[GameTreeNode.gameRound2int(node.getRound())] == -1) {
-                random_deal = ThreadLocalRandom.current().nextInt(1, possible_deals + 1 + 2);
-                this.round_deal[GameTreeNode.gameRound2int(node.getRound())] = random_deal;
-            } else {
-                random_deal = this.round_deal[GameTreeNode.gameRound2int(node.getRound())];
-            }
+            random_deal = ThreadLocalRandom.current().nextInt(1, possible_deals + 1 + 2);
         }
         for(int card = 0;card < node.getCards().size();card ++){
             GameTreeNode one_child = node.getChildrens().get(card);
@@ -354,7 +349,22 @@ public class CfrPlusRiverSolver extends Solver{
             long new_board_long = current_board | card_long;
             if(this.monteCarolAlg == MonteCarolAlg.PUBLIC){
                 if(cardcount == random_deal){
-                    float[] utility = this.cfr(player,one_child,reach_probs,iter,new_board_long);
+                    // TODO reach prob 在这里是不是不能直接往下传，是不是应该mute掉 这轮发的card然后重新normalize?
+                    float[][] new_reach_probs = new float[2][];
+
+                    new_reach_probs[player] = new float[reach_probs[player].length];
+                    new_reach_probs[1 - player] = new float[reach_probs[1 - player].length];
+
+                    for(int one_player = 0;one_player < 2;one_player ++) {
+                        int player_hand_len = this.ranges[one_player].length;
+                        for (int player_hand = 0; player_hand < player_hand_len; player_hand++) {
+                            PrivateCards one_private = this.ranges[one_player][player_hand];
+                            long privateBoardLong = one_private.toBoardLong();
+                            if (Card.boardsHasIntercept(card_long, privateBoardLong)) continue;
+                            new_reach_probs[one_player][player_hand] = reach_probs[one_player][player_hand];
+                        }
+                    }
+                    float[] utility = this.cfr(player,one_child,new_reach_probs,iter,new_board_long);
                     /*
                     for(int i = 0;i < utility.length;i ++){
                         utility[i] = utility[i] * possible_deals / (possible_deals + 2);

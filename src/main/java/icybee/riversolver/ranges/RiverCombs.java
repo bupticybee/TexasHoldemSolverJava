@@ -6,7 +6,6 @@ package icybee.riversolver.ranges;
  */
 public class RiverCombs implements Comparable<RiverCombs>{
     int[] board;
-    // TODO OMG,how to write,what to write??????????
     public int rank;
     public PrivateCards private_cards;
     public int reach_prob_index;
@@ -20,7 +19,7 @@ public class RiverCombs implements Comparable<RiverCombs>{
 
     @Override
     public int compareTo(RiverCombs o) {
-        if (this.rank < o.rank)
+        if (this.rank < o.rank) // if a's rank is smaller than b's , a win b lose
             return 1;
         if (this.rank > o.rank)
             return -1;

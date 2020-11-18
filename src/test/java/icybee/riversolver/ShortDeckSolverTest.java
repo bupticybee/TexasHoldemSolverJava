@@ -15,6 +15,7 @@ import icybee.riversolver.utils.PrivateRangeConverter;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.naming.PartialResultException;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Arrays;
@@ -473,7 +474,76 @@ public class ShortDeckSolverTest
         System.out.println("end solverTest");
     }
 
-    //@Test
+    @Test
+    public void parrallelCfrFlopSolverTest() throws BoardNotFoundException,Exception{
+        System.out.println("solverTest");
+
+        //String config_name = "yamls/rule_shortdeck_simple.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
+        //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
+        String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
+        Config config = this.loadConfig(config_name);
+        GameTree game_tree = SolverEnvironment.gameTreeFromConfig(config, ShortDeckSolverTest.deck);
+
+        String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
+        String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
+        //String player2RangeStr = "KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
+
+        // String player1RangeStr = "87";
+        // String player2RangeStr = "87";
+        /*
+        case 'c': return 0; // 梅花
+        case 'd': return 1; // 方块
+        case 'h': return 2; // 红桃
+        case 's': return 3; // 黑桃
+         */
+
+        int[] initialBoard = new int[]{
+                Card.strCard2int("Kd"),
+                Card.strCard2int("Jd"),
+                Card.strCard2int("Td"),
+        };
+
+        PrivateCards[] player1Range = PrivateRangeConverter.rangeStr2Cards(player1RangeStr,initialBoard);
+        PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
+
+        String logfile_name = "src/test/resources/outputs/outputs_log.txt";
+        Solver solver = new ParallelCfrPlusSolver(game_tree
+                , player1Range
+                , player2Range
+                , initialBoard
+                , ShortDeckSolverTest.compairer
+                , ShortDeckSolverTest.deck
+                ,31
+                ,false
+                , 10
+                ,logfile_name
+                , DiscountedCfrTrainable.class
+                ,MonteCarolAlg.NONE
+                ,-1
+                ,1
+                ,0
+                , 1
+                , 0
+        );
+        Map train_config = new HashMap();
+        solver.train(train_config);
+
+        //String strategy_json = solver.getTree().dumps(false).toJSONString();
+
+        //String strategy_fname = "src/test/resources/outputs/outputs_strategy.json";
+
+        //File output_file = new File(strategy_fname);
+        //FileWriter writer = new FileWriter(output_file);
+        //writer.write(strategy_json);
+        //writer.flush();
+        //writer.close();
+
+        //System.out.println("end solverTest");
+    }
+
+    @Test
     public void cfrFlopSolverTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
 
@@ -486,8 +556,8 @@ public class ShortDeckSolverTest
         GameTree game_tree = SolverEnvironment.gameTreeFromConfig(config, ShortDeckSolverTest.deck);
 
         String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
-        //String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
-        String player2RangeStr = "KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
+        String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
+        //String player2RangeStr = "KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
 
         // String player1RangeStr = "87";
         // String player2RangeStr = "87";
@@ -514,7 +584,7 @@ public class ShortDeckSolverTest
                 , initialBoard
                 , ShortDeckSolverTest.compairer
                 , ShortDeckSolverTest.deck
-                ,100
+                ,31
                 ,false
                 , 10
                 ,logfile_name
@@ -524,20 +594,20 @@ public class ShortDeckSolverTest
         Map train_config = new HashMap();
         solver.train(train_config);
 
-        String strategy_json = solver.getTree().dumps(false).toJSONString();
+        //String strategy_json = solver.getTree().dumps(false).toJSONString();
 
-        String strategy_fname = "src/test/resources/outputs/outputs_strategy.json";
+        //String strategy_fname = "src/test/resources/outputs/outputs_strategy.json";
 
-        File output_file = new File(strategy_fname);
-        FileWriter writer = new FileWriter(output_file);
-        writer.write(strategy_json);
-        writer.flush();
-        writer.close();
+        //File output_file = new File(strategy_fname);
+        //FileWriter writer = new FileWriter(output_file);
+        //writer.write(strategy_json);
+        //writer.flush();
+        //writer.close();
 
         System.out.println("end solverTest");
     }
 
-    //@Test
+    @Test
     public void cfrFlopSolverPcsTest() throws BoardNotFoundException,Exception{
         System.out.println("solverTest");
 
@@ -578,9 +648,9 @@ public class ShortDeckSolverTest
                 , initialBoard
                 , ShortDeckSolverTest.compairer
                 , ShortDeckSolverTest.deck
-                ,100
+                ,1000
                 ,false
-                , 10
+                , 100
                 ,logfile_name
                 , DiscountedCfrTrainable.class
                 ,MonteCarolAlg.PUBLIC
@@ -592,11 +662,11 @@ public class ShortDeckSolverTest
 
         String strategy_fname = "src/test/resources/outputs/outputs_strategy.json";
 
-        File output_file = new File(strategy_fname);
-        FileWriter writer = new FileWriter(output_file);
-        writer.write(strategy_json);
-        writer.flush();
-        writer.close();
+        //File output_file = new File(strategy_fname);
+        //FileWriter writer = new FileWriter(output_file);
+        //writer.write(strategy_json);
+        //writer.flush();
+        //writer.close();
 
         System.out.println("end solverTest");
     }

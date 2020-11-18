@@ -459,7 +459,6 @@ public class GameTree {
         }else if(node instanceof ShowdownNode){
             return null;
         }else if(node instanceof ChanceNode){
-            // TODO 写这里的策略导出
             ChanceNode chanceNode = (ChanceNode)node;
             List<Card> cards = chanceNode.getCards();
             List<GameTreeNode> childerns = chanceNode.getChildrens();

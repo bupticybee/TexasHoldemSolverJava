@@ -60,7 +60,6 @@ public class Config {
                     this.tree_builder_json = json_file;
                     break;
                 }
-                //TODO 写cfr的配置读取
                 case "solver": {
                     String type = (String)((Map)value).get("type");
                     solver_type = type;

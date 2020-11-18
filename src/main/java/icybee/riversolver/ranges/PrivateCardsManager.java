@@ -15,7 +15,6 @@ public class PrivateCardsManager {
     long initialboard;
     int[][] card_player_index;
 
-    //TODO finish this
     public PrivateCardsManager(PrivateCards[][] private_cards,int player_number,long initialboard){
         this.private_cards = private_cards;
         this.player_number = player_number;
