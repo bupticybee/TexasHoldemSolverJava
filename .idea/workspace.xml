@@ -11,6 +11,8 @@
     <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 串联Poker树生成和求解">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Dic5Compairer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Dic5Compairer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/TexasHoldemSolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/TexasHoldemSolverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
@@ -491,7 +493,9 @@
       <workItem from="1585836525622" duration="1872000" />
       <workItem from="1605094028045" duration="2141000" />
       <workItem from="1605100991891" duration="5138000" />
-      <workItem from="1605106355307" duration="3603000" />
+      <workItem from="1605106355307" duration="4031000" />
+      <workItem from="1605625580746" duration="1748000" />
+      <workItem from="1605709360037" duration="821000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -724,7 +728,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605106434494</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary=":new: modify test case to include non-shortdeck testcase">
+      <created>1605110106621</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1605110106621</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -752,7 +763,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value=":bug: confirm了在复杂情况下的收敛性" />
     <MESSAGE value=":sparkles: 完成strategy 落盘功能" />
     <MESSAGE value=":sparkles: 在一个简单局面下和piosolver精度校对一致" />
     <MESSAGE value=":sparkles: 增加CFR和discounted CFR" />
@@ -777,7 +787,8 @@
     <MESSAGE value=":new: 串联Poker树生成和求解" />
     <MESSAGE value=":bug: 修复一个兼容性bug" />
     <MESSAGE value=":new: add support for both holdem and shortdeck" />
-    <option name="LAST_COMMIT_MESSAGE" value=":new: add support for both holdem and shortdeck" />
+    <MESSAGE value=":new: modify test case to include non-shortdeck testcase" />
+    <option name="LAST_COMMIT_MESSAGE" value=":new: modify test case to include non-shortdeck testcase" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605105465487">
@@ -788,34 +799,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="689" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605103119406" />
-    <state x="533" y="113" key="CommitChangelistDialog2" timestamp="1605110072143">
+    <state x="533" y="113" key="CommitChangelistDialog2" timestamp="1605110385655">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="533" y="113" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1605110072143" />
-    <state width="1877" height="360" key="GridCell.Tab.0.bottom" timestamp="1605105858088">
+    <state x="533" y="113" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1605110385655" />
+    <state width="1877" height="358" key="GridCell.Tab.0.bottom" timestamp="1605710341277">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="360" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605105858088" />
-    <state width="1877" height="360" key="GridCell.Tab.0.center" timestamp="1605105858088">
+    <state width="1877" height="358" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605710341277" />
+    <state width="1877" height="358" key="GridCell.Tab.0.center" timestamp="1605710341276">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="360" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605105858088" />
-    <state width="1877" height="360" key="GridCell.Tab.0.left" timestamp="1605105858088">
+    <state width="1877" height="358" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605710341276" />
+    <state width="1877" height="358" key="GridCell.Tab.0.left" timestamp="1605710341276">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="360" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605105858088" />
-    <state width="1877" height="360" key="GridCell.Tab.0.right" timestamp="1605105858088">
+    <state width="1877" height="358" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605710341276" />
+    <state width="1877" height="358" key="GridCell.Tab.0.right" timestamp="1605710341276">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="360" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605105858088" />
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1605106356734">
+    <state width="1877" height="358" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605710341276" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1605110130200">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605106356734" />
-    <state x="636" y="253" width="647" height="534" key="find.popup" timestamp="1605101638504">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605110130200" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1605709361865">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="636" y="253" width="647" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605101638504" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605709361865" />
+    <state x="636" y="253" width="647" height="534" key="find.popup" timestamp="1605626673707">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="636" y="253" width="647" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605626673707" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

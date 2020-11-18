@@ -22,7 +22,7 @@ public class PrivateRangeConverter {
 
             one_range = cardstr_arr.get(0);
             if(cardstr_arr.size() == 2){
-                weight = Integer.valueOf(cardstr_arr.get(1));
+                weight = Float.valueOf(cardstr_arr.get(1));
             }
 
             int range_len = one_range.length();

@@ -18,12 +18,12 @@ import org.paukov.combinatorics3.IGenerator;
  * This file contains code for a card compairer
  */
 public class Dic5Compairer extends Compairer {
-    Map<Set<String>,Integer> cards2rank = (Map<Set<String>,Integer>)new HashMap<Set<String>,Integer>();
+    //Map<Set<String>,Integer> cards2rank = (Map<Set<String>,Integer>)new HashMap<Set<String>,Integer>();
     Map<Long,Integer> cardslong2rank = (Map<Long,Integer>)new HashMap<Long,Integer>();
     public Dic5Compairer(String dic_dir,int lines) throws IOException{
         super(dic_dir,lines);
 
-        cards2rank = (Map<Set<String>,Integer>)new Hashtable<Set<String>,Integer>(lines * 50);
+        //cards2rank = (Map<Set<String>,Integer>)new Hashtable<Set<String>,Integer>(lines * 50);
         cardslong2rank = (Map<Long,Integer>)new Hashtable<Long,Integer>(lines * 50);
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader(dic_dir));
@@ -40,7 +40,7 @@ public class Dic5Compairer extends Compairer {
             Set<String> cards_set = new HashSet<>(Arrays.asList(cards));
 
             int rank = Integer.valueOf(linesp[1]);
-            cards2rank.put(cards_set,rank);
+            //cards2rank.put(cards_set,rank);
             if(cardslong2rank.containsKey(Card.boardCards2long(cards))){
                 String err_info = "";
                 for(String one_card:cards) err_info += (" " + one_card);
@@ -78,11 +78,11 @@ public class Dic5Compairer extends Compairer {
             List<String> cards_str = comb_cards.stream().map(
                     Card::getCard
             ).collect(Collectors.toList());
-            Set<String> cards_set = new HashSet<>(cards_str);
-            Integer rank = cards2rank.get(cards_set);
+            //Set<String> cards_set = new HashSet<>(cards_str);
+            Integer rank = cardslong2rank.get(Card.boardCards2long(cards_str));
 
             if (rank == null){
-                throw new CardsNotFoundException(cards_set.toString());
+                throw new CardsNotFoundException(cards_str.toString());
             }
             return rank;
         }).collect(Collectors.toList());

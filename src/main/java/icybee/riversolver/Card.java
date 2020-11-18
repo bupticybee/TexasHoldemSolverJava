@@ -53,6 +53,14 @@ public class Card {
         return boardCards2long(cards_objs);
     }
 
+    public static long boardCards2long(List<String> cards) {
+        Card[] cards_objs = new Card[cards.size()];
+        for(int i = 0;i < cards.size();i++){
+            cards_objs[i] = new Card(cards.get(i));
+        }
+        return boardCards2long(cards_objs);
+    }
+
     public static long boardCard2long(Card card){
         try {
             return boardCards2long(new Card[]{card});
