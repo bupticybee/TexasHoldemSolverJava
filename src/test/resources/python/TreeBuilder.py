@@ -380,7 +380,6 @@ class FiveCardTexasTreeBuilder(TreeBuilder):
                         continue
                 # 第二轮之后的check后面只能跟 bet 
                 if root.last_action == 'check':
-                    # TODO check这里的逻辑替换会不会引出新问题
                     #if root.parent and root.parent.parent is None:
                     if root.parent and (root.parent.parent is None and root.betting_round == 1):
                         pass
@@ -476,7 +475,6 @@ class Node(object):
             hash(''.join(self.bet_history)) % 10000
         )
     
-# TODO get chance node done later
 class ChanceNode(Node):
     def __init__(self, parent, committed, players, player,  bet_history,betting_round=None,**kwargs):
         super().__init__(parent, committed, players, player,  bet_history,betting_round=betting_round)

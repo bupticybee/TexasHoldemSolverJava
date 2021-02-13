@@ -10,7 +10,7 @@ with open('resources/yamls/general_rule.yaml') as fhdl:
 
 startJVM(getDefaultJVMPath(), "-ea", "-Djava.class.path=%s" % "./RiverSolver.jar")
 
-PokerSolver = JClass('icybee.riversolver.runtime.PokerSolver')
+PokerSolver = JClass('icybee.solver.runtime.PokerSolver')
 
 ps = PokerSolver("Dic5Compairer",
                  "./resources/compairer/card5_dic_sorted_shortdeck.txt",

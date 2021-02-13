@@ -11,13 +11,51 @@
     <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 串联Poker树生成和求解">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCardsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCardsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/RiverCombs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/RiverCombs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/ShortDeckSolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/riversolver/ShortDeckSolverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/GameTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/GameTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/RiverRangeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/RiverRangeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/SolverEnvironment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/SolverEnvironment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Compairer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/compairer/Compairer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/compairer/Dic5Compairer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/compairer/Dic5Compairer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/exceptions/ActionNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/exceptions/ActionNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/exceptions/BoardNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/exceptions/BoardNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/exceptions/CardsNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/exceptions/CardsNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/exceptions/NodeLengthMismatchException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/exceptions/NodeLengthMismatchException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/exceptions/NodeNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/exceptions/NodeNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/exceptions/RoundNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/exceptions/RoundNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ActionNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/nodes/ActionNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ChanceNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/nodes/ChanceNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/nodes/GameActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/GameTreeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/nodes/GameTreeNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/ShowdownNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/nodes/ShowdownNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/nodes/TerminalNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/nodes/TerminalNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/ranges/PrivateCards.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/PrivateCardsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/ranges/PrivateCardsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/ranges/RiverCombs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/ranges/RiverCombs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/runtime/CommandlineSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/runtime/CommandlineSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/runtime/PokerSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/runtime/PokerSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/BestResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/solver/BestResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/CfrPlusRiverSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/solver/CfrPlusRiverSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/MonteCarolAlg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/solver/MonteCarolAlg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParallelCfrPlusSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/solver/ParallelCfrPlusSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/ParallelDcfrSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/solver/ParallelDcfrSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/PublicChanceSamplingSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/solver/PublicChanceSamplingSolver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/solver/Solver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/solver/Solver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrPlusTrainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/trainable/CfrPlusTrainable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/CfrTrainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/trainable/CfrTrainable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/DiscountedCfrTrainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/trainable/DiscountedCfrTrainable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/trainable/Trainable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/trainable/Trainable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/utils/PrivateRangeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/utils/PrivateRangeConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/riversolver/utils/Range.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/utils/Range.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/ShortDeckSolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/solver/ShortDeckSolverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/riversolver/TexasHoldemSolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/solver/TexasHoldemSolverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/python/TreeBuilder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/python/TreeBuilder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/python/java_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/python/java_interface.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +99,12 @@
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/icybee/riversolver" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/test/resources/yamls" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -88,13 +132,19 @@
       <recent name="$PROJECT_DIR$/src/test/resources/gametree" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.testShortDeckSolver">
-    <configuration default="true" type="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.testHoldemSolver">
     <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -144,7 +194,7 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
+    <configuration default="true" type="AndroidRunConfigurationType">
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -173,7 +223,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
+    <configuration default="true" type="AndroidTestRunConfigurationType">
       <option name="TESTING_TYPE" value="0" />
       <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
       <option name="METHOD_NAME" value="" />
@@ -199,13 +249,19 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CommandlineSolver" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="icybee.riversolver.runtime.CommandlineSolver" />
+      <option name="MAIN_CLASS_NAME" value="icybee.solver.runtime.CommandlineSolver" />
       <module name="RiverSolver" />
       <option name="PROGRAM_PARAMETERS" value="-c &quot;src/test/resources/yamls/rule_generated_game.yaml&quot; -p1 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -p2 &quot;AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76&quot; -b &quot;Kd,Jd,Td&quot; -n 200 -i 50 -d false -p true -o &quot;src/test/resources/outputs/outputs_strategy.json&quot; -l &quot;src/test/resources/outputs/outputs_log.txt&quot; -a &quot;discounted_cfr&quot; -m &quot;none&quot; -t 2 -fa 1 -fc 1 -fe 1 -fs 0" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="icybee.riversolver.runtime.*" />
+          <option name="PATTERN" value="icybee.solver.runtime.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -267,9 +323,8 @@
     </configuration>
     <configuration name="testHoldemSolver" type="JUnit" factoryName="JUnit">
       <module name="RiverSolver" />
-      <useClassPathOnly />
-      <option name="PACKAGE_NAME" value="icybee.riversolver" />
-      <option name="MAIN_CLASS_NAME" value="icybee.riversolver.TexasHoldemSolverTest" />
+      <option name="PACKAGE_NAME" value="icybee.solver" />
+      <option name="MAIN_CLASS_NAME" value="icybee.solver.TexasHoldemSolverTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <option name="PARAMETERS" value="" />
@@ -280,9 +335,8 @@
     </configuration>
     <configuration name="testShortDeckSolver" type="JUnit" factoryName="JUnit">
       <module name="RiverSolver" />
-      <useClassPathOnly />
-      <option name="PACKAGE_NAME" value="icybee.riversolver" />
-      <option name="MAIN_CLASS_NAME" value="icybee.riversolver.ShortDeckSolverTest" />
+      <option name="PACKAGE_NAME" value="icybee.solver" />
+      <option name="MAIN_CLASS_NAME" value="icybee.solver.ShortDeckSolverTest" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <option name="PARAMETERS" value="" />
