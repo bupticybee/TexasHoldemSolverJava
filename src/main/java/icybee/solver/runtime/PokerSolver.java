@@ -46,7 +46,7 @@ public class PokerSolver {
         tree = SolverEnvironment.gameTreeFromJson(tree_json,this.deck);
     }
 
-    public void train(
+    public String train(
             String player1_range,
             String player2_range,
             String initial_board,
@@ -137,11 +137,16 @@ public class PokerSolver {
         solver.train(train_config);
 
         String strategy_json = solver.getTree().dumps(false).toJSONString();
-        File output_file = new File(output_strategy_file);
-        FileWriter writer = new FileWriter(output_file);
-        writer.write(strategy_json);
-        writer.flush();
-        writer.close();
+        if(output_strategy_file == null || output_strategy_file.isEmpty()){
+            return strategy_json;
+        }else {
+            File output_file = new File(output_strategy_file);
+            FileWriter writer = new FileWriter(output_file);
+            writer.write(strategy_json);
+            writer.flush();
+            writer.close();
+            return output_strategy_file;
+        }
     }
 
 }
