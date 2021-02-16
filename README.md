@@ -106,9 +106,12 @@ gameTree = PartGameTreeBuilder(rule)
 gameTree.gen_km_json("./.tree.km",limit=np.inf,ret_json=True)
 ```
 
-ps_shortdeck.build_game_tree("./.tree.km")
+在solver中读取并且在内存中构建这颗游戏树
+```python
+ps_holdem.build_game_tree("./.tree.km")
+```
 
-
+开始输入各个求解参数并且求解，这块的各个参数可以参考piosolver。
 ```python
 result = ps_holdem.train(
     "AA:0.5,KK:0.9,QQ:0.8,97,96,87,86,76", # player1 的range，字符串用','间隔开，range写法有"AA:0.5"代表 player有对Arange的权重为0.5;还有一种忽略权重的写法"AA" 代表 player有对A的权重是1,这里的定义和piosolver一致
