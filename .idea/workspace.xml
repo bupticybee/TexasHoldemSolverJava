@@ -9,16 +9,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 串联Poker树生成和求解">
-      <change afterPath="$PROJECT_DIR$/img/solving.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/strategy1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/strategy2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/strategy3.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/runtime/PokerSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/runtime/PokerSolver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_strategy.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/python/java_interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/python/java_interface.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -539,7 +531,7 @@
       <workItem from="1605625580746" duration="1748000" />
       <workItem from="1605709360037" duration="7301000" />
       <workItem from="1605719321107" duration="225000" />
-      <workItem from="1613367522845" duration="18658000" />
+      <workItem from="1613367522845" duration="19844000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>

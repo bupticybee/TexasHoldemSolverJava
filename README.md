@@ -12,6 +12,7 @@
 - 完全开源并且免费
 - 支持标准德州扑克和流行的变种玩法短牌
 - 主要聚焦在翻牌后求解
+- 支持命令行和python调用
 
 本项目适合:
 - 德州扑克高级玩家
@@ -22,9 +23,11 @@
 下载release包,release包的结构如下：
 
 ```
---- resources
+--- Solver
+ |- resources
  |- java_interface.py
  |- RiverSolver.jar
+ |- riversolver.sh
 ```
 
 其中RiverSolver是德州扑克solver主体程序，```java_interface.py``` 是通过python调用solver的示例程序，其中的测试用例包含了
@@ -33,6 +36,8 @@
 - 短牌river求解示例
 - 标准德州扑克turn求解示例
 - 标准德州扑克river求解示例
+
+riversolver.sh 包含了命令行调用solver的示例
 
 下载release包后通过 ```python3 java_interface.py``` 来进行测试.
 
@@ -134,6 +139,10 @@ result = ps_holdem.train(
 ```
 
 执行上面的代码，求解器就会开始工作，求解时间和游戏树大小，双方range复杂程度，还有计算机配置有关，在我的mac book pro上，求解river肯定可以在1秒内完成，turn的求解一般在10秒内也可以完成，机器配置越好求解越快。
+
+## 命令行调用方法
+
+参考release包中的riversolver.sh,调用参数和python接口相同
 
 ## 分析求解器产生的结果
 首先求解器运行的时候会输出类似如下的日志:
