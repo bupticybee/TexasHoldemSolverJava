@@ -10,7 +10,7 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 A open sourced, efficient Texas Hold'em and short deck solver.
 
-[algs](img/solving.gif)
+![algs](img/solving.gif)
 
 This is a java-based Texas Hold'em solver, fully open source, supports cross-language calls (supports python and command-line calls by default). Support standard Texas Hold'em and it's popular variant short-deck.
 

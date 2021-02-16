@@ -9,7 +9,7 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 一个完全开源，java实现的高效标准德州扑克和短牌solver
 
-[algs](img/solving.gif)
+![algs](img/solving.gif)
 
 这是一个基于java的德州扑克solver,完全开源,支持跨语言调用(默认支持python和命令行调用),实现了标准德州扑克和德州扑克的一个变种-德州扑克短牌的solver,和piosolver等常见德州扑克solver类似，重点提供翻牌后情况的求解，solver求解结果结果和piosolver完全对齐。速度上在turn和river上比piosolver快一些，但是flop比piosolver慢。
 
