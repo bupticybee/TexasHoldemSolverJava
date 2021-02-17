@@ -66,7 +66,8 @@ pip3 install networkx
 pip3 install matplotlib
 ```
 
-## Call solver through python
+## Usage
+### python api
 
 Althrough written in java. TexasHoldemSolverJava is by default called through python.
 
@@ -156,11 +157,11 @@ result = ps_holdem.train(
 
 The solver will start to work after executing the above code. Time required for solving is affected by game tree size, range complicity, and computer hardware. In my mac book pro, river can be solved in less than 1 second, turn can be solved usually within 10 seconds.
 
-## Call solver through command line 
+### command line api
 
 Please refer to code in ```riversolver.sh``` in [release package](https://github.com/bupticybee/TexasHoldemSolverJava/releases). The parameters are the same to the python code.
 
-## Reading the Solver's output
+### Reading the Solver's output
 When running, the solver would generate logs like this:
 ```text
 Iter: 0
@@ -223,6 +224,10 @@ TexasHoldemSolverJava is a IDEA project, an IDEA environment is required to comp
 4. press build -> build artifacts -> all artifacts -> build to generate the release package
 5. the release package can be found in the ```out``` folder in project root
 
+## Algorithm
+As shown in the figure below, thanks to the implementation of the latest algorithm variant discounted CFR ++, algorithm used in this project can be a lot faster than traditional algorithms such as CFR +.
+![algs](img/algs.png)
+
 ## c++ version
 
 If you somehow feel our java version is not fast enough,here is a ported [c++ version](https://github.com/bupticybee/TexasSolver) ,c++ version is faster than java version in turn and river, however still contains certain problems：
@@ -230,10 +235,6 @@ If you somehow feel our java version is not fast enough,here is a ported [c++ ve
 - supports only Linux machine
 - manually compile is reqiured before use
 - c++ version's code is not well optimized, it's slower than the java version on flop.
-
-## Algorithm
-As shown in the figure below, thanks to the implementation of the latest algorithm variant discounted CFR ++, our algorithm can be a lot faster than traditional algorithms such as CFR +.
-![algs](img/algs.png)
 
 ## License
 

@@ -61,7 +61,8 @@ pip3 install networkx
 pip3 install matplotlib
 ```
 
-## python 调用方法
+## 使用
+### python 调用方法
 
 python 调用的所有代码均可在release包中的 java_interface.py中找到。这里简单描述调用过程和一些参数设定。
 
@@ -147,11 +148,11 @@ result = ps_holdem.train(
 
 执行上面的代码，求解器就会开始工作，求解时间和游戏树大小，双方range复杂程度，还有计算机配置有关，在我的mac book pro上，求解river肯定可以在1秒内完成，turn的求解一般在10秒内也可以完成，机器配置越好求解越快。
 
-## 命令行调用方法
+### 命令行调用方法
 
 参考release包中的riversolver.sh,调用参数和python接口相同
 
-## 分析求解器产生的结果
+### 分析求解器产生的结果
 首先求解器运行的时候会输出类似如下的日志:
 ```text
 Iter: 0
@@ -210,6 +211,10 @@ actions:
 4. 菜单栏 build -> build artifacts -> all artifacts -> build 生成release包
 5. 编译完成的release包可以在工程根目录下的out 路径中找到
 
+## 算法
+如图,得益于实现的最新算法的变种 discounted cfr++, 在算法上可以保证比cfr+等传统算法快得多的速度。
+![algs](img/algs.png)
+
 ## c++ 版本
 
 如果你觉得这个java版本还不够快，可以尝试一下我们的[c++版本](https://github.com/bupticybee/TexasSolver) ,c++版本在turn和river上会比java版本快，但是有两个缺点：
@@ -217,10 +222,6 @@ actions:
 - 仅支持Linux机器
 - 使用前必须重新编译
 - 没有很好的优化，在flop的计算上会占用数量惊人的内存空间
-
-## 算法
-如图,得益于实现的最新算法的变种 discounted cfr++, 在算法上可以保证比cfr+等传统算法快得多的速度。
-![algs](img/algs.png)
 
 ## License
 
