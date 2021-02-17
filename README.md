@@ -216,8 +216,8 @@ Each specific item of strategy contains the "optimal strategy" of specific hand 
 For example, the figure above represents that when player 1 gets the hand of qd7c (square Q, plum 7), the optimal strategy is to check with 34% probability and bet with 65% probability.
 
 ## Compile the release package
-
-TexasHoldemSolverJava is a IDEA project, an IDEA environment is required to compile the release package, if you want to compile the release package, please follow the following instruction：
+Normally compiling the release package manually is not required. It can be directly downloaded [here](https://github.com/bupticybee/TexasHoldemSolverJava/releases)
+However if you intend to modify this project, recompiling is required. TexasHoldemSolverJava is a IDEA project, an IDEA environment is required to compile the release package, if you want to compile the release package, please follow the following instruction：
 1. install IntellIJ IDEA
 2. download TexasHoldemSolverJava from github and load to IntellIJ IDEA
 3. press build -> build project to compile the projet from source

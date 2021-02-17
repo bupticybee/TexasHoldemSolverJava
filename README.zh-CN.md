@@ -27,7 +27,7 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 ## 安装
 
-下载release包,release包的结构如下：
+下载[release](https://github.com/bupticybee/TexasHoldemSolverJava/releases) 包,release包的结构如下：
 
 ```
 --- Solver
@@ -46,7 +46,7 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 riversolver.sh 包含了命令行调用solver的示例
 
-下载release包后通过 ```python3 java_interface.py``` 来进行测试.
+下载[release](https://github.com/bupticybee/TexasHoldemSolverJava/releases) 包后通过 ```python3 java_interface.py``` 来进行测试.
 
 除了需要下载软件本身之外，TexasHoldemSolverJava 还依赖 JRE 11.0.2 作为运行库。如果电脑上没有请安装java JRE 11.0.2。
 
@@ -64,7 +64,7 @@ pip3 install matplotlib
 ## 使用
 ### python 调用方法
 
-python 调用的所有代码均可在release包中的 java_interface.py中找到。这里简单描述调用过程和一些参数设定。
+python 调用的所有代码均可在[release](https://github.com/bupticybee/TexasHoldemSolverJava/releases) 包中的 java_interface.py中找到。这里简单描述调用过程和一些参数设定。
 
 撰写python代码时，首先保证rsources目录和jar文件（通过release下载）在work dir下,import 各个依赖包：
 
@@ -150,7 +150,7 @@ result = ps_holdem.train(
 
 ### 命令行调用方法
 
-参考release包中的riversolver.sh,调用参数和python接口相同
+参考[release](https://github.com/bupticybee/TexasHoldemSolverJava/releases) 包中的riversolver.sh,调用参数和python接口相同
 
 ### 分析求解器产生的结果
 首先求解器运行的时候会输出类似如下的日志:
@@ -202,9 +202,10 @@ actions:
 
 比如在上图中的信息就代表player1在拿到 Qd7c (方块Q，梅花7) 手牌的时候，最优策略就是以 34%的概率去check，以65%概率去 bet。
 
-## 自己编译release包
+## 编译release包
 
-本项目是一个IDEA项目，需要在IDEA环境下编译release包，具体步骤：
+一般情况下release包不需要编译，而可以直接从[项目release](https://github.com/bupticybee/TexasHoldemSolverJava/releases) 下载
+如果需要对项目进行二次开发，则需要重新编译release包。本项目是一个IDEA项目，需要在IDEA环境下编译release包，具体步骤：
 1. 安装IntellIJ IDEA
 2. 从github上下载本项目，并且加载到IntellIJ IDEA中
 3. 菜单栏 build -> build project 编译项目
