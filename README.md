@@ -240,3 +240,7 @@ If you somehow feel our java version is not fast enough,here is a ported [c++ ve
 
 [MIT](LICENSE) © bupticybee
 
+## Contact
+
+icybee@yeah.net
+
