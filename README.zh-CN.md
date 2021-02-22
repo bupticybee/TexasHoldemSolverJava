@@ -7,7 +7,7 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 ## 项目介绍
 
-一个完全开源，java实现的高效标准德州扑克和短牌solver
+一个完全开源，java实现的高效标准德州扑克和短牌solver, 看看这个 [介绍视频](https://www.bilibili.com/video/BV1s5411N7gf?from=search&seid=8860812381397878796) 了解更多.
 
 ![algs](img/solving.gif)
 
