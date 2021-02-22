@@ -8,7 +8,7 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 ## Introduction
 
-A open sourced, efficient Texas Hold'em and short deck solver.
+A open sourced, efficient Texas Hold'em and short deck solver. See this [Introduction video](https://www.youtube.com/watch?v=tf34v0fCvi0) for more.
 
 ![algs](img/solving.gif)
 
