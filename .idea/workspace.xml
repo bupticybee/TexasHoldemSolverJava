@@ -9,6 +9,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 串联Poker树生成和求解">
+      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,6 +25,20 @@
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="RiverSolver" />
@@ -49,6 +66,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="223" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
@@ -99,7 +117,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TexasHoldemSolverTest.cfrTurnSolverTest">
+  <component name="RunManager" selected="Application.SolverGui">
     <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -217,6 +235,20 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="icybee.solver.runtime.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolverGui" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="icybee.solver.gui.SolverGui" />
+      <module name="RiverSolver" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="icybee.solver.gui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -477,6 +509,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.CommandlineSolver" />
+      <item itemvalue="Application.SolverGui" />
       <item itemvalue="JUnit.testHoldemSolver" />
       <item itemvalue="JUnit.testShortDeckSolver" />
       <item itemvalue="JUnit.TexasHoldemSolverTest.cfrTurnSolverTest" />
@@ -485,6 +518,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SolverGui" />
         <item itemvalue="JUnit.TexasHoldemSolverTest.cfrTurnSolverTest" />
       </list>
     </recent_temporary>
@@ -532,7 +566,8 @@
       <workItem from="1605709360037" duration="7301000" />
       <workItem from="1605719321107" duration="225000" />
       <workItem from="1613367522845" duration="20079000" />
-      <workItem from="1613456905034" duration="13510000" />
+      <workItem from="1613456905034" duration="22640000" />
+      <workItem from="1614394966662" duration="12461000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -891,9 +926,5 @@
         <watch expression="player1Range[0]" />
       </configuration>
     </watches-manager>
-  </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
   </component>
 </project>
