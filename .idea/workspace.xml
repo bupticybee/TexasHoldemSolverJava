@@ -9,10 +9,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 串联Poker树生成和求解">
-      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/CustomOutputStream.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/SolverEnvironment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/SolverEnvironment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/compairer/Dic5Compairer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/compairer/Dic5Compairer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/icybee/solver/TexasHoldemSolverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/icybee/solver/TexasHoldemSolverTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +82,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
@@ -567,7 +571,7 @@
       <workItem from="1605719321107" duration="225000" />
       <workItem from="1613367522845" duration="20079000" />
       <workItem from="1613456905034" duration="22640000" />
-      <workItem from="1614394966662" duration="12461000" />
+      <workItem from="1614394966662" duration="22345000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>

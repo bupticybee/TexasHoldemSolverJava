@@ -200,7 +200,7 @@
                       <text value="raise limit"/>
                     </properties>
                   </component>
-                  <component id="64fa5" class="javax.swing.JTextField" binding="a2TextField" default-binding="true">
+                  <component id="64fa5" class="javax.swing.JTextField" binding="raise_limit">
                     <constraints/>
                     <properties>
                       <preferredSize width="50" height="30"/>
@@ -213,7 +213,7 @@
                       <text value="times"/>
                     </properties>
                   </component>
-                  <component id="7c98d" class="javax.swing.JCheckBox" binding="allinCheckBox" default-binding="true">
+                  <component id="7c98d" class="javax.swing.JCheckBox" binding="allin">
                     <constraints/>
                     <properties>
                       <text value="allin"/>
@@ -237,7 +237,7 @@
                       <text value=" small blind:"/>
                     </properties>
                   </component>
-                  <component id="ccf45" class="javax.swing.JTextField" binding="a05TextField" default-binding="true">
+                  <component id="ccf45" class="javax.swing.JTextField" binding="sm_blind">
                     <constraints/>
                     <properties>
                       <preferredSize width="50" height="30"/>
@@ -250,7 +250,7 @@
                       <text value="big blind:"/>
                     </properties>
                   </component>
-                  <component id="3ab12" class="javax.swing.JTextField" binding="a1TextField" default-binding="true">
+                  <component id="3ab12" class="javax.swing.JTextField" binding="big_blind">
                     <constraints/>
                     <properties>
                       <preferredSize width="50" height="30"/>
@@ -263,7 +263,7 @@
                       <text value="Effective stacks"/>
                     </properties>
                   </component>
-                  <component id="3323e" class="javax.swing.JTextField" binding="a10TextField" default-binding="true">
+                  <component id="3323e" class="javax.swing.JTextField" binding="stacks">
                     <constraints/>
                     <properties>
                       <preferredSize width="100" height="30"/>
@@ -376,7 +376,7 @@
                       <text value="algorithm"/>
                     </properties>
                   </component>
-                  <component id="96034" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+                  <component id="96034" class="javax.swing.JComboBox" binding="algorithm">
                     <constraints/>
                     <properties>
                       <model>
@@ -443,21 +443,33 @@
       <grid id="8393" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <autoscrolls value="false"/>
+        </properties>
         <border type="none" title="log"/>
         <children>
-          <component id="3cf9c" class="javax.swing.JTextArea" binding="log">
+          <scrollpane id="cf2e1">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="300" height="-1"/>
               </grid>
             </constraints>
             <properties>
-              <text value=""/>
+              <autoscrolls value="true"/>
             </properties>
-          </component>
+            <border type="none"/>
+            <children>
+              <component id="3cf9c" class="javax.swing.JTextArea" binding="log">
+                <constraints/>
+                <properties>
+                  <autoscrolls value="false"/>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
     </children>

@@ -77,4 +77,11 @@ public class SolverEnvironment {
             throw new RuntimeException();
         }
     }
+    public static Compairer compairerFromConfig(Config config,boolean verbose)throws IOException{
+        if(config.compairer_type.equals("Dic5Compairer")) {
+            return new Dic5Compairer(config.compairer_dic_dir,config.compairer_lines,verbose);
+        }else{
+            throw new RuntimeException();
+        }
+    }
 }
