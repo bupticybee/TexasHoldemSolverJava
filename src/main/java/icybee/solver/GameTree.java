@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by huangxuefeng on 2019/10/7.
@@ -417,6 +418,14 @@ public class GameTree {
             this.stack = rule.stack;
             this.bet_sizes = rule.bet_sizes;
         }
+        public float get_pot(){
+            return this.oop_commit + this.ip_commit;
+        }
+        public float get_commit(int player){
+            if (player == 0) return this.ip_commit;
+            else if(player == 1) return this.oop_commit;
+            else throw new RuntimeException("unknown player");
+        }
     }
 
     public GameTree(Deck deck,
@@ -448,7 +457,7 @@ public class GameTree {
     ){
         int current_player = 1;
         GameTreeNode.GameRound round = intToGameRound(rule.current_round);
-        ActionNode node = new ActionNode(null,null,current_player, round, (double) rule.stack,null);
+        ActionNode node = new ActionNode(null,null,current_player, round, (double) rule.get_pot(),null);
         this.__build(node,rule);
         return node;
     }
@@ -465,7 +474,7 @@ public class GameTree {
         }else if(node instanceof TerminalNode) {
 
         }else if(node instanceof ChanceNode) {
-
+            // TODO manage chance node according to java code
         }else {
             throw new RuntimeException("node type unknown");
         }
@@ -482,9 +491,9 @@ public class GameTree {
             case "roundbegin":
                 possible_actions = new String[]{"check", "bet"};
                 break;
-            case "begin":
-                possible_actions = new String[]{"call", "raise", "fold"};
-                break;
+            //case "begin":
+            //    possible_actions = new String[]{"call", "raise", "fold"};
+            //    break;
             case "bet":
                 possible_actions = new String[]{"call", "raise", "fold"};
                 break;
@@ -504,8 +513,6 @@ public class GameTree {
                 throw new NodeNotFoundException(String.format("last action %s not found", last_action));
         }
         int nextplayer = 1 - player;
-        GameTreeNode nextnode;
-        Rule nextrule;
 
         List<GameActions> actions = new ArrayList<GameActions>();
         List<GameTreeNode> childrens = new ArrayList<GameTreeNode>();
@@ -515,6 +522,8 @@ public class GameTree {
         for (String action : possible_actions) {
             if (action == "check") {
                 // 当不是第一轮的时候 call后面是不能跟check的
+                GameTreeNode nextnode;
+                Rule nextrule;
                 if ((last_action == "call" && rule.current_round == 1) || check_times >= 1) {
 
                     // 双方均check的话,进入摊派阶段
@@ -530,31 +539,95 @@ public class GameTree {
                                 {-p1_commit, p1_commit}
                         };
                         nextrule = new Rule(rule);
-                        nextnode = new ShowdownNode(new Double[]{peace_getback - p1_commit, peace_getback - p2_commit}, payoffs, this.intToGameRound(rule.current_round), (double) rule.stack, root);
+                        nextnode = new ShowdownNode(new Double[]{peace_getback - p1_commit, peace_getback - p2_commit}, payoffs, this.intToGameRound(rule.current_round), (double) rule.get_pot(), root);
                     } else {
                         // 在preflop/flop/turn check 导致游戏进入下一轮
                         nextrule = new Rule(rule);
                         nextrule.current_round += 1;
-                        nextnode = new ChanceNode(null, this.intToGameRound(rule.current_round + 1), (double) rule.stack, root, rule.deck.getCards());
+                        nextnode = new ChanceNode(null, this.intToGameRound(rule.current_round + 1), (double) rule.get_pot(), root, rule.deck.getCards());
                     }
                 } else if (root.getParent() == null) {
                     nextrule = new Rule(rule);
-                    nextnode = new ActionNode(null, null, nextplayer, this.intToGameRound(rule.current_round), (double) rule.stack, root);
+                    nextnode = new ActionNode(null, null, nextplayer, this.intToGameRound(rule.current_round), (double) rule.get_pot(), root);
                 } else {
                     nextrule = new Rule(rule);
-                    nextnode = new ActionNode(null, null, nextplayer, this.intToGameRound(rule.current_round), (double) rule.stack, root);
+                    nextnode = new ActionNode(null, null, nextplayer, this.intToGameRound(rule.current_round), (double) rule.get_pot(), root);
                 }
                 this.__build(nextnode, nextrule,"check",check_times + 1,0);
                 actions.add(new GameActions(GameTreeNode.PokerActions.CHECK,0.0));
                 childrens.add(nextnode);
             }else if (action == "bet"){
+                List<Double> bet_sizes = this.get_possible_bets(root,player,nextplayer,rule);
+                for(Double one_betting_size:bet_sizes){
+                    Rule nextrule = new Rule(rule);
+                    if (player == 0) nextrule.ip_commit += one_betting_size;
+                    else if (player == 1) nextrule.oop_commit += one_betting_size;
+                    else throw new RuntimeException("unknown player");
+                    GameTreeNode nextnode = new ActionNode(null,null,nextplayer,this.intToGameRound(rule.current_round),(double) rule.get_pot(),root);
+                    this.__build(nextnode,nextrule,"bet",0,0);
+                    actions.add(new GameActions(GameTreeNode.PokerActions.BET,one_betting_size));
+                    childrens.add(nextnode);
+                }
 
             }else if (action == "call"){
+                Rule nextrule = new Rule(rule);
+                if (player == 0) nextrule.ip_commit += (rule.oop_commit - rule.ip_commit);
+                else if (player == 1) nextrule.oop_commit += (rule.ip_commit - rule.oop_commit);
+                else throw new RuntimeException("unknown player");
 
+                GameTreeNode nextnode;
+
+                if (rule.current_round == 4 || rule.stack - rule.oop_commit <= 0 || rule.stack - rule.ip_commit <= 0){
+
+                    Double p1_commit = Double.valueOf(rule.ip_commit);
+                    Double p2_commit = Double.valueOf(rule.oop_commit);
+                    Double peace_getback = (p1_commit + p2_commit) / 2;
+
+                    Double[][] payoffs = {
+                            {p2_commit, -p2_commit},
+                            {-p1_commit, p1_commit}
+                    };
+                    Double[] tie_payoffs = new Double[]{peace_getback - p1_commit, peace_getback - p2_commit};
+                    nextnode = new ShowdownNode(tie_payoffs,payoffs,this.intToGameRound(rule.current_round),(double) rule.get_pot(),root);
+                }else{
+                    nextnode = new ChanceNode(null,this.intToGameRound(rule.current_round + 1),(double) rule.get_pot(),root,rule.deck.getCards());
+                }
+                this.__build(nextnode,nextrule,"call",0,0);
+                actions.add(new GameActions(GameTreeNode.PokerActions.CALL, (double) Math.abs(rule.oop_commit - rule.ip_commit)));
+                childrens.add(nextnode);
             }else if (action == "raise"){
+                if(last_action == "call"){
+                    if(!(root.getParent() != null && root.getParent().getParent() == null)) continue;
+                }else if(last_action == "check"){
+                    // 第二轮之后的check后面只能跟 bet
+                    if(!(root.getParent() != null && root.getParent().getParent() == null && rule.current_round == 1)) continue;
+                }
+                // 如果raise次数超出限制，则不可以继续raise
+                if(raise_times >= rule.raise_limit) continue;
+                List<Double> bet_sizes = this.get_possible_bets(root,player,nextplayer,rule);
+                for(Double one_betting_size:bet_sizes){
+                    Rule nextrule = new Rule(rule);
+                    if (player == 0) nextrule.ip_commit += one_betting_size;
+                    else if (player == 1) nextrule.oop_commit += one_betting_size;
+                    else throw new RuntimeException("unknown player");
+                    GameTreeNode nextnode = new ActionNode(null,null,nextplayer,this.intToGameRound(rule.current_round),(double) rule.get_pot(),root);
+                    this.__build(nextnode,nextrule,"raise",0,raise_times + 1);
+                    actions.add(new GameActions(GameTreeNode.PokerActions.RAISE,one_betting_size));
+                    childrens.add(nextnode);
+                }
 
             }else if (action == "fold"){
-
+                Rule nextrule = new Rule(rule);
+                Double[] payoffs;
+                if (player == 0) {
+                    payoffs = new Double[]{Double.valueOf(-rule.ip_commit), Double.valueOf(rule.ip_commit)};
+                }else if(player == 1){
+                    payoffs = new Double[]{Double.valueOf(rule.oop_commit), Double.valueOf(-rule.oop_commit)};
+                }else throw new RuntimeException("unknown player");
+                GameTreeNode nextnode = new TerminalNode(payoffs,nextplayer,this.intToGameRound(rule.current_round), (double) rule.get_pot(),root);
+                this.__build(nextnode,nextrule,"fold",0,0);
+                actions.add(new GameActions(GameTreeNode.PokerActions.FOLD,0.0));
+                childrens.add(nextnode);
             }
         }
         assert(actions.size() != 0);
@@ -567,7 +640,8 @@ public class GameTree {
         return Math.round((number * round_num)) / round_num;
     }
 
-    Double[] get_possible_bets(GameTreeNode root,int player,int next_player,Rule rule){
+    List<Double> get_possible_bets(GameTreeNode root,int player,int next_player,Rule rule){
+        assert(player == 1 - next_player);
         String[] legal_bets = rule.bet_sizes;
         ArrayList<Double> bets_ratios = new ArrayList<Double>();
         boolean all_in = false;
@@ -576,7 +650,7 @@ public class GameTree {
             else bets_ratios.add(Double.valueOf(one_bet) / 100);
         }
         float pot = rule.ip_commit + rule.oop_commit;
-        ArrayList<Double> possible_amounts =  new ArrayList<Double>();
+        List<Double> possible_amounts =  new ArrayList<Double>();
         for(Double one_bet: bets_ratios){
             Double amount;
             if(rule.oop_commit == rule.small_blind){
@@ -593,9 +667,23 @@ public class GameTree {
             }
             possible_amounts.add(amount);
         }
-        if(all_in) possible_amounts.add((double) (rule.stack - (player == 0? rule.oop_commit:rule.ip_commit)));
-        // TODO finish writing this function
-        return null;
+        if(all_in) possible_amounts.add((double) (rule.stack - rule.get_commit(player)));
+
+        if (rule.get_commit(player) != rule.small_blind){
+            // 一开始的possible bet amount不能简单取整
+            possible_amounts = possible_amounts.stream().filter(e -> e > 0).map(n -> Double.valueOf(n.intValue())).collect(Collectors.toList());
+        }
+        if (rule.get_commit(player) == rule.small_blind){
+            possible_amounts = possible_amounts.stream().filter(e -> e >= rule.big_blind).collect(Collectors.toList());
+        }else if (rule.get_commit(player) == rule.big_blind && rule.get_commit(next_player) == rule.big_blind){
+            possible_amounts = possible_amounts.stream().filter(e -> e >= rule.big_blind).collect(Collectors.toList());
+        }else{
+            float gap = rule.get_commit(player) - rule.get_commit(next_player);
+            assert(gap > 0);
+            possible_amounts = possible_amounts.stream().filter(e -> e >= gap * 2).collect(Collectors.toList());
+        }
+        possible_amounts = possible_amounts.stream().filter(e -> e < rule.stack - rule.get_commit(player)).collect(Collectors.toList());
+        return possible_amounts;
     }
 
     void recurrentPrintTree(GameTreeNode node,int depth,int depth_limit) throws ClassCastException{
