@@ -34,6 +34,15 @@ public class ActionNode extends GameTreeNode{
         return childrens;
     }
 
+    public void setActions(List<GameActions> actions) {
+        this.actions = actions;
+    }
+
+    public void setChildrens(List<GameTreeNode> childrens) {
+        this.childrens = childrens;
+    }
+
+
     public int getPlayer() {
         return player;
     }

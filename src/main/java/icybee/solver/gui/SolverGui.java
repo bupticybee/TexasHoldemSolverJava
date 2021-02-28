@@ -17,6 +17,7 @@ import icybee.solver.solver.CfrPlusRiverSolver;
 import icybee.solver.solver.MonteCarolAlg;
 import icybee.solver.solver.ParallelCfrPlusSolver;
 import icybee.solver.solver.Solver;
+import icybee.solver.trainable.CfrPlusTrainable;
 import icybee.solver.trainable.DiscountedCfrTrainable;
 import icybee.solver.utils.PrivateRangeConverter;
 
@@ -134,17 +135,22 @@ public class SolverGui {
     }
 
     private void solve() throws Exception{
+        if (this.game_tree == null){
+            System.out.println("please build tree first.");
+            return;
+        }
         System.out.println("solving...");
-        String player1RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
-        String player2RangeStr = "AA,KK,QQ,JJ,TT,99,88,77,66,AK,AQ,AJ,AT,A9,A8,A7,A6,KQ,KJ,KT,K9,K8,K7,K6,QJ,QT,Q9,Q8,Q7,Q6,JT,J9,J8,J7,J6,T9,T8,T7,T6,98,97,96,87,86,76";
+        String player1RangeStr = iprange.getText();
+        String player2RangeStr = ooprange.getText();
+        // TODO check these ranges
 
-        int[] initialBoard = new int[]{
-                Card.strCard2int("Kd"),
-                Card.strCard2int("Jd"),
-                Card.strCard2int("Td"),
-                Card.strCard2int("7s"),
-                Card.strCard2int("8s")
-        };
+        String board = boardstr.getText();
+        String[] board_cards = board.split(",");
+
+        int[] initialBoard = new int[board_cards.length];
+        for(int i = 0;i < board_cards.length;i ++){
+            initialBoard[i] = Card.strCard2int(board_cards[i]);
+        }
 
         PrivateCards[] player1Range = PrivateRangeConverter.rangeStr2Cards(player1RangeStr,initialBoard);
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
@@ -163,8 +169,8 @@ public class SolverGui {
                 , false
                 , Integer.valueOf(log_interval.getText())
                 , logfile_name
-                , DiscountedCfrTrainable.class
-                , MonteCarolAlg.NONE
+                , algorithm.getSelectedIndex() == 0? DiscountedCfrTrainable.class : CfrPlusTrainable.class
+                , mc.isSelected()? MonteCarolAlg.PUBLIC:MonteCarolAlg.NONE
                 , Integer.valueOf(threads.getText())
                 ,1
                 ,0
@@ -172,6 +178,7 @@ public class SolverGui {
                 , 0
         );
         Map train_config = new HashMap();
+        train_config.put("stop_exploitibility",Double.valueOf(exploitability.getText()));
         solver.train(train_config);
         System.out.println("solve complete");
     }

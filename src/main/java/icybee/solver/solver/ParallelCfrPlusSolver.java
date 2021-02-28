@@ -186,6 +186,18 @@ public class ParallelCfrPlusSolver extends Solver{
 
     }
 
+    private Double getValue(Map<String,Object> meta,String key){
+        Object value = meta.get(key);
+        if(value instanceof Integer){
+            return ((Integer)value).doubleValue();
+        }else if(value instanceof Double){
+            return (Double)value;
+        }else{
+            return Double.valueOf(0);
+        }
+
+    }
+
     @Override
     public void train(Map training_config) throws Exception {
         setTrainable(tree.getRoot());
@@ -203,6 +215,8 @@ public class ParallelCfrPlusSolver extends Solver{
 
         long begintime = System.currentTimeMillis();
         long endtime = System.currentTimeMillis();
+
+        Double stop_exploitibility = this.getValue(training_config,"stop_exploitibility");
         for(int i = 0;i < this.iteration_number;i++){
             for(int player_id = 0;player_id < this.player_number;player_id ++) {
                 if(this.debug){
@@ -228,6 +242,7 @@ public class ParallelCfrPlusSolver extends Solver{
                     jo.put("time_ms",time_ms);
                     fileWriter.write(String.format("%s\n",jo.toJSONString()));
                 }
+                if (stop_exploitibility > expliotibility) break;
                 begintime = System.currentTimeMillis();
             }
         }
