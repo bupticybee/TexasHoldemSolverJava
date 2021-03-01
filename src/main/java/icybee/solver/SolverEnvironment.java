@@ -51,6 +51,24 @@ public class SolverEnvironment {
         }
     }
 
+    public static GameTree gameTreeFromParams(
+            Deck deck,
+            float oop_commit,
+            float ip_commit,
+            int current_round,
+            int raise_limit,
+            float small_blind,
+            float big_blind,
+            float stack,
+            String[] bet_sizes
+            ){
+        try {
+            return new GameTree(deck,oop_commit,ip_commit,current_round,raise_limit,small_blind,big_blind,stack,bet_sizes);
+        }catch(IOException e){
+            throw new RuntimeException();
+        }
+    }
+
     public static GameTree gameTreeFromJson(String json_path,Deck deck){
         try {
             return new GameTree(json_path, deck);

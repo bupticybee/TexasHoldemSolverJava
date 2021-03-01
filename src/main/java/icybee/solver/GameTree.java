@@ -475,10 +475,23 @@ public class GameTree {
 
         }else if(node instanceof ChanceNode) {
             // TODO manage chance node according to java code
+            this.buildChance((ChanceNode)root,rule);
         }else {
             throw new RuntimeException("node type unknown");
         }
         return node;
+    }
+
+    void buildChance(ChanceNode root,Rule rule){
+        //节点上的下注额度
+        Double pot = (double)rule.get_pot();
+        List<GameTreeNode> childrens = new ArrayList<>();
+        for(Card one_card:this.deck.getCards()){
+            ActionNode one_node = new ActionNode(null,null,1, this.intToGameRound(rule.current_round), (double) rule.get_pot(),root);
+            childrens.add(one_node);
+            this.__build(one_node,rule,"roundbegin",0,0);
+        }
+        root.setChildrens(childrens);
     }
 
     void buildAction(ActionNode root,Rule rule,String last_action,int check_times,int raise_times) {

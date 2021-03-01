@@ -36,7 +36,7 @@ public class SolverGui {
     private JButton buildTreeButton;
     private JTextField oop_commit;
     private JTextField ip_commit;
-    private JTextField a50100200TextField;
+    private JTextField bet_size;
     private JTextField raise_limit;
     private JCheckBox allin;
     private JTextField sm_blind;
@@ -109,15 +109,52 @@ public class SolverGui {
     private void onBuildTree(){
         System.out.println("building tree...");
         int mode = this.mode.getSelectedIndex();
+
+        String board = boardstr.getText();
+        int board_num = board.split(",").length;
+        int round;
+        if (board_num == 3){
+            round = 2;
+        }
+        else if (board_num == 4){
+            round = 3;
+        }
+        else if (board_num == 5){
+            round = 4;
+        }else throw new RuntimeException("board number not valid");
+
+        String[] bet_sizes = bet_size.getText().split(" ");
+        if(allin.isSelected()){
+            String[] new_bet_sizes = new String[bet_sizes.length + 1];
+            for(int i = 0;i < bet_sizes.length;i ++) new_bet_sizes[i] = bet_sizes[i];
+            new_bet_sizes[bet_sizes.length] = "all_in";
+            bet_sizes = new_bet_sizes;
+        }
+
         if(mode == 0) {
-            // holdem
-            String config_name = "yamls/rule_holdem_simple.yaml";
-            Config config = this.loadConfig(config_name);
-            this.game_tree = SolverEnvironment.gameTreeFromConfig(config, this.holdem_deck);
+            this.game_tree = SolverEnvironment.gameTreeFromParams(
+                    this.holdem_deck,
+                    Float.valueOf(this.oop_commit.getText()),
+                    Float.valueOf(this.ip_commit.getText()),
+                    round,
+                    Integer.valueOf(raise_limit.getText()),
+                    Float.valueOf(this.sm_blind.getText()),
+                    Float.valueOf(this.big_blind.getText()),
+                    Float.valueOf(this.stacks.getText()),
+                    bet_sizes
+            );
         }else if(mode == 1){
-            String config_name = "yamls/rule_shortdeck_simple.yaml";
-            Config config = this.loadConfig(config_name);
-            this.game_tree = SolverEnvironment.gameTreeFromConfig(config, this.shortdeck_deck);
+            this.game_tree = SolverEnvironment.gameTreeFromParams(
+                    this.shortdeck_deck,
+                    Float.valueOf(this.oop_commit.getText()),
+                    Float.valueOf(this.ip_commit.getText()),
+                    round,
+                    Integer.valueOf(raise_limit.getText()),
+                    Float.valueOf(this.sm_blind.getText()),
+                    Float.valueOf(this.big_blind.getText()),
+                    Float.valueOf(this.stacks.getText()),
+                    bet_sizes
+            );
         }else{
             throw new RuntimeException("game mode unknown");
         }

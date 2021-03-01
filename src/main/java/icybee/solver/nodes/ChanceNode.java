@@ -11,7 +11,6 @@ import java.util.List;
  */
 public class ChanceNode extends GameTreeNode{
     // 如果一个chance node的game round是river，那么实际上它是一个介于turn和river之间的发牌节点
-
     List<GameTreeNode> childrens;
 
     Trainable trainable;
@@ -24,7 +23,7 @@ public class ChanceNode extends GameTreeNode{
         super(round,pot,parent);
         this.childrens = childrens;
         this.cards = cards;
-        if(childrens.size() != cards.size()) throw new RuntimeException("Card and childern length not match");
+        //if(childrens.size() != cards.size()) throw new RuntimeException("Card and childern length not match");
     }
 
     public List<Card> getCards() {
@@ -45,6 +44,10 @@ public class ChanceNode extends GameTreeNode{
 
     public void setTrainable(Trainable trainable) {
         this.trainable = trainable;
+    }
+
+    public void setChildrens(List<GameTreeNode> childrens) {
+        this.childrens = childrens;
     }
 
     @Override

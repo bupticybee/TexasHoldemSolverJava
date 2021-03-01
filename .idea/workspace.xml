@@ -14,6 +14,10 @@
     <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 串联Poker树生成和求解">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/GameTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/GameTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/SolverEnvironment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/SolverEnvironment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/nodes/ChanceNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/nodes/ChanceNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

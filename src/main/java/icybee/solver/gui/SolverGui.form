@@ -181,7 +181,7 @@
                       <text value="bet/raise sizes:"/>
                     </properties>
                   </component>
-                  <component id="b65b5" class="javax.swing.JTextField" binding="a50100200TextField" default-binding="true">
+                  <component id="b65b5" class="javax.swing.JTextField" binding="bet_size">
                     <constraints/>
                     <properties>
                       <preferredSize width="150" height="30"/>
