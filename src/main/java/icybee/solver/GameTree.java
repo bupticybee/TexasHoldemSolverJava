@@ -501,9 +501,10 @@ public class GameTree {
         String[] possible_actions = null;
         switch (last_action) {
             case "roundbegin":
-                possible_actions = new String[]{"check", "bet"};
+                possible_actions = new String[]{"call", "raise", "fold"};
                 break;
             //case "begin":
+            //    possible_actions = new String[]{"check", "bet"};
             //    possible_actions = new String[]{"call", "raise", "fold"};
             //    break;
             case "bet":
@@ -536,7 +537,7 @@ public class GameTree {
                 // 当不是第一轮的时候 call后面是不能跟check的
                 GameTreeNode nextnode;
                 Rule nextrule;
-                if ((last_action == "call" && rule.current_round == 1) || check_times >= 1) {
+                if ((last_action == "call" && root.getParent() != null && root.getParent().getParent() == null) || check_times >= 1) {
 
                     // 双方均check的话,进入摊派阶段
                     // check 只有最有一轮（river）的时候才是摊派，否则都是应该进入下一轮的
@@ -588,8 +589,9 @@ public class GameTree {
                 else throw new RuntimeException("unknown player");
 
                 GameTreeNode nextnode;
-
-                if (rule.current_round == 4 || rule.stack - rule.oop_commit <= 0 || rule.stack - rule.ip_commit <= 0){
+                if(root.getParent() == null) {
+                    nextnode = new ActionNode(null, null, nextplayer, this.intToGameRound(rule.current_round), (double) rule.get_pot(), root);
+                }else if (rule.current_round == 4 || rule.stack - rule.oop_commit <= 0 || rule.stack - rule.ip_commit <= 0){
 
                     Double p1_commit = Double.valueOf(rule.ip_commit);
                     Double p2_commit = Double.valueOf(rule.oop_commit);
@@ -659,7 +661,7 @@ public class GameTree {
         ArrayList<Double> bets_ratios = new ArrayList<Double>();
         boolean all_in = false;
         for(String one_bet:legal_bets){
-            if(one_bet == "all_in")all_in = true;
+            if(one_bet.equals("all_in"))all_in = true;
             else bets_ratios.add(Double.valueOf(one_bet) / 100);
         }
         float pot = rule.ip_commit + rule.oop_commit;
@@ -695,7 +697,7 @@ public class GameTree {
             assert(gap > 0);
             possible_amounts = possible_amounts.stream().filter(e -> e >= gap * 2).collect(Collectors.toList());
         }
-        possible_amounts = possible_amounts.stream().filter(e -> e < rule.stack - rule.get_commit(player)).collect(Collectors.toList());
+        possible_amounts = possible_amounts.stream().filter(e -> e <= rule.stack - rule.get_commit(player)).collect(Collectors.toList());
         return possible_amounts;
     }
 
