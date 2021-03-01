@@ -194,6 +194,7 @@ public class SolverGui {
 
         PrivateCards[] player1Range = PrivateRangeConverter.rangeStr2Cards(player1RangeStr,initialBoard);
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
+        // TODO 不需要log，去掉
         String logfile_name = "src/test/resources/outputs/outputs_log.txt";
 
         Compairer compairer =  mode.getSelectedIndex() == 0 ? this.compairer_holdem:this.compairer_shortdeck;
