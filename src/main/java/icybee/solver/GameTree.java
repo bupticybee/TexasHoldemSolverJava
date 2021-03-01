@@ -486,10 +486,11 @@ public class GameTree {
         Double pot = (double)rule.get_pot();
         Rule nextrule = new Rule(rule);
         List<GameTreeNode> childrens = new ArrayList<>();
+        assert(rule.current_round <= 4);
         for(Card one_card:this.deck.getCards()){
             GameTreeNode one_node;
             if(rule.oop_commit == rule.ip_commit && rule.oop_commit == rule.stack) {
-                if(rule.current_round == 4){
+                if(rule.current_round >= 4){
                     Double p1_commit = Double.valueOf(rule.ip_commit);
                     Double p2_commit = Double.valueOf(rule.oop_commit);
                     Double peace_getback = (p1_commit + p2_commit) / 2;
@@ -501,13 +502,16 @@ public class GameTree {
                     nextrule = new Rule(rule);
                     one_node = new ShowdownNode(new Double[]{peace_getback - p1_commit, peace_getback - p2_commit}, payoffs, this.intToGameRound(rule.current_round), (double) rule.get_pot(), root);
                 }else {
+                    nextrule = new Rule(rule);
                     nextrule.current_round += 1;
+                    assert(nextrule.current_round <= 4);
                     one_node = new ChanceNode(null, this.intToGameRound(rule.current_round + 1), (double) rule.get_pot(), root, rule.deck.getCards());
                 }
             }else {
                 one_node = new ActionNode(null, null, 1, this.intToGameRound(rule.current_round), (double) rule.get_pot(), root);
             }
             childrens.add(one_node);
+            assert(nextrule.current_round <= 4);
             this.__build(one_node,nextrule,"begin",0,0);
         }
         root.setChildrens(childrens);
@@ -626,6 +630,7 @@ public class GameTree {
                     nextrule.current_round += 1;
                     nextnode = new ChanceNode(null,this.intToGameRound(rule.current_round + 1),(double) rule.get_pot(),root,rule.deck.getCards());
                 }
+                assert(nextrule.current_round <= 4);
                 this.__build(nextnode,nextrule,"call",0,0);
                 actions.add(new GameActions(GameTreeNode.PokerActions.CALL, (double) Math.abs(rule.oop_commit - rule.ip_commit)));
                 childrens.add(nextnode);
@@ -675,6 +680,7 @@ public class GameTree {
     }
 
     List<Double> get_possible_bets(GameTreeNode root,int player,int next_player,Rule rule){
+        // TODO raise 的size不能比bet的低
         assert(player == 1 - next_player);
         String[] legal_bets = rule.bet_sizes;
         ArrayList<Double> bets_ratios = new ArrayList<Double>();
