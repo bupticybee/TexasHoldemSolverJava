@@ -484,11 +484,31 @@ public class GameTree {
     void buildChance(ChanceNode root,Rule rule){
         //节点上的下注额度
         Double pot = (double)rule.get_pot();
+        Rule nextrule = new Rule(rule);
         List<GameTreeNode> childrens = new ArrayList<>();
         for(Card one_card:this.deck.getCards()){
-            ActionNode one_node = new ActionNode(null,null,1, this.intToGameRound(rule.current_round), (double) rule.get_pot(),root);
+            GameTreeNode one_node;
+            if(rule.oop_commit == rule.ip_commit && rule.oop_commit == rule.stack) {
+                if(rule.current_round == 4){
+                    Double p1_commit = Double.valueOf(rule.ip_commit);
+                    Double p2_commit = Double.valueOf(rule.oop_commit);
+                    Double peace_getback = (p1_commit + p2_commit) / 2;
+
+                    Double[][] payoffs = {
+                            {p2_commit, -p2_commit},
+                            {-p1_commit, p1_commit}
+                    };
+                    nextrule = new Rule(rule);
+                    one_node = new ShowdownNode(new Double[]{peace_getback - p1_commit, peace_getback - p2_commit}, payoffs, this.intToGameRound(rule.current_round), (double) rule.get_pot(), root);
+                }else {
+                    nextrule.current_round += 1;
+                    one_node = new ChanceNode(null, this.intToGameRound(rule.current_round + 1), (double) rule.get_pot(), root, rule.deck.getCards());
+                }
+            }else {
+                one_node = new ActionNode(null, null, 1, this.intToGameRound(rule.current_round), (double) rule.get_pot(), root);
+            }
             childrens.add(one_node);
-            this.__build(one_node,rule,"roundbegin",0,0);
+            this.__build(one_node,nextrule,"begin",0,0);
         }
         root.setChildrens(childrens);
     }
@@ -503,10 +523,9 @@ public class GameTree {
             case "roundbegin":
                 possible_actions = new String[]{"call", "raise", "fold"};
                 break;
-            //case "begin":
-            //    possible_actions = new String[]{"check", "bet"};
-            //    possible_actions = new String[]{"call", "raise", "fold"};
-            //    break;
+            case "begin":
+                possible_actions = new String[]{"check", "bet"};
+                break;
             case "bet":
                 possible_actions = new String[]{"call", "raise", "fold"};
                 break;
@@ -591,10 +610,10 @@ public class GameTree {
                 GameTreeNode nextnode;
                 if(root.getParent() == null) {
                     nextnode = new ActionNode(null, null, nextplayer, this.intToGameRound(rule.current_round), (double) rule.get_pot(), root);
-                }else if (rule.current_round == 4 || rule.stack - rule.oop_commit <= 0 || rule.stack - rule.ip_commit <= 0){
+                }else if (rule.current_round == 4 ){
 
-                    Double p1_commit = Double.valueOf(rule.ip_commit);
-                    Double p2_commit = Double.valueOf(rule.oop_commit);
+                    Double p1_commit = Double.valueOf(nextrule.ip_commit);
+                    Double p2_commit = Double.valueOf(nextrule.oop_commit);
                     Double peace_getback = (p1_commit + p2_commit) / 2;
 
                     Double[][] payoffs = {
