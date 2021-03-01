@@ -468,14 +468,13 @@ public class GameTree {
     GameTreeNode __build(GameTreeNode node,Rule rule,String last_action,int check_times,int raise_times){
 
         if(node instanceof ActionNode){
-            this.buildAction((ActionNode) node,rule,last_action,0,0);
+            this.buildAction((ActionNode) node,rule,last_action,check_times,raise_times);
         }else if(node instanceof ShowdownNode) {
 
         }else if(node instanceof TerminalNode) {
 
         }else if(node instanceof ChanceNode) {
-            // TODO manage chance node according to java code
-            this.buildChance((ChanceNode)root,rule);
+            this.buildChance((ChanceNode)node,rule);
         }else {
             throw new RuntimeException("node type unknown");
         }
@@ -603,6 +602,7 @@ public class GameTree {
                     Double[] tie_payoffs = new Double[]{peace_getback - p1_commit, peace_getback - p2_commit};
                     nextnode = new ShowdownNode(tie_payoffs,payoffs,this.intToGameRound(rule.current_round),(double) rule.get_pot(),root);
                 }else{
+                    nextrule.current_round += 1;
                     nextnode = new ChanceNode(null,this.intToGameRound(rule.current_round + 1),(double) rule.get_pot(),root,rule.deck.getCards());
                 }
                 this.__build(nextnode,nextrule,"call",0,0);
@@ -719,6 +719,13 @@ public class GameTree {
                 ));
                 recurrentPrintTree(one_child,depth + 1,depth_limit);
             }
+        }else if(node instanceof ChanceNode) {
+            String prefix = "";
+            for(int j = 0;j < depth;j++) prefix += "\t";
+            System.out.println(String.format(
+                    "%sCHANCE",prefix
+            ));
+            recurrentPrintTree(((ChanceNode) node).getChildrens().get(0),depth + 1,depth_limit);
         }else if(node instanceof ShowdownNode){
             ShowdownNode showdown_node = (ShowdownNode)node;
             String prefix = "";

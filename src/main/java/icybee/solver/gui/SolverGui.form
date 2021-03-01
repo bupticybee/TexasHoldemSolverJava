@@ -139,7 +139,7 @@
                     <properties>
                       <minimumSize width="64" height="30"/>
                       <preferredSize width="64" height="30"/>
-                      <text value="2"/>
+                      <text value="0.5"/>
                     </properties>
                   </component>
                   <component id="d0066" class="javax.swing.JLabel">
@@ -152,19 +152,11 @@
                     <constraints/>
                     <properties>
                       <preferredSize width="64" height="30"/>
-                      <text value="2"/>
+                      <text value="1"/>
                     </properties>
                   </component>
                 </children>
               </grid>
-              <component id="72ecf" class="javax.swing.JButton" binding="buildTreeButton" default-binding="true">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Build tree"/>
-                </properties>
-              </component>
               <grid id="59e39" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="0">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -216,6 +208,7 @@
                   <component id="7c98d" class="javax.swing.JCheckBox" binding="allin">
                     <constraints/>
                     <properties>
+                      <selected value="true"/>
                       <text value="allin"/>
                     </properties>
                   </component>
@@ -283,6 +276,27 @@
                         <item value="texas holdem"/>
                         <item value="shortdeck"/>
                       </model>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="48fe9" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="20a22" class="javax.swing.JButton" binding="buildTreeButton">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="Build tree"/>
+                    </properties>
+                  </component>
+                  <component id="72ecf" class="javax.swing.JButton" binding="showTreeButton">
+                    <constraints border-constraint="East"/>
+                    <properties>
+                      <text value="show tree"/>
                     </properties>
                   </component>
                 </children>
@@ -440,7 +454,7 @@
           </grid>
         </children>
       </grid>
-      <grid id="8393" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="8393" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -470,6 +484,14 @@
               </component>
             </children>
           </scrollpane>
+          <component id="12133" class="javax.swing.JButton" binding="clearLogButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="clear log"/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>

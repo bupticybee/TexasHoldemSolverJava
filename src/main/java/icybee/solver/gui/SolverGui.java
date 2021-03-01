@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
@@ -34,6 +35,7 @@ public class SolverGui {
     private JTextArea boardstr;
     private JButton selectBoardCardButton;
     private JButton buildTreeButton;
+    private JButton showTreeButton;
     private JTextField oop_commit;
     private JTextField ip_commit;
     private JTextField bet_size;
@@ -51,6 +53,7 @@ public class SolverGui {
     private JTextField threads;
     private JCheckBox mc;
     private JComboBox algorithm;
+    private JButton clearLogButton;
 
     private Compairer compairer_holdem = null;
     private Compairer compairer_shortdeck = null;
@@ -210,13 +213,23 @@ public class SolverGui {
                 , mc.isSelected()? MonteCarolAlg.PUBLIC:MonteCarolAlg.NONE
                 , Integer.valueOf(threads.getText())
                 ,1
-                ,0
+                ,1
                 , 1
-                , 0
+                , 16
         );
         Map train_config = new HashMap();
         train_config.put("stop_exploitibility",Double.valueOf(exploitability.getText()));
         solver.train(train_config);
+
+        /*
+        String output_strategy_file = "out/demo.json";
+        String strategy_json = solver.getTree().dumps(false).toJSONString();
+        File output_file = new File(output_strategy_file);
+        FileWriter writer = new FileWriter(output_file);
+        writer.write(strategy_json);
+        writer.flush();
+        writer.close();
+         */
         System.out.println("solve complete");
     }
 
@@ -255,6 +268,18 @@ public class SolverGui {
                         }
                     }
                 }.start();
+            }
+        });
+        showTreeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game_tree.printTree(100);
+            }
+        });
+        clearLogButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                log.setText("");
             }
         });
     }
