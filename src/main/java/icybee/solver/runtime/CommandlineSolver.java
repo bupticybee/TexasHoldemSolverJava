@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import icybee.solver.compairer.Compairer;
+import icybee.solver.gui.SolverGui;
 import icybee.solver.ranges.PrivateCards;
 import icybee.solver.solver.CfrPlusRiverSolver;
 import icybee.solver.solver.MonteCarolAlg;
@@ -97,6 +98,10 @@ public class CommandlineSolver {
         }
 
         String config_file = ns.getString("config");
+        if(config_file == null){
+            SolverGui.main(null);
+            return;
+        }
         String player1_range = ns.getString("player1_range");
         String player2_range = ns.getString("player2_range");
         String initial_board_str = ns.getString("initial_board");

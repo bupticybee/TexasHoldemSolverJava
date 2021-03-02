@@ -72,37 +72,30 @@ public class SolverGui {
 
 
     Config loadConfig(String conf_name){
-
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL fpath = classLoader.getResource(conf_name);
         File file;
-        if(fpath == null) {
-            // this happens when debug mode is on
-            file = new File("src/test/resources/" + conf_name);
-        }else{
-            // this happens when debug mode is off
-            file = new File(fpath.getFile());
+        for(String one_url: new String[]{conf_name,"src/test/" + conf_name}) {
+            file = new File(one_url);
+            Config config;
+            try {
+                config = new Config(file.getAbsolutePath());
+            } catch (Exception e) {
+                continue;
+            }
+            return config;
         }
-
-        Config config;
-        try {
-            config = new Config(file.getAbsolutePath());
-        }catch(Exception e){
-            throw new RuntimeException();
-        }
-        return config;
+        throw new RuntimeException("load config failed: cannot find config file");
     }
 
     private void load_compairer() throws IOException {
         System.out.println("loading holdem compairer dictionary...");
-        String config_name = "yamls/rule_holdem_simple.yaml";
+        String config_name = "resources/yamls/rule_holdem_simple.yaml";
         Config config = this.loadConfig(config_name);
         this.compairer_holdem = SolverEnvironment.compairerFromConfig(config,false);
         this.holdem_deck = SolverEnvironment.deckFromConfig(config);
         System.out.println("loading holdem compairer dictionary complete");
 
         System.out.println("loading shortdeck compairer dictionary...");
-        config_name = "yamls/rule_shortdeck_simple.yaml";
+        config_name = "resources/yamls/rule_shortdeck_simple.yaml";
         config = this.loadConfig(config_name);
         this.compairer_shortdeck = SolverEnvironment.compairerFromConfig(config,false);
         this.shortdeck_deck = SolverEnvironment.deckFromConfig(config);
@@ -194,8 +187,7 @@ public class SolverGui {
 
         PrivateCards[] player1Range = PrivateRangeConverter.rangeStr2Cards(player1RangeStr,initialBoard);
         PrivateCards[] player2Range = PrivateRangeConverter.rangeStr2Cards(player2RangeStr,initialBoard);
-        // TODO 不需要log，去掉
-        String logfile_name = "src/test/resources/outputs/outputs_log.txt";
+        String logfile_name = null;
 
         Compairer compairer =  mode.getSelectedIndex() == 0 ? this.compairer_holdem:this.compairer_shortdeck;
         Deck deck = mode.getSelectedIndex() == 0 ? this.holdem_deck:this.shortdeck_deck;

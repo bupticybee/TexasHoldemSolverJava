@@ -211,7 +211,8 @@ public class ParallelCfrPlusSolver extends Solver{
         br.printExploitability(tree.getRoot(), 0, tree.getRoot().getPot().floatValue(), initial_board_long);
 
         float[][] reach_probs = this.getReachProbs();
-        FileWriter fileWriter = new FileWriter(this.logfile);
+        FileWriter fileWriter = null;
+        if(this.logfile != null) fileWriter = new FileWriter(this.logfile);
 
         long begintime = System.currentTimeMillis();
         long endtime = System.currentTimeMillis();
@@ -240,14 +241,16 @@ public class ParallelCfrPlusSolver extends Solver{
                     jo.put("iteration",i);
                     jo.put("exploitibility",expliotibility);
                     jo.put("time_ms",time_ms);
-                    fileWriter.write(String.format("%s\n",jo.toJSONString()));
+                    if(this.logfile != null) fileWriter.write(String.format("%s\n",jo.toJSONString()));
                 }
                 if (stop_exploitibility > expliotibility) break;
                 begintime = System.currentTimeMillis();
             }
         }
-        fileWriter.flush();
-        fileWriter.close();
+        if(this.logfile != null) {
+            fileWriter.flush();
+            fileWriter.close();
+        }
         forkJoinPool.shutdown();
         // System.out.println(this.tree.dumps(false).toJSONString());
     }
