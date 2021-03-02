@@ -278,11 +278,14 @@ public class SolverGui {
         showResult.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SolverResult sr = new SolverResult(game_tree);
                 JFrame frame = new JFrame("SolverResult");
-                frame.setContentPane(new SolverResult().resultPanel);
+                frame.setContentPane(sr.resultPanel);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
+
+                sr.set_tree();
             }
         });
     }
