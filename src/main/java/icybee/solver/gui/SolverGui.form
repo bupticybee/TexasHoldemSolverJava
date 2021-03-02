@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="156" y="63" width="862" height="641"/>
+      <xy x="156" y="63" width="902" height="703"/>
     </constraints>
     <properties>
       <maximumSize width="-1" height="-1"/>
@@ -442,14 +442,28 @@
                   </component>
                 </children>
               </grid>
-              <component id="b47b1" class="javax.swing.JButton" binding="startSolvingButton" default-binding="true">
+              <grid id="b3363" layout-manager="BorderLayout" hgap="0" vgap="0">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties>
-                  <text value="Start solving"/>
-                </properties>
-              </component>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="948cf" class="javax.swing.JButton" binding="startSolvingButton">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="Start solving"/>
+                    </properties>
+                  </component>
+                  <component id="b47b1" class="javax.swing.JButton" binding="showResult">
+                    <constraints border-constraint="East"/>
+                    <properties>
+                      <autoscrolls value="false"/>
+                      <text value="show result"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
         </children>

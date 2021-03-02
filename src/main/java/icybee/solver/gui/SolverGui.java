@@ -36,6 +36,7 @@ public class SolverGui {
     private JButton selectBoardCardButton;
     private JButton buildTreeButton;
     private JButton showTreeButton;
+    private JButton showResult;
     private JTextField oop_commit;
     private JTextField ip_commit;
     private JTextField bet_size;
@@ -69,7 +70,6 @@ public class SolverGui {
         frame.setVisible(true);
 
     }
-
 
     Config loadConfig(String conf_name){
         File file;
@@ -273,6 +273,16 @@ public class SolverGui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 log.setText("");
+            }
+        });
+        showResult.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("SolverResult");
+                frame.setContentPane(new SolverResult().resultPanel);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
             }
         });
     }
