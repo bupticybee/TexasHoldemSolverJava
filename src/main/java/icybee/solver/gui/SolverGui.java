@@ -252,6 +252,10 @@ public class SolverGui {
         startSolvingButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(game_tree == null) {
+                    System.out.println("Please build tree first");
+                    return;
+                }
                 new Thread(){
                     public void run(){
                         try {
@@ -266,7 +270,11 @@ public class SolverGui {
         showTreeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                game_tree.printTree(100);
+                if(game_tree == null){
+                    System.out.println("Please build tree first");
+                }else {
+                    game_tree.printTree(100);
+                }
             }
         });
         clearLogButton.addActionListener(new ActionListener() {
@@ -278,7 +286,11 @@ public class SolverGui {
         showResult.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SolverResult sr = new SolverResult(game_tree);
+                if(game_tree == null) {
+                    System.out.println("Please build tree first");
+                    return;
+                }
+                SolverResult sr = new SolverResult(game_tree,game_tree.getRoot());
                 JFrame frame = new JFrame("SolverResult");
                 frame.setContentPane(sr.resultPanel);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
