@@ -6,9 +6,13 @@ import icybee.solver.nodes.GameActions;
 import icybee.solver.nodes.GameTreeNode;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
+import java.awt.*;
 import java.util.List;
 
 public class SolverResult {
@@ -65,6 +69,36 @@ public class SolverResult {
 
             }
         });
+        construct_inital_table();
+    }
+
+    void construct_inital_table(){
+        String[] columnName;
+        String[][] data;
+        if (this.game_tree.getDeck().getCards().size() == 52){
+            columnName = new String[]{"A","K","Q","J","T","9","8","7","6","5","4","3","2"};
+        }else{
+            throw new RuntimeException(String.format("deck size %d unknown",this.game_tree.getDeck().getCards().size()));
+        }
+
+        data = new String[columnName.length][columnName.length];
+        for(int i = 0;i < columnName.length;i ++) {
+            boolean s_start = false;
+            for(int j = 0;j < columnName.length;j ++) {
+                if(j == i){s_start = true;data[i][j] = String.format("%s%s",columnName[i],columnName[j]);}
+                else if(s_start) data[i][j] = String.format("%s%ss",columnName[i],columnName[j]);
+                else data[i][j] = String.format("%s%so",columnName[j],columnName[i]);
+            }
+        }
+
+        DefaultTableModel defaultTableModel = new DefaultTableModel(data, columnName);
+        strategy_table.setModel(defaultTableModel);
+        strategy_table.setTableHeader(null);
+        strategy_table.setShowHorizontalLines(true);
+        strategy_table.setShowVerticalLines(true);
+        strategy_table.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+        strategy_table.setGridColor(Color.BLACK);
+        strategy_table.setRowHeight(27);
     }
 
     void reGenerateTree(GameTreeNode node,DefaultMutableTreeNode parent){

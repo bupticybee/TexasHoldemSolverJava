@@ -26,6 +26,10 @@ public class GameTree {
     GameTreeNode root = null;
     Deck deck;
 
+    public Deck getDeck() {
+        return deck;
+    }
+
     public GameTreeNode getRoot() {
         return root;
     }
