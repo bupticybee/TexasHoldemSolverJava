@@ -9,7 +9,9 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeModel;
 import java.awt.*;
@@ -77,6 +79,8 @@ public class SolverResult {
         String[][] data;
         if (this.game_tree.getDeck().getCards().size() == 52){
             columnName = new String[]{"A","K","Q","J","T","9","8","7","6","5","4","3","2"};
+        }else if(this.game_tree.getDeck().getCards().size() == 36){
+            columnName = new String[]{"A","K","Q","J","T","9","8","7","6"};
         }else{
             throw new RuntimeException(String.format("deck size %d unknown",this.game_tree.getDeck().getCards().size()));
         }
@@ -99,6 +103,8 @@ public class SolverResult {
         strategy_table.setBorder(new EtchedBorder(EtchedBorder.RAISED));
         strategy_table.setGridColor(Color.BLACK);
         strategy_table.setRowHeight(27);
+        TableCellRenderer tcr = new ColorTableCellRenderer();
+        strategy_table.setDefaultRenderer(Object.class,tcr);
     }
 
     void reGenerateTree(GameTreeNode node,DefaultMutableTreeNode parent){
@@ -118,6 +124,31 @@ public class SolverResult {
                 parent.add(one_tree_child);
                 reGenerateTree(one_child,one_tree_child);
             }
+        }
+    }
+
+
+    class ColorTableCellRenderer extends DefaultTableCellRenderer
+    {
+        DefaultTableCellRenderer renderer=new DefaultTableCellRenderer();
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            if((row + column)%2 == 0){
+                //调用基类方法
+                return super.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
+            }
+            else{
+                return renderer.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
+            }
+        }
+        //该类继承与JLabel，Graphics用于绘制单元格,绘制红线
+        public void paintComponent(Graphics g){
+            Graphics2D g2=(Graphics2D)g;
+            final BasicStroke stroke=new BasicStroke(2.0f);
+            g2.setColor(Color.RED);
+            g2.setStroke(stroke);
+            g2.fillRect(0,0,getWidth() / 2,getHeight());
+            super.paintComponent(g);
         }
     }
 
