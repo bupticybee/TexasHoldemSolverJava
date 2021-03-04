@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeModel;
 import java.awt.*;
 import java.util.List;
 
@@ -26,6 +25,8 @@ public class SolverResult {
     GameTree game_tree;
     GameTreeNode root;
     GameTreeNode.GameRound round;
+
+    String[][] grid_names;
 
     class NodeDesc{
         GameTreeNode node;
@@ -68,6 +69,8 @@ public class SolverResult {
                 NodeDesc nodeinfo = (NodeDesc) nodeInfoObject;
                 if(nodeinfo.last_action == null) return;
                 System.out.println(nodeinfo.last_action.toString());
+                TableCellRenderer tcr = new ColorTableCellRenderer();
+                strategy_table.setDefaultRenderer(Object.class,tcr);
 
             }
         });
@@ -76,7 +79,6 @@ public class SolverResult {
 
     void construct_inital_table(){
         String[] columnName;
-        String[][] data;
         if (this.game_tree.getDeck().getCards().size() == 52){
             columnName = new String[]{"A","K","Q","J","T","9","8","7","6","5","4","3","2"};
         }else if(this.game_tree.getDeck().getCards().size() == 36){
@@ -85,17 +87,18 @@ public class SolverResult {
             throw new RuntimeException(String.format("deck size %d unknown",this.game_tree.getDeck().getCards().size()));
         }
 
-        data = new String[columnName.length][columnName.length];
+        grid_names = new String[columnName.length][columnName.length];
         for(int i = 0;i < columnName.length;i ++) {
             boolean s_start = false;
             for(int j = 0;j < columnName.length;j ++) {
-                if(j == i){s_start = true;data[i][j] = String.format("%s%s",columnName[i],columnName[j]);}
-                else if(s_start) data[i][j] = String.format("%s%ss",columnName[i],columnName[j]);
-                else data[i][j] = String.format("%s%so",columnName[j],columnName[i]);
+                if(j == i){s_start = true;
+                    grid_names[i][j] = String.format("%s%s",columnName[i],columnName[j]);}
+                else if(s_start) grid_names[i][j] = String.format("%s%ss",columnName[i],columnName[j]);
+                else grid_names[i][j] = String.format("%s%so",columnName[j],columnName[i]);
             }
         }
 
-        DefaultTableModel defaultTableModel = new DefaultTableModel(data, columnName);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(grid_names, columnName);
         strategy_table.setModel(defaultTableModel);
         strategy_table.setTableHeader(null);
         strategy_table.setShowHorizontalLines(true);
@@ -103,8 +106,6 @@ public class SolverResult {
         strategy_table.setBorder(new EtchedBorder(EtchedBorder.RAISED));
         strategy_table.setGridColor(Color.BLACK);
         strategy_table.setRowHeight(27);
-        TableCellRenderer tcr = new ColorTableCellRenderer();
-        strategy_table.setDefaultRenderer(Object.class,tcr);
     }
 
     void reGenerateTree(GameTreeNode node,DefaultMutableTreeNode parent){
@@ -128,28 +129,40 @@ public class SolverResult {
     }
 
 
-    class ColorTableCellRenderer extends DefaultTableCellRenderer
-    {
-        DefaultTableCellRenderer renderer=new DefaultTableCellRenderer();
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                                                       boolean isSelected, boolean hasFocus, int row, int column) {
-            if((row + column)%2 == 0){
-                //调用基类方法
-                return super.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
-            }
-            else{
-                return renderer.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
-            }
+    class EachCellRenderer extends DefaultTableCellRenderer {
+
+        int row,colunm;
+        public EachCellRenderer(int row,int colunm) {
+            this.row = row;
+            this.colunm = colunm;
         }
+
         //该类继承与JLabel，Graphics用于绘制单元格,绘制红线
         public void paintComponent(Graphics g){
             Graphics2D g2=(Graphics2D)g;
             final BasicStroke stroke=new BasicStroke(2.0f);
             g2.setColor(Color.RED);
             g2.setStroke(stroke);
-            g2.fillRect(0,0,getWidth() / 2,getHeight());
+            g2.fillRect(0,0,row,colunm );
             super.paintComponent(g);
         }
+    }
+
+    class ColorTableCellRenderer extends DefaultTableCellRenderer
+    {
+
+        DefaultTableCellRenderer renderer=new DefaultTableCellRenderer();
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            if((row + column)%2 == 0){
+                EachCellRenderer cell_renderer = new EachCellRenderer(row,column);
+                return cell_renderer.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
+            }
+            else{
+                return renderer.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
+            }
+        }
+
     }
 
     void set_tree(){
