@@ -52,7 +52,7 @@ public class SolverResult {
             if(this.last_action == null) {
                 return String.format("%s begin", GameTreeNode.gameRound2String(this.node.getRound()));
             }else{
-                return String.format("p%d %s",((ActionNode) this.node).getPlayer(),last_action.toString());
+                return String.format("p%d %s",((ActionNode) this.node.getParent()).getPlayer(),last_action.toString());
             }
         }
     }
@@ -76,7 +76,6 @@ public class SolverResult {
                 if (node == null) return;
                 Object nodeInfoObject = node.getUserObject();
                 NodeDesc nodeinfo = (NodeDesc) nodeInfoObject;
-                if(nodeinfo.last_action == null) return;
                 TableCellRenderer tcr = new ColorTableCellRenderer(nodeinfo);
                 strategy_table.setDefaultRenderer(Object.class,tcr);
                 strategy_table.updateUI();
@@ -129,7 +128,7 @@ public class SolverResult {
                 GameActions one_action = actions.get(i);
                 DefaultMutableTreeNode one_tree_child = new DefaultMutableTreeNode();
 
-                one_tree_child.setUserObject(new NodeDesc(node,one_action,i));
+                one_tree_child.setUserObject(new NodeDesc(one_child,one_action,i));
                 parent.add(one_tree_child);
                 reGenerateTree(one_child,one_tree_child);
             }
@@ -176,28 +175,32 @@ public class SolverResult {
                     node_strategy[j] = node_strategy[j] * (num_cases - 1) / num_cases + strategy[strategy_index] / num_cases;
                 }
             }
+            /*
             System.out.print(String.format("%s : ",this.name));
             for (float prob:node_strategy)
                 System.out.print(String.format(" %s",prob));
             System.out.println();
+             */
             assert(actions.size() == node_strategy.length);
         }
 
         public void paintComponent(Graphics g){
+            if(node_strategy == null){
+                super.paintComponent(g);
+                return;
+            }
             Graphics2D g2=(Graphics2D)g;
             float check_fold_prob = 0;
             for(int i = 0;i < actions.size();i ++){
                 GameActions one_action = actions.get(i);
-                if(one_action.getAction() == GameTreeNode.PokerActions.CHECK
-                        || one_action.getAction() == GameTreeNode.PokerActions.FOLD){
+                if(one_action.getAction() == GameTreeNode.PokerActions.FOLD){
                     check_fold_prob = node_strategy[i];
                 }
             }
 
-            g2.setColor(Color.RED);
-            g2.fillRect(0,0,getWidth(),
-                    (int)(check_fold_prob * getHeight())
-            );
+            int disable_height = (int)(check_fold_prob * getHeight());
+            g2.setColor(Color.GRAY);
+            g2.fillRect(0,0,getWidth(),disable_height);
             super.paintComponent(g);
         }
     }
