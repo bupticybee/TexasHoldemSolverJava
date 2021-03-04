@@ -24,6 +24,9 @@ public class DiscountedCfrTrainable extends Trainable{
     float gamma = 2;
     float theta = 0.9f;
 
+    public PrivateCards[] getPrivateCards() {
+        return privateCards;
+    }
 
     public float[] getR_plus() {
         return r_plus;
