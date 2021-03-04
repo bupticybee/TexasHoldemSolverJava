@@ -37,6 +37,12 @@ public class SolverResult {
         // TODO: place custom component creation code here
     }
 
+    float sum(float[] ins){
+        float sumnum = 0;
+        for(int i = 0;i < ins.length;i ++)sumnum += ins[i];
+        return sumnum;
+    }
+
     class NodeDesc{
         GameTreeNode node;
         GameActions last_action;
@@ -180,12 +186,12 @@ public class SolverResult {
             for (float prob:node_strategy)
                 System.out.print(String.format(" %s",prob));
             System.out.println();
-             */
+            */
             assert(actions.size() == node_strategy.length);
         }
 
         public void paintComponent(Graphics g){
-            if(node_strategy == null){
+            if(node_strategy == null || sum(node_strategy) == 0){
                 super.paintComponent(g);
                 return;
             }
@@ -199,8 +205,33 @@ public class SolverResult {
             }
 
             int disable_height = (int)(check_fold_prob * getHeight());
+            int remain_height = getHeight() - disable_height;
             g2.setColor(Color.GRAY);
             g2.fillRect(0,0,getWidth(),disable_height);
+
+            int begin_w = 0;
+            for(int i = 0;i < actions.size();i ++){
+                GameActions one_action = actions.get(i);
+                if(one_action.getAction() == GameTreeNode.PokerActions.CHECK
+                        ||one_action.getAction() == GameTreeNode.PokerActions.CALL
+                ){
+                    int prob_width = Math.round(node_strategy[i] / (1 - check_fold_prob) * getWidth());
+                    if(node_strategy[i] != 0) prob_width = Math.max(1,prob_width);
+                    g2.setColor(Color.GREEN);
+                    g2.fillRect(begin_w,disable_height,prob_width,remain_height);
+                    begin_w += prob_width;
+                }else if(one_action.getAction() == GameTreeNode.PokerActions.BET
+                        ||one_action.getAction() == GameTreeNode.PokerActions.RAISE
+                ){
+                    int prob_width = Math.round(node_strategy[i] / (1 - check_fold_prob) * getWidth());
+                    if(node_strategy[i] != 0) prob_width = Math.max(1,prob_width);
+                    if(i == actions.size() - 1)  prob_width = Math.max(prob_width,getWidth() - begin_w);
+                    int color_base = Math.max(128 - 32 * i - 1,0);
+                    g2.setColor(new Color(255,color_base,color_base));
+                    g2.fillRect(begin_w,disable_height,prob_width,remain_height);
+                    begin_w += prob_width;
+                }
+            }
             super.paintComponent(g);
         }
     }
