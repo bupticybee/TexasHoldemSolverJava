@@ -71,6 +71,7 @@ public class SolverResult {
                 System.out.println(nodeinfo.last_action.toString());
                 TableCellRenderer tcr = new ColorTableCellRenderer();
                 strategy_table.setDefaultRenderer(Object.class,tcr);
+                strategy_table.updateUI();
 
             }
         });
