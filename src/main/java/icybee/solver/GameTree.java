@@ -684,7 +684,6 @@ public class GameTree {
     }
 
     List<Double> get_possible_bets(GameTreeNode root,int player,int next_player,Rule rule){
-        // TODO raise 的size不能比bet的低
         assert(player == 1 - next_player);
         String[] legal_bets = rule.bet_sizes;
         ArrayList<Double> bets_ratios = new ArrayList<Double>();
@@ -726,6 +725,7 @@ public class GameTree {
             assert(gap > 0);
             possible_amounts = possible_amounts.stream().filter(e -> e >= gap * 2).collect(Collectors.toList());
         }
+        possible_amounts = possible_amounts.stream().filter(e -> e >  rule.get_commit(next_player) - rule.get_commit(player)).collect(Collectors.toList());
         possible_amounts = possible_amounts.stream().filter(e -> e <= rule.stack - rule.get_commit(player)).collect(Collectors.toList());
         return possible_amounts;
     }
