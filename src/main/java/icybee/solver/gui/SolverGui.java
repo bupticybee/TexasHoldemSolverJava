@@ -300,5 +300,7 @@ public class SolverGui {
                 sr.set_tree();
             }
         });
+        ooprange.setLineWrap(true);
+        iprange.setLineWrap(true);
     }
 }

@@ -118,7 +118,8 @@ public class SolverResult {
         strategy_table.setShowVerticalLines(true);
         strategy_table.setBorder(new EtchedBorder(EtchedBorder.RAISED));
         strategy_table.setGridColor(Color.BLACK);
-        strategy_table.setRowHeight(27);
+        strategy_table.setRowHeight(26);
+        strategy_table.setRowSelectionAllowed(true);
     }
 
     void reGenerateTree(GameTreeNode node,DefaultMutableTreeNode parent){
@@ -149,11 +150,13 @@ public class SolverResult {
         float[] node_strategy = null;
         String name;
         List<GameActions> actions;
-        public EachCellRenderer(int row,int colunm,NodeDesc desc) {
+        boolean selected;
+        public EachCellRenderer(int row,int colunm,NodeDesc desc,boolean selected) {
             this.row = row;
             this.colunm = colunm;
             this.desc = desc;
             this.name = grid_names[row][colunm];
+            this.selected = selected;
 
             GameTreeNode node = desc.node;
             if(!(node instanceof ActionNode)) {
@@ -190,9 +193,17 @@ public class SolverResult {
             assert(actions.size() == node_strategy.length);
         }
 
+        private void paintBlackSide(Graphics g){
+            Graphics2D g2=(Graphics2D)g;
+            final BasicStroke stroke=new BasicStroke(4.0f);
+            g2.setColor(Color.BLACK);
+            g2.drawRect(0,0,getWidth(),getHeight());
+        }
+
         public void paintComponent(Graphics g){
             if(node_strategy == null || sum(node_strategy) == 0){
                 super.paintComponent(g);
+                if(this.selected)paintBlackSide(g);
                 return;
             }
             Graphics2D g2=(Graphics2D)g;
@@ -233,6 +244,7 @@ public class SolverResult {
                 }
             }
             super.paintComponent(g);
+            if(this.selected)paintBlackSide(g);
         }
     }
 
@@ -246,8 +258,8 @@ public class SolverResult {
 
         public Component getTableCellRendererComponent(JTable table, Object value,
                                                        boolean isSelected, boolean hasFocus, int row, int column) {
-            EachCellRenderer cell_renderer = new EachCellRenderer(row,column,desc);
-            return cell_renderer.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
+            EachCellRenderer cell_renderer = new EachCellRenderer(row,column,desc,isSelected);
+            return cell_renderer.getTableCellRendererComponent(table, value, false,false, row, column);
         }
 
     }
