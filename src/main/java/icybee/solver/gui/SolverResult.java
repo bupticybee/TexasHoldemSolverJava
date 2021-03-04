@@ -4,6 +4,9 @@ import icybee.solver.GameTree;
 import icybee.solver.nodes.ActionNode;
 import icybee.solver.nodes.GameActions;
 import icybee.solver.nodes.GameTreeNode;
+import icybee.solver.ranges.PrivateCards;
+import icybee.solver.trainable.DiscountedCfrTrainable;
+import icybee.solver.trainable.Trainable;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -14,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 
 public class SolverResult {
@@ -27,6 +31,11 @@ public class SolverResult {
     GameTreeNode.GameRound round;
 
     String[][] grid_names;
+    String[] columnName;
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 
     class NodeDesc{
         GameTreeNode node;
@@ -68,8 +77,7 @@ public class SolverResult {
                 Object nodeInfoObject = node.getUserObject();
                 NodeDesc nodeinfo = (NodeDesc) nodeInfoObject;
                 if(nodeinfo.last_action == null) return;
-                System.out.println(nodeinfo.last_action.toString());
-                TableCellRenderer tcr = new ColorTableCellRenderer();
+                TableCellRenderer tcr = new ColorTableCellRenderer(nodeinfo);
                 strategy_table.setDefaultRenderer(Object.class,tcr);
                 strategy_table.updateUI();
 
@@ -79,7 +87,6 @@ public class SolverResult {
     }
 
     void construct_inital_table(){
-        String[] columnName;
         if (this.game_tree.getDeck().getCards().size() == 52){
             columnName = new String[]{"A","K","Q","J","T","9","8","7","6","5","4","3","2"};
         }else if(this.game_tree.getDeck().getCards().size() == 36){
@@ -122,7 +129,7 @@ public class SolverResult {
                 GameActions one_action = actions.get(i);
                 DefaultMutableTreeNode one_tree_child = new DefaultMutableTreeNode();
 
-                one_tree_child.setUserObject(new NodeDesc(root,one_action,i));
+                one_tree_child.setUserObject(new NodeDesc(node,one_action,i));
                 parent.add(one_tree_child);
                 reGenerateTree(one_child,one_tree_child);
             }
@@ -133,18 +140,64 @@ public class SolverResult {
     class EachCellRenderer extends DefaultTableCellRenderer {
 
         int row,colunm;
-        public EachCellRenderer(int row,int colunm) {
+        NodeDesc desc;
+        float[] node_strategy = null;
+        String name;
+        List<GameActions> actions;
+        public EachCellRenderer(int row,int colunm,NodeDesc desc) {
             this.row = row;
             this.colunm = colunm;
+            this.desc = desc;
+            this.name = grid_names[row][colunm];
+
+            GameTreeNode node = desc.node;
+            if(!(node instanceof ActionNode)) {
+                return;
+            }
+            ActionNode actionNode = (ActionNode) node;
+            DiscountedCfrTrainable trainable = (DiscountedCfrTrainable) actionNode.getTrainable();
+            float[] strategy = trainable.getAverageStrategy();
+            List<GameActions> actions = actionNode.getActions();
+            this.actions = actions;
+            PrivateCards[] cards = trainable.getPrivateCards();
+
+            int num_cases = 0;
+            node_strategy = new float[actions.size()];
+            Arrays.fill(node_strategy,0);
+
+            for(int i = 0;i < cards.length;i ++){
+                PrivateCards one_private_card = cards[i];
+                if(!this.name.equals(one_private_card.summary()))continue;
+                float[] one_strategy = new float[actions.size()];
+                num_cases += 1;
+                for(int j = 0;j < actions.size();j ++){
+                    int strategy_index = j * cards.length + i;
+                    one_strategy[j] = strategy[strategy_index];
+                    node_strategy[j] = node_strategy[j] * (num_cases - 1) / num_cases + strategy[strategy_index] / num_cases;
+                }
+            }
+            System.out.print(String.format("%s : ",this.name));
+            for (float prob:node_strategy)
+                System.out.print(String.format(" %s",prob));
+            System.out.println();
+            assert(actions.size() == node_strategy.length);
         }
 
-        //该类继承与JLabel，Graphics用于绘制单元格,绘制红线
         public void paintComponent(Graphics g){
             Graphics2D g2=(Graphics2D)g;
-            final BasicStroke stroke=new BasicStroke(2.0f);
+            float check_fold_prob = 0;
+            for(int i = 0;i < actions.size();i ++){
+                GameActions one_action = actions.get(i);
+                if(one_action.getAction() == GameTreeNode.PokerActions.CHECK
+                        || one_action.getAction() == GameTreeNode.PokerActions.FOLD){
+                    check_fold_prob = node_strategy[i];
+                }
+            }
+
             g2.setColor(Color.RED);
-            g2.setStroke(stroke);
-            g2.fillRect(0,0,row,colunm );
+            g2.fillRect(0,0,getWidth(),
+                    (int)(check_fold_prob * getHeight())
+            );
             super.paintComponent(g);
         }
     }
@@ -152,16 +205,15 @@ public class SolverResult {
     class ColorTableCellRenderer extends DefaultTableCellRenderer
     {
 
-        DefaultTableCellRenderer renderer=new DefaultTableCellRenderer();
+        NodeDesc desc;
+        public ColorTableCellRenderer(NodeDesc desc) {
+            this.desc = desc;
+        }
+
         public Component getTableCellRendererComponent(JTable table, Object value,
                                                        boolean isSelected, boolean hasFocus, int row, int column) {
-            if((row + column)%2 == 0){
-                EachCellRenderer cell_renderer = new EachCellRenderer(row,column);
-                return cell_renderer.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
-            }
-            else{
-                return renderer.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
-            }
+            EachCellRenderer cell_renderer = new EachCellRenderer(row,column,desc);
+            return cell_renderer.getTableCellRendererComponent(table, value, isSelected,hasFocus, row, column);
         }
 
     }
