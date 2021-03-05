@@ -49,6 +49,14 @@ public class PrivateCards {
         }
     }
 
+    public String toFormatString() {
+        if (card1 > card2) {
+            return Card.intCard2FormatStr(card1) + Card.intCard2FormatStr(card2);
+        }else{
+            return Card.intCard2FormatStr(card2) + Card.intCard2FormatStr(card1);
+        }
+    }
+
     public String summary(){
         String card_1 = Card.intCard2Str(card1);
         String card_2 = Card.intCard2Str(card2);

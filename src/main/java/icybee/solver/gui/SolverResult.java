@@ -357,10 +357,13 @@ public class SolverResult {
                 int strategy_index = j * cards.length + i;
                 one_strategy[j] = strategy[strategy_index];
             }
-            infos.add(new DetailStrategyInfo(one_private_card.toString(),actions,one_strategy));
+            // TODO add code here to show ev/strategy ...
+            String card_infos = one_private_card.toFormatString() + "";
+            infos.add(new DetailStrategyInfo(card_infos,actions,one_strategy));
         }
-        String[][] detail_grid_names = new String[infos.size() / columnName.length + 1][columnName.length];
-        DetailStrategyInfo[][] strategy2d = new DetailStrategyInfo[infos.size() / columnName.length + 1][columnName.length];
+        int line_num = (int)Math.ceil(((float)infos.size() / columnName.length));
+        String[][] detail_grid_names = new String[line_num][columnName.length];
+        DetailStrategyInfo[][] strategy2d = new DetailStrategyInfo[line_num][columnName.length];
         for(int i = 0;i < infos.size();i ++) {
             detail_grid_names[i / columnName.length][i % columnName.length] = infos.get(i).cards_name;
             strategy2d[i / columnName.length][i % columnName.length] = infos.get(i);

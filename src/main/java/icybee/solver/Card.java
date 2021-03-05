@@ -45,6 +45,13 @@ public class Card {
         return rankToString(rank) + suitToString(suit);
     }
 
+    public static String intCard2FormatStr(int card)
+    {
+        int rank = card / 4 + 2;
+        int suit = card - (rank-2)*4;
+        return rankToString(rank) + suitToFormatString(suit);
+    }
+
     public static long boardCards2long(String[] cards) {
         Card[] cards_objs = new Card[cards.length];
         for(int i = 0;i < cards.length;i++){
@@ -151,6 +158,18 @@ public class Card {
             case 2: return "h";
             case 3: return "s";
             default: return "c";
+        }
+    }
+
+    static String suitToFormatString(int suit)
+    {
+        switch(suit)
+        {
+            case 0: return "♣";
+            case 1: return "♦";
+            case 2: return "♥";
+            case 3: return "♠";
+            default: return "♣";
         }
     }
 
