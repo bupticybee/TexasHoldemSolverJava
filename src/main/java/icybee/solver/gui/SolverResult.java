@@ -217,7 +217,7 @@ public class SolverResult {
 
         private void paintBlackSide(Graphics g){
             Graphics2D g2=(Graphics2D)g;
-            final BasicStroke stroke=new BasicStroke(4.0f);
+            final BasicStroke stroke=new BasicStroke(10.0f);
             g2.setColor(Color.BLACK);
             g2.drawRect(0,0,getWidth(),getHeight());
         }
