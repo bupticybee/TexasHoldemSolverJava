@@ -360,7 +360,7 @@ public class SolverResult {
                 strategy_str += String.format("<br>%s : %.2f",actions.get(j).toString(),one_strategy[j] * 100);
                 strategy_str += " %";
             }
-            String card_infos = String.format("<html><h2> %s </h2>%s</html>",one_private_card.toFormatString(),strategy_str);;
+            String card_infos = String.format("<html><h2 style=\"background-color:rgb(255, 255, 255);\"> %s </h2>%s</html>",one_private_card.toFormatString(),strategy_str);;
             infos.add(new DetailStrategyInfo(card_infos,actions,one_strategy));
         }
         int line_num = (int)Math.ceil(((float)infos.size() / columnName.length));
