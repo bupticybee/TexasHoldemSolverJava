@@ -29,6 +29,7 @@ public class SolverResult {
     private JTable detail_table;
     private JPanel tree_and_strategy;
     private JScrollPane tree_panel;
+    private JTabbedPane tabbedPane1;
 
     GameTree game_tree;
     GameTreeNode root;
