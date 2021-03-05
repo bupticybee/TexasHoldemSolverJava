@@ -165,11 +165,11 @@ public class Card {
     {
         switch(suit)
         {
-            case 0: return "♣";
-            case 1: return "♦";
-            case 2: return "♥";
-            case 3: return "♠";
-            default: return "♣";
+            case 0: return "<font color=\"black\">♣</font>";
+            case 1: return "<font color=\"red\">♦</font>";
+            case 2: return "<font color=\"red\">♥</font>";
+            case 3: return "<font color=\"black\">♠</font>";
+            default: return "♣</font>";
         }
     }
 

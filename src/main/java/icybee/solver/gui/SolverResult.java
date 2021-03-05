@@ -353,12 +353,14 @@ public class SolverResult {
             PrivateCards one_private_card = cards[i];
             if(!name.equals(one_private_card.summary()))continue;
             float[] one_strategy = new float[actions.size()];
+            String strategy_str = "";
             for(int j = 0;j < actions.size();j ++){
                 int strategy_index = j * cards.length + i;
                 one_strategy[j] = strategy[strategy_index];
+                strategy_str += String.format("<br>%s : %.2f",actions.get(j).toString(),one_strategy[j] * 100);
+                strategy_str += " %";
             }
-            // TODO add code here to show ev/strategy ...
-            String card_infos = one_private_card.toFormatString() + "";
+            String card_infos = String.format("<html><h2> %s </h2>%s</html>",one_private_card.toFormatString(),strategy_str);;
             infos.add(new DetailStrategyInfo(card_infos,actions,one_strategy));
         }
         int line_num = (int)Math.ceil(((float)infos.size() / columnName.length));
@@ -396,7 +398,7 @@ public class SolverResult {
 
         private void paintBlackSide(Graphics g){
             Graphics2D g2=(Graphics2D)g;
-            final BasicStroke stroke=new BasicStroke(3.0f);
+            final BasicStroke stroke=new BasicStroke(2.0f);
             g2.setStroke(stroke);
             g2.setColor(Color.BLACK);
             g2.drawRect(0,0,getWidth(),getHeight());
@@ -446,7 +448,7 @@ public class SolverResult {
                 }
             }
             super.paintComponent(g);
-            //if(this.selected)paintBlackSide(g);
+            paintBlackSide(g);
         }
     }
 
