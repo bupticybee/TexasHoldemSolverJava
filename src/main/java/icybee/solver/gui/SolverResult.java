@@ -6,7 +6,6 @@ import icybee.solver.nodes.GameActions;
 import icybee.solver.nodes.GameTreeNode;
 import icybee.solver.ranges.PrivateCards;
 import icybee.solver.trainable.DiscountedCfrTrainable;
-import icybee.solver.trainable.Trainable;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -17,6 +16,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class SolverResult {
     private JScrollPane tree_pane;
     private JTree game_tree_field;
     private JTable detail_table;
+    private JPanel tree_and_strategy;
+    private JScrollPane tree_panel;
 
     GameTree game_tree;
     GameTreeNode root;
@@ -90,6 +93,24 @@ public class SolverResult {
             }
         });
         construct_inital_table();
+        strategy_table.addComponentListener(new ComponentAdapter()
+        {
+            @Override
+            public void componentResized(ComponentEvent e)
+            {
+                strategy_table.setRowHeight(26);
+                Dimension p = strategy_table.getPreferredSize();
+                Dimension v = tree_panel.getViewportBorderBounds().getSize();
+                if (v.height > p.height)
+                {
+                    int available = v.height -
+                            strategy_table.getRowCount() * strategy_table.getRowMargin();
+                    int perRow = available / strategy_table.getRowCount();
+                    strategy_table.setRowHeight(perRow);
+                }
+            }
+        });
+
     }
 
     void construct_inital_table(){
