@@ -18,6 +18,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,10 +41,6 @@ public class SolverResult {
 
     String[][] grid_names;
     String[] columnName;
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 
     float sum(float[] ins){
         float sumnum = 0;
@@ -112,6 +112,25 @@ public class SolverResult {
             }
         });
 
+
+        detail_table.addComponentListener(new ComponentAdapter()
+        {
+            @Override
+            public void componentResized(ComponentEvent e)
+            {
+                if(detail_table.getRowCount() == 0)return;
+                detail_table.setRowHeight(26);
+                Dimension p = detail_table.getPreferredSize();
+                Dimension v = tree_panel.getViewportBorderBounds().getSize();
+                if (v.height > p.height)
+                {
+                    int available = v.height -
+                            detail_table.getRowCount() * detail_table.getRowMargin();
+                    int perRow = available / detail_table.getRowCount();
+                    detail_table.setRowHeight(perRow);
+                }
+            }
+        });
     }
 
     void construct_inital_table(){
@@ -143,6 +162,14 @@ public class SolverResult {
         strategy_table.setGridColor(Color.BLACK);
         strategy_table.setRowHeight(26);
         strategy_table.setRowSelectionAllowed(true);
+
+        detail_table.setTableHeader(null);
+        detail_table.setShowHorizontalLines(true);
+        detail_table.setShowVerticalLines(true);
+        detail_table.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+        detail_table.setGridColor(Color.BLACK);
+        detail_table.setRowHeight(26);
+        detail_table.setRowSelectionAllowed(true);
     }
 
     void reGenerateTree(GameTreeNode node,DefaultMutableTreeNode parent){
@@ -218,7 +245,8 @@ public class SolverResult {
 
         private void paintBlackSide(Graphics g){
             Graphics2D g2=(Graphics2D)g;
-            final BasicStroke stroke=new BasicStroke(10.0f);
+            final BasicStroke stroke=new BasicStroke(3.0f);
+            g2.setStroke(stroke);
             g2.setColor(Color.BLACK);
             g2.drawRect(0,0,getWidth(),getHeight());
         }
@@ -282,11 +310,155 @@ public class SolverResult {
         public Component getTableCellRendererComponent(JTable table, Object value,
                                                        boolean isSelected, boolean hasFocus, int row, int column) {
             EachCellRenderer cell_renderer = new EachCellRenderer(row,column,desc,isSelected);
+            if(isSelected) setDetailStrategyInfo(row,column,desc);
             return cell_renderer.getTableCellRendererComponent(table, value, false,false, row, column);
         }
-
     }
 
-    void set_tree(){
+    class DetailStrategyInfo{
+        public String cards_name;
+        public List<GameActions> actions;
+        public float[] strategy;
+
+        public DetailStrategyInfo(String cards_name, List<GameActions> actions, float[] strategy) {
+            this.cards_name = cards_name;
+            this.actions = actions;
+            this.strategy = strategy;
+            assert(this.strategy.length == actions.size());
+        }
     }
+
+    void setDetailStrategyInfo(int row,int colunm,NodeDesc desc){
+        GameTreeNode node = desc.node;
+        if(!(node instanceof ActionNode)) {
+            return;
+        }
+
+        String name = grid_names[row][colunm];
+        String[] columnName;
+
+        if(name.length() == 3 && name.charAt(2) == 'o') columnName= new String[]{"","",""};
+        else columnName = new String[]{"",""};
+        int col_len = columnName.length;
+
+        ActionNode actionNode = (ActionNode) node;
+        DiscountedCfrTrainable trainable = (DiscountedCfrTrainable) actionNode.getTrainable();
+        float[] strategy = trainable.getAverageStrategy();
+        List<GameActions> actions = actionNode.getActions();
+        PrivateCards[] cards = trainable.getPrivateCards();
+
+        List<DetailStrategyInfo> infos = new ArrayList<DetailStrategyInfo>();
+
+        for(int i = 0;i < cards.length;i ++){
+            PrivateCards one_private_card = cards[i];
+            if(!name.equals(one_private_card.summary()))continue;
+            float[] one_strategy = new float[actions.size()];
+            for(int j = 0;j < actions.size();j ++){
+                int strategy_index = j * cards.length + i;
+                one_strategy[j] = strategy[strategy_index];
+            }
+            infos.add(new DetailStrategyInfo(one_private_card.toString(),actions,one_strategy));
+        }
+        String[][] detail_grid_names = new String[infos.size() / columnName.length + 1][columnName.length];
+        DetailStrategyInfo[][] strategy2d = new DetailStrategyInfo[infos.size() / columnName.length + 1][columnName.length];
+        for(int i = 0;i < infos.size();i ++) {
+            detail_grid_names[i / columnName.length][i % columnName.length] = infos.get(i).cards_name;
+            strategy2d[i / columnName.length][i % columnName.length] = infos.get(i);
+        }
+
+        DefaultTableModel defaultTableModel = new DefaultTableModel(detail_grid_names, columnName);
+        TableCellRenderer tcr = new StrategyDetailColorTableCellRenderer(strategy2d);
+        detail_table.setModel(defaultTableModel);
+        detail_table.setDefaultRenderer(Object.class,tcr);
+        detail_table.updateUI();
+    }
+
+
+    class StragetyDetailCellRenderer extends DefaultTableCellRenderer {
+
+        int row,colunm;
+        float[] node_strategy = null;
+        List<GameActions> actions;
+        boolean selected;
+        public StragetyDetailCellRenderer(int row,int colunm,DetailStrategyInfo[][] strategy2d,boolean selected) {
+            this.row = row;
+            this.colunm = colunm;
+            this.selected = selected;
+
+            if(!(row < strategy2d.length || colunm < strategy2d[0].length) || strategy2d[row][colunm] == null)return;
+            actions = strategy2d[row][colunm].actions;
+            node_strategy = strategy2d[row][colunm].strategy;
+            assert(actions.size() == node_strategy.length);
+        }
+
+        private void paintBlackSide(Graphics g){
+            Graphics2D g2=(Graphics2D)g;
+            final BasicStroke stroke=new BasicStroke(3.0f);
+            g2.setStroke(stroke);
+            g2.setColor(Color.BLACK);
+            g2.drawRect(0,0,getWidth(),getHeight());
+        }
+
+        public void paintComponent(Graphics g){
+            if(node_strategy == null || sum(node_strategy) == 0){
+                super.paintComponent(g);
+                if(this.selected)paintBlackSide(g);
+                return;
+            }
+            Graphics2D g2=(Graphics2D)g;
+            float check_fold_prob = 0;
+            for(int i = 0;i < actions.size();i ++){
+                GameActions one_action = actions.get(i);
+                if(one_action.getAction() == GameTreeNode.PokerActions.FOLD){
+                    check_fold_prob = node_strategy[i];
+                }
+            }
+
+            int disable_height = (int)(check_fold_prob * getHeight());
+            int remain_height = getHeight() - disable_height;
+            g2.setColor(Color.GRAY);
+            g2.fillRect(0,0,getWidth(),disable_height);
+
+            int begin_w = 0;
+            for(int i = 0;i < actions.size();i ++){
+                GameActions one_action = actions.get(i);
+                if(one_action.getAction() == GameTreeNode.PokerActions.CHECK
+                        ||one_action.getAction() == GameTreeNode.PokerActions.CALL
+                ){
+                    int prob_width = Math.round(node_strategy[i] / (1 - check_fold_prob) * getWidth());
+                    if(node_strategy[i] != 0) prob_width = Math.max(1,prob_width);
+                    g2.setColor(Color.GREEN);
+                    g2.fillRect(begin_w,disable_height,prob_width,remain_height);
+                    begin_w += prob_width;
+                }else if(one_action.getAction() == GameTreeNode.PokerActions.BET
+                        ||one_action.getAction() == GameTreeNode.PokerActions.RAISE
+                ){
+                    int prob_width = Math.round(node_strategy[i] / (1 - check_fold_prob) * getWidth());
+                    if(node_strategy[i] != 0) prob_width = Math.max(1,prob_width);
+                    if(i == actions.size() - 1)  prob_width = Math.max(prob_width,getWidth() - begin_w);
+                    int color_base = Math.max(128 - 32 * i - 1,0);
+                    g2.setColor(new Color(255,color_base,color_base));
+                    g2.fillRect(begin_w,disable_height,prob_width,remain_height);
+                    begin_w += prob_width;
+                }
+            }
+            super.paintComponent(g);
+            //if(this.selected)paintBlackSide(g);
+        }
+    }
+
+    class StrategyDetailColorTableCellRenderer extends DefaultTableCellRenderer
+    {
+        DetailStrategyInfo[][] strategy2d;
+        public StrategyDetailColorTableCellRenderer(DetailStrategyInfo[][] strategy2d) {
+            this.strategy2d = strategy2d;
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            StragetyDetailCellRenderer cell_renderer = new StragetyDetailCellRenderer(row,column,this.strategy2d,isSelected);
+            return cell_renderer.getTableCellRendererComponent(table, value, false,false, row, column);
+        }
+    }
+
 }

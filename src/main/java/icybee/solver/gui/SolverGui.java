@@ -296,8 +296,6 @@ public class SolverGui {
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
-
-                sr.set_tree();
             }
         });
         ooprange.setLineWrap(true);
