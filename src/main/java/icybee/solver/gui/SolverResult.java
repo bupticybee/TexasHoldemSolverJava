@@ -34,6 +34,7 @@ public class SolverResult {
     private JPanel tree_and_strategy;
     private JScrollPane tree_panel;
     private JTabbedPane tabbedPane1;
+    private JTable table1;
 
     GameTree game_tree;
     GameTreeNode root;
@@ -337,7 +338,7 @@ public class SolverResult {
         String name = grid_names[row][colunm];
         String[] columnName;
 
-        if(name.length() == 3 && name.charAt(2) == 'o') columnName= new String[]{"","",""};
+        if(name.length() == 3 && name.charAt(2) == 'o') columnName= new String[]{"","","",""};
         else columnName = new String[]{"",""};
         int col_len = columnName.length;
 
@@ -357,8 +358,7 @@ public class SolverResult {
             for(int j = 0;j < actions.size();j ++){
                 int strategy_index = j * cards.length + i;
                 one_strategy[j] = strategy[strategy_index];
-                strategy_str += String.format("<br>%s : %.2f",actions.get(j).toString(),one_strategy[j] * 100);
-                strategy_str += " %";
+                strategy_str += String.format("<p style=\"font-size:7px\">%s : %.1f %s </p>",actions.get(j).toString(),one_strategy[j] * 100,"%");
             }
             String card_infos = String.format("<html><h2 style=\"background-color:rgb(255, 255, 255);\"> %s </h2>%s</html>",one_private_card.toFormatString(),strategy_str);;
             infos.add(new DetailStrategyInfo(card_infos,actions,one_strategy));
