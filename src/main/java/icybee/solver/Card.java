@@ -240,4 +240,13 @@ public class Card {
     public String toString() {
         return this.card;
     }
+
+    public String toFormatString() {
+        return this.card
+                .replace('c','♣')
+                .replace('d','♦')
+                .replace('h','♥')
+                .replace('s','♠')
+        ;
+    }
 }

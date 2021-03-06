@@ -1,7 +1,9 @@
 package icybee.solver.gui;
 
+import icybee.solver.Card;
 import icybee.solver.GameTree;
 import icybee.solver.nodes.ActionNode;
+import icybee.solver.nodes.ChanceNode;
 import icybee.solver.nodes.GameActions;
 import icybee.solver.nodes.GameTreeNode;
 import icybee.solver.ranges.PrivateCards;
@@ -46,9 +48,9 @@ public class SolverResult {
 
     class NodeDesc{
         GameTreeNode node;
-        GameActions last_action;
+        String last_action;
         int action_ind;
-        NodeDesc(GameTreeNode node,GameActions last_action,int action_ind){
+        NodeDesc(GameTreeNode node,String last_action,int action_ind){
             this.node = node;
             this.last_action = last_action;
             this.action_ind = action_ind;
@@ -58,8 +60,12 @@ public class SolverResult {
         public String toString() {
             if(this.last_action == null) {
                 return String.format("%s begin", GameTreeNode.gameRound2String(this.node.getRound()));
+            }else if(this.node.getParent() != null && this.node.getParent() instanceof  ActionNode){
+                int player = ((ActionNode) this.node.getParent()).getPlayer();
+                String pname = player == 0? "ip":"oop";
+                return String.format("%s %s",pname,last_action);
             }else{
-                return String.format("p%d %s",((ActionNode) this.node.getParent()).getPlayer(),last_action.toString());
+                return last_action;
             }
         }
     }
@@ -70,7 +76,7 @@ public class SolverResult {
         this.round = root.getRound();
         DefaultMutableTreeNode treenode = new DefaultMutableTreeNode();
         treenode.setUserObject(new NodeDesc(root,null,0));
-        reGenerateTree(this.root,treenode);
+        reGenerateTree(this.root,treenode,root.getRound());
         JTree jtree_field = new JTree(treenode);
         game_tree_field.setModel(jtree_field.getModel());
 
@@ -86,9 +92,13 @@ public class SolverResult {
                 global_node_desc = nodeinfo;
                 TableCellRenderer tcr = new ColorTableCellRenderer(nodeinfo);
                 strategy_table.setDefaultRenderer(Object.class,tcr);
-                strategy_table.updateUI();
 
                 update_global_strategy(nodeinfo);
+
+                if(nodeinfo.node instanceof ChanceNode && node.getChildCount() == 0) {
+                    reGenerateTree(nodeinfo.node,node,nodeinfo.node.getRound());
+                }
+                strategy_table.updateUI();
             }
         });
         construct_inital_table();
@@ -264,8 +274,8 @@ public class SolverResult {
         detail_table.setRowSelectionAllowed(true);
     }
 
-    void reGenerateTree(GameTreeNode node,DefaultMutableTreeNode parent){
-        if(node.getRound() != this.root.getRound()) return;
+    void reGenerateTree(GameTreeNode node,DefaultMutableTreeNode parent,GameTreeNode.GameRound stop_round){
+        if(node.getRound() != stop_round) return;
         if(node instanceof ActionNode){
             ActionNode actionNode = (ActionNode) node;
             List<GameTreeNode> childs = actionNode.getChildrens();
@@ -277,10 +287,26 @@ public class SolverResult {
                 GameActions one_action = actions.get(i);
                 DefaultMutableTreeNode one_tree_child = new DefaultMutableTreeNode();
 
-                one_tree_child.setUserObject(new NodeDesc(one_child,one_action,i));
+                one_tree_child.setUserObject(new NodeDesc(one_child,one_action.toString(),i));
                 parent.add(one_tree_child);
-                reGenerateTree(one_child,one_tree_child);
+                reGenerateTree(one_child,one_tree_child,stop_round);
             }
+        }else if(node instanceof ChanceNode){
+            ChanceNode chanceNode = (ChanceNode)node;
+            List<GameTreeNode> childs = chanceNode.getChildrens();
+            List<Card> cards = chanceNode.getCards();
+
+            assert(childs.size() == cards.size());
+            for(int i = 0;i < childs.size();i ++){
+                GameTreeNode one_child = childs.get(i);
+                Card one_card = cards.get(i);
+                DefaultMutableTreeNode one_tree_child = new DefaultMutableTreeNode();
+                String act_str = String.format("%s - %s",one_card.toFormatString(),node.getRound());
+                one_tree_child.setUserObject(new NodeDesc(one_child,act_str,i));
+                parent.add(one_tree_child);
+                reGenerateTree(one_child,one_tree_child,stop_round);
+            }
+
         }
     }
 
