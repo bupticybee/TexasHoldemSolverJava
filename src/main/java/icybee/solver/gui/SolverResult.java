@@ -16,10 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +32,7 @@ public class SolverResult {
     private JScrollPane tree_panel;
     private JTabbedPane tabbedPane1;
     private JTable table1;
+    private NodeDesc global_node_desc = null;
 
     GameTree game_tree;
     GameTreeNode root;
@@ -88,6 +86,7 @@ public class SolverResult {
                 if (node == null) return;
                 Object nodeInfoObject = node.getUserObject();
                 NodeDesc nodeinfo = (NodeDesc) nodeInfoObject;
+                global_node_desc = nodeinfo;
                 TableCellRenderer tcr = new ColorTableCellRenderer(nodeinfo);
                 strategy_table.setDefaultRenderer(Object.class,tcr);
                 strategy_table.updateUI();
@@ -130,6 +129,21 @@ public class SolverResult {
                     int perRow = available / detail_table.getRowCount();
                     detail_table.setRowHeight(perRow);
                 }
+            }
+        });
+        strategy_table.addMouseMotionListener(new MouseMotionAdapter() {
+            int last_id = -1;
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                super.mouseMoved(e);
+                Point p = e.getPoint();
+                int row = strategy_table.rowAtPoint(p);
+                int col = strategy_table.columnAtPoint(p);
+                int this_id = row * 100 + col;
+                if(global_node_desc  != null && last_id != this_id) {
+                    setDetailStrategyInfo(row, col, global_node_desc);
+                }
+                last_id = this_id;
             }
         });
     }
@@ -311,7 +325,7 @@ public class SolverResult {
         public Component getTableCellRendererComponent(JTable table, Object value,
                                                        boolean isSelected, boolean hasFocus, int row, int column) {
             EachCellRenderer cell_renderer = new EachCellRenderer(row,column,desc,isSelected);
-            if(isSelected) setDetailStrategyInfo(row,column,desc);
+            //if(isSelected) setDetailStrategyInfo(row,column,desc);
             return cell_renderer.getTableCellRendererComponent(table, value, false,false, row, column);
         }
     }
