@@ -23,6 +23,8 @@ public class DiscountedCfrTrainable extends Trainable{
     float beta = 0.5f;
     float gamma = 2;
     float theta = 0.9f;
+    float[][] reach_probs;
+    float[] evs;
 
     public PrivateCards[] getPrivateCards() {
         return privateCards;
@@ -44,12 +46,28 @@ public class DiscountedCfrTrainable extends Trainable{
         return cum_r_plus_sum;
     }
 
+    public float[][] getReach_probs() {
+        return reach_probs;
+    }
+
     float[] r_plus_sum = null;
 
     float[] cum_r_plus = null;
     float[] cum_r_plus_sum = null;
 
     float[] regrets = null;
+
+    public void setReach_probs(float[][] reach_probs) {
+        this.reach_probs = reach_probs;
+    }
+
+    public float[] getEvs() {
+        return evs;
+    }
+
+    public void setEvs(float[] evs) {
+        this.evs = evs;
+    }
 
     public DiscountedCfrTrainable(ActionNode action_node, PrivateCards[] privateCards){
         this.action_node = action_node;

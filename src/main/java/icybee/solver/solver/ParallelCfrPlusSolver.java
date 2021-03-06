@@ -10,6 +10,7 @@ import icybee.solver.nodes.*;
 import icybee.solver.ranges.PrivateCards;
 import icybee.solver.ranges.PrivateCardsManager;
 import icybee.solver.ranges.RiverCombs;
+import icybee.solver.trainable.DiscountedCfrTrainable;
 import icybee.solver.trainable.Trainable;
 
 import java.io.FileWriter;
@@ -553,6 +554,11 @@ public class ParallelCfrPlusSolver extends Solver{
                     }
                 }
                 trainable.updateRegrets(regrets, iter + 1, reach_probs[player]);
+                if(trainable instanceof DiscountedCfrTrainable){
+                    DiscountedCfrTrainable dct =  (DiscountedCfrTrainable) trainable;
+                    dct.setEvs(payoffs);
+                    dct.setReach_probs(reach_probs);
+                }
             }
             //if(this.solver_env.debug && player == node.getPlayer()) {
 
