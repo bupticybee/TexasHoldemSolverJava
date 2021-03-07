@@ -708,7 +708,9 @@ public class GameTree {
                 amount = one_bet * pot;
                 amount = round_nearest(amount, (double) rule.big_blind);
             }
-            possible_amounts.add(amount);
+            if(amount < rule.stack - rule.get_commit(player)) {
+                possible_amounts.add(amount);
+            }
         }
         if(all_in) possible_amounts.add((double) (rule.stack - rule.get_commit(player)));
 

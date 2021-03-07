@@ -28,12 +28,12 @@ public class SolverResult {
     private JTree game_tree_field;
     private JTable detail_table;
     private JPanel tree_and_strategy;
-    private JScrollPane tree_panel;
-    private JTabbedPane tabbedPane1;
+    private JScrollPane strategy_viewer_panel;
     private JTable global_info;
     private JTable table_url;
     private JScrollPane detail_strategy_panel;
     private JTextPane text_info_panel;
+    private JComboBox mode;
     private NodeDesc global_node_desc = null;
 
     GameTree game_tree;
@@ -43,6 +43,13 @@ public class SolverResult {
     String[][] grid_names;
     String[] columnName;
     String boardstr;
+    PrivateCards[][] privateCards = new PrivateCards[2][];
+    private enum ShowType{
+        STRATEGY,
+        OOPRANGE,
+        IPRANGE
+    }
+    ShowType showType = ShowType.STRATEGY;
 
     float sum(float[] ins){
         float sumnum = 0;
@@ -92,14 +99,14 @@ public class SolverResult {
         }
     }
 
-    SolverResult(GameTree game_tree,GameTreeNode root,String boardstr){
+    SolverResult(GameTree game_tree,GameTreeNode root,String boardstr) {
         this.game_tree = game_tree;
         this.root = root;
         this.round = root.getRound();
         this.boardstr = boardstr;
         DefaultMutableTreeNode treenode = new DefaultMutableTreeNode();
-        treenode.setUserObject(new NodeDesc(root,null,0));
-        reGenerateTree(this.root,treenode,root.getRound());
+        treenode.setUserObject(new NodeDesc(root, null, 0));
+        reGenerateTree(this.root, treenode, root.getRound());
         JTree jtree_field = new JTree(treenode);
         game_tree_field.setModel(jtree_field.getModel());
 
@@ -115,27 +122,24 @@ public class SolverResult {
                 NodeDesc nodeinfo = (NodeDesc) nodeInfoObject;
                 global_node_desc = nodeinfo;
                 TableCellRenderer tcr = new ColorTableCellRenderer(nodeinfo);
-                strategy_table.setDefaultRenderer(Object.class,tcr);
+                strategy_table.setDefaultRenderer(Object.class, tcr);
 
                 update_global_strategy(nodeinfo);
 
-                if(nodeinfo.node instanceof ChanceNode && node.getChildCount() == 0) {
-                    reGenerateTree(nodeinfo.node,node,nodeinfo.node.getRound());
+                if (nodeinfo.node instanceof ChanceNode && node.getChildCount() == 0) {
+                    reGenerateTree(nodeinfo.node, node, nodeinfo.node.getRound());
                 }
                 strategy_table.updateUI();
             }
         });
         construct_inital_table();
-        strategy_table.addComponentListener(new ComponentAdapter()
-        {
+        strategy_table.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e)
-            {
+            public void componentResized(ComponentEvent e) {
                 strategy_table.setRowHeight(26);
                 Dimension p = strategy_table.getPreferredSize();
-                Dimension v = tree_panel.getViewportBorderBounds().getSize();
-                if (v.height > p.height)
-                {
+                Dimension v = strategy_viewer_panel.getViewportBorderBounds().getSize();
+                if (v.height > p.height) {
                     int available = v.height -
                             strategy_table.getRowCount() * strategy_table.getRowMargin();
                     int perRow = available / strategy_table.getRowCount();
@@ -145,17 +149,14 @@ public class SolverResult {
         });
 
 
-        detail_table.addComponentListener(new ComponentAdapter()
-        {
+        detail_table.addComponentListener(new ComponentAdapter() {
             @Override
-            public void componentResized(ComponentEvent e)
-            {
-                if(detail_table.getRowCount() == 0)return;
+            public void componentResized(ComponentEvent e) {
+                if (detail_table.getRowCount() == 0) return;
                 detail_table.setRowHeight(26);
                 Dimension p = detail_table.getPreferredSize();
                 Dimension v = detail_strategy_panel.getViewportBorderBounds().getSize();
-                if (v.height > p.height)
-                {
+                if (v.height > p.height) {
                     int available = v.height -
                             detail_table.getRowCount() * detail_table.getRowMargin();
                     int perRow = available / detail_table.getRowCount();
@@ -165,6 +166,7 @@ public class SolverResult {
         });
         strategy_table.addMouseMotionListener(new MouseMotionAdapter() {
             int last_id = -1;
+
             @Override
             public void mouseMoved(MouseEvent e) {
                 super.mouseMoved(e);
@@ -172,13 +174,23 @@ public class SolverResult {
                 int row = strategy_table.rowAtPoint(p);
                 int col = strategy_table.columnAtPoint(p);
                 int this_id = row * 100 + col;
-                if(global_node_desc  != null && last_id != this_id) {
+                if (global_node_desc != null && last_id != this_id) {
                     setDetailStrategyInfo(row, col, global_node_desc);
                 }
                 last_id = this_id;
             }
         });
         global_info.setRowHeight(100);
+        mode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int action = mode.getSelectedIndex();
+                if(action == 0){showType = ShowType.STRATEGY;}
+                else if(action == 1){showType = ShowType.IPRANGE;}
+                else if(action == 2){showType = ShowType.OOPRANGE;}
+                strategy_table.updateUI();
+            }
+        });
     }
 
     void update_url(DefaultMutableTreeNode node) {
@@ -268,7 +280,7 @@ public class SolverResult {
                 .replace("h","<font color=\"red\">♥</font>")
                 .replace("s","<font color=\"black\">♠</font>");
         String player_toshow = player == 0? "IP":"OOP";
-        String info_toshow = String.format("<html>board: %s<br><h3>%s strategy</h3></html>",board_str_toshow,player_toshow);
+        String info_toshow = String.format("<html>board: %s<br><h3>%s decision node</h3></html>",board_str_toshow,player_toshow);
         text_info_panel.setContentType("text/html");
         text_info_panel.setText(info_toshow);
         text_info_panel.setEditable(false);
@@ -337,6 +349,7 @@ public class SolverResult {
                 GameTreeNode one_child = childs.get(i);
                 GameActions one_action = actions.get(i);
                 DefaultMutableTreeNode one_tree_child = new DefaultMutableTreeNode();
+                privateCards[actionNode.getPlayer()] = ((DiscountedCfrTrainable)(actionNode).getTrainable()).getPrivateCards();
 
                 one_tree_child.setUserObject(new NodeDesc(one_child,one_action.toString(),i));
                 parent.add(one_tree_child);
@@ -370,6 +383,7 @@ public class SolverResult {
         String name;
         List<GameActions> actions;
         boolean selected;
+        float[] join_prob = new float[2];
         public EachCellRenderer(int row,int colunm,NodeDesc desc,boolean selected) {
             this.row = row;
             this.colunm = colunm;
@@ -384,6 +398,7 @@ public class SolverResult {
             ActionNode actionNode = (ActionNode) node;
             DiscountedCfrTrainable trainable = (DiscountedCfrTrainable) actionNode.getTrainable();
             float[] strategy = trainable.getAverageStrategy();
+            float[][] reach_prob = trainable.getReach_probs();
             List<GameActions> actions = actionNode.getActions();
             this.actions = actions;
             PrivateCards[] cards = trainable.getPrivateCards();
@@ -403,6 +418,18 @@ public class SolverResult {
                     node_strategy[j] = node_strategy[j] * (num_cases - 1) / num_cases + strategy[strategy_index] / num_cases;
                 }
             }
+
+            for(int one_player = 0;one_player < 2;one_player ++) {
+                num_cases = 0;
+                assert(privateCards[one_player].length == reach_prob[one_player].length);
+                for (int i = 0; i < privateCards[one_player].length; i++) {
+                    PrivateCards one_private_card = privateCards[one_player][i];
+                    if (!this.name.equals(one_private_card.summary())) continue;
+                    this.join_prob[one_player] += reach_prob[one_player][i];
+                    num_cases += 1;
+                }
+                if (num_cases != 0) this.join_prob[one_player] /= num_cases;
+            }
             /*
             System.out.print(String.format("%s : ",this.name));
             for (float prob:node_strategy)
@@ -420,7 +447,33 @@ public class SolverResult {
             g2.drawRect(0,0,getWidth(),getHeight());
         }
 
+
         public void paintComponent(Graphics g){
+            if (showType == ShowType.STRATEGY){
+                paintStrategy(g);
+            }else if(showType == ShowType.IPRANGE){
+                paintReachProb(g,0);
+            }else if(showType == ShowType.OOPRANGE){
+                paintReachProb(g,1);
+            }
+        }
+
+        public void paintReachProb(Graphics g,int player){
+            int disable_height = (int)((1 - this.join_prob[player]) * getHeight());
+            int remain_height = getHeight() - disable_height;
+            Graphics2D g2=(Graphics2D)g;
+            g2.setColor(Color.YELLOW);
+            g2.fillRect(0,0,getWidth(),getHeight());
+            g2.setColor(Color.GRAY);
+            g2.fillRect(0,0,getWidth(),disable_height);
+            String origin_str = getText();
+            setText(String.format("<html>%s<br>%.3f</html>",getText(),this.join_prob[player]));
+            super.paintComponent(g);
+            if(this.selected)paintBlackSide(g);
+            setText(origin_str);
+        }
+
+        public void paintStrategy(Graphics g){
             if(node_strategy == null || sum(node_strategy) == 0){
                 super.paintComponent(g);
                 if(this.selected)paintBlackSide(g);
@@ -517,36 +570,66 @@ public class SolverResult {
         float[] evs = trainable.getEvs();
         List<GameActions> actions = actionNode.getActions();
         PrivateCards[] cards = trainable.getPrivateCards();
+        float[][] reach_probs = trainable.getReach_probs();
 
-        List<DetailStrategyInfo> infos = new ArrayList<DetailStrategyInfo>();
-        float norm_ev = sum(trainable.getReach_probs()[player]);
+        if(showType == ShowType.STRATEGY) {
+            List<DetailStrategyInfo> infos = new ArrayList<DetailStrategyInfo>();
+            float norm_ev = sum(trainable.getReach_probs()[player]);
 
-        for(int i = 0;i < cards.length;i ++){
-            PrivateCards one_private_card = cards[i];
-            if(!name.equals(one_private_card.summary()))continue;
-            float[] one_strategy = new float[actions.size()];
-            String strategy_str = "";
-            for(int j = 0;j < actions.size();j ++){
-                int strategy_index = j * cards.length + i;
-                one_strategy[j] = strategy[strategy_index];
-                strategy_str += String.format("<p style=\"font-size:7px\">%s : %.1f %s </p>",actions.get(j).toString(),one_strategy[j] * 100,"%");
+            for (int i = 0; i < cards.length; i++) {
+                PrivateCards one_private_card = cards[i];
+                if (!name.equals(one_private_card.summary())) continue;
+                float[] one_strategy = new float[actions.size()];
+                String strategy_str = "";
+                for (int j = 0; j < actions.size(); j++) {
+                    int strategy_index = j * cards.length + i;
+                    one_strategy[j] = strategy[strategy_index];
+                    strategy_str += String.format("<p style=\"font-size:7px\">%s : %.1f %s </p>", actions.get(j).toString(), one_strategy[j] * 100, "%");
+                }
+                String card_infos = String.format("<html><h2 style=\"background-color:rgb(255, 255, 255);\"> %s </h2><br><h3>EV: %.2f</h3>%s</html>", one_private_card.toFormatString(), evs[i] / norm_ev, strategy_str);
+                ;
+                infos.add(new DetailStrategyInfo(card_infos, actions, one_strategy));
             }
-            String card_infos = String.format("<html><h2 style=\"background-color:rgb(255, 255, 255);\"> %s </h2><br><h3>EV: %.2f</h3>%s</html>",one_private_card.toFormatString(),evs[i] / norm_ev,strategy_str);;
-            infos.add(new DetailStrategyInfo(card_infos,actions,one_strategy));
-        }
-        int line_num = (int)Math.ceil(((float)infos.size() / columnName.length));
-        String[][] detail_grid_names = new String[line_num][columnName.length];
-        DetailStrategyInfo[][] strategy2d = new DetailStrategyInfo[line_num][columnName.length];
-        for(int i = 0;i < infos.size();i ++) {
-            detail_grid_names[i / columnName.length][i % columnName.length] = infos.get(i).cards_name;
-            strategy2d[i / columnName.length][i % columnName.length] = infos.get(i);
-        }
+            int line_num = (int) Math.ceil(((float) infos.size() / columnName.length));
+            String[][] detail_grid_names = new String[line_num][columnName.length];
+            DetailStrategyInfo[][] strategy2d = new DetailStrategyInfo[line_num][columnName.length];
+            for (int i = 0; i < infos.size(); i++) {
+                detail_grid_names[i / columnName.length][i % columnName.length] = infos.get(i).cards_name;
+                strategy2d[i / columnName.length][i % columnName.length] = infos.get(i);
+            }
+            DefaultTableModel defaultTableModel = new DefaultTableModel(detail_grid_names, columnName);
+            TableCellRenderer tcr = new StrategyDetailColorTableCellRenderer(strategy2d,null);
+            detail_table.setModel(defaultTableModel);
+            detail_table.setDefaultRenderer(Object.class,tcr);
+        }else {
 
-        DefaultTableModel defaultTableModel = new DefaultTableModel(detail_grid_names, columnName);
-        TableCellRenderer tcr = new StrategyDetailColorTableCellRenderer(strategy2d);
-        detail_table.setModel(defaultTableModel);
-        detail_table.setDefaultRenderer(Object.class,tcr);
+            int line_num = 3;
+            String[][] detail_grid_names = new String[line_num][columnName.length];
+            float[][][] reach_prob3d = new float[2][3][columnName.length];
+            for (int one_player = 0; one_player < 2; one_player++) {
+                PrivateCards[] player_cards = privateCards[one_player];
+                assert (reach_probs[one_player].length == player_cards.length);
+                int num = 0;
+                for (int i = 0; i < player_cards.length; i++) {
+                    PrivateCards one_private_card = player_cards[i];
+                    if (!name.equals(one_private_card.summary())) continue;
+                    reach_prob3d[one_player][num / columnName.length][num % columnName.length] = reach_probs[one_player][i];
+
+                    String card_infos = String.format("<html><h2 > %s </h2><br><h3>%.3f </h3></html>", one_private_card.toFormatString(), reach_probs[one_player][i]);
+                    detail_grid_names[num / columnName.length][num % columnName.length] = card_infos;
+                    //System.out.println(String.format("%s %s %s %s", one_player, num / columnName.length, num % columnName.length, reach_probs[one_player][i]));
+                    num += 1;
+                }
+            }
+
+
+            DefaultTableModel defaultTableModel = new DefaultTableModel(detail_grid_names, columnName);
+            TableCellRenderer tcr = new StrategyDetailColorTableCellRenderer(null, reach_prob3d);
+            detail_table.setModel(defaultTableModel);
+            detail_table.setDefaultRenderer(Object.class,tcr);
+        }
         detail_table.updateUI();
+
     }
 
 
@@ -556,12 +639,14 @@ public class SolverResult {
         float[] node_strategy = null;
         List<GameActions> actions;
         boolean selected;
-        public StragetyDetailCellRenderer(int row,int colunm,DetailStrategyInfo[][] strategy2d,boolean selected) {
+        float[][][] reach_prob3d;
+        public StragetyDetailCellRenderer(int row,int colunm,DetailStrategyInfo[][] strategy2d,float[][][] reach_prob3d,boolean selected) {
             this.row = row;
             this.colunm = colunm;
             this.selected = selected;
+            this.reach_prob3d = reach_prob3d;
 
-            if(!(row < strategy2d.length || colunm < strategy2d[0].length) || strategy2d[row][colunm] == null)return;
+            if(strategy2d == null || !(row < strategy2d.length || colunm < strategy2d[0].length) || strategy2d[row][colunm] == null)return;
             actions = strategy2d[row][colunm].actions;
             node_strategy = strategy2d[row][colunm].strategy;
             assert(actions.size() == node_strategy.length);
@@ -576,6 +661,28 @@ public class SolverResult {
         }
 
         public void paintComponent(Graphics g){
+            if(showType == ShowType.STRATEGY){
+                paintStrategy(g);
+            }else if(showType == ShowType.IPRANGE){
+                paintReachProb(g,0);
+            }else if(showType == ShowType.OOPRANGE){
+                paintReachProb(g,1);
+            }
+        }
+
+        public void paintReachProb(Graphics g,int player){
+            float prob = reach_prob3d[player][this.row][this.colunm];
+            int disable_height = (int)((1 - prob) * getHeight());
+            Graphics2D g2=(Graphics2D)g;
+            g2.setColor(Color.YELLOW);
+            g2.fillRect(0,0,getWidth(),getHeight());
+            g2.setColor(Color.GRAY);
+            g2.fillRect(0,0,getWidth(),disable_height);
+            super.paintComponent(g);
+            paintBlackSide(g);
+        }
+
+        public void paintStrategy(Graphics g){
             if(node_strategy == null || sum(node_strategy) == 0){
                 super.paintComponent(g);
                 if(this.selected)paintBlackSide(g);
@@ -626,13 +733,15 @@ public class SolverResult {
     class StrategyDetailColorTableCellRenderer extends DefaultTableCellRenderer
     {
         DetailStrategyInfo[][] strategy2d;
-        public StrategyDetailColorTableCellRenderer(DetailStrategyInfo[][] strategy2d) {
+        float[][][] reach_prob3d;
+        public StrategyDetailColorTableCellRenderer(DetailStrategyInfo[][] strategy2d,float[][][] reach_prob3d) {
             this.strategy2d = strategy2d;
+            this.reach_prob3d = reach_prob3d;
         }
 
         public Component getTableCellRendererComponent(JTable table, Object value,
                                                        boolean isSelected, boolean hasFocus, int row, int column) {
-            StragetyDetailCellRenderer cell_renderer = new StragetyDetailCellRenderer(row,column,this.strategy2d,isSelected);
+            StragetyDetailCellRenderer cell_renderer = new StragetyDetailCellRenderer(row,column,this.strategy2d,this.reach_prob3d,isSelected);
             return cell_renderer.getTableCellRendererComponent(table, value, false,false, row, column);
         }
     }
