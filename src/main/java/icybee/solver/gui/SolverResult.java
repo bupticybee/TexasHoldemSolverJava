@@ -271,6 +271,7 @@ public class SolverResult {
         String info_toshow = String.format("<html>board: %s<br><h3>%s strategy</h3></html>",board_str_toshow,player_toshow);
         text_info_panel.setContentType("text/html");
         text_info_panel.setText(info_toshow);
+        text_info_panel.setEditable(false);
     }
 
     private void setInfoTableWidths(float[] global_strategy) {
