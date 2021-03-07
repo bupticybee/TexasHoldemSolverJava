@@ -529,7 +529,7 @@ public class GameTree {
         String[] possible_actions = null;
         switch (last_action) {
             case "roundbegin":
-                possible_actions = new String[]{"call", "raise", "fold"};
+                possible_actions = new String[]{"check", "bet"};
                 break;
             case "begin":
                 possible_actions = new String[]{"check", "bet"};
