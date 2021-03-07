@@ -290,7 +290,7 @@ public class SolverGui {
                     System.out.println("Please build tree first");
                     return;
                 }
-                SolverResult sr = new SolverResult(game_tree,game_tree.getRoot());
+                SolverResult sr = new SolverResult(game_tree,game_tree.getRoot(),boardstr.getText());
                 JFrame frame = new JFrame("SolverResult");
                 frame.setContentPane(sr.resultPanel);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

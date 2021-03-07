@@ -33,6 +33,7 @@ public class SolverResult {
     private JTable global_info;
     private JTable table_url;
     private JScrollPane detail_strategy_panel;
+    private JTextPane text_info_panel;
     private NodeDesc global_node_desc = null;
 
     GameTree game_tree;
@@ -41,6 +42,7 @@ public class SolverResult {
 
     String[][] grid_names;
     String[] columnName;
+    String boardstr;
 
     float sum(float[] ins){
         float sumnum = 0;
@@ -90,10 +92,11 @@ public class SolverResult {
         }
     }
 
-    SolverResult(GameTree game_tree,GameTreeNode root){
+    SolverResult(GameTree game_tree,GameTreeNode root,String boardstr){
         this.game_tree = game_tree;
         this.root = root;
         this.round = root.getRound();
+        this.boardstr = boardstr;
         DefaultMutableTreeNode treenode = new DefaultMutableTreeNode();
         treenode.setUserObject(new NodeDesc(root,null,0));
         reGenerateTree(this.root,treenode,root.getRound());
@@ -259,6 +262,15 @@ public class SolverResult {
         });
         setInfoTableWidths(global_strategy);
         global_info.updateUI();
+
+        String board_str_toshow = this.boardstr.replace('c','♣')
+                .replace('d','♦')
+                .replace('h','♥')
+                .replace('s','♠');
+        String player_toshow = player == 0? "IP":"OOP";
+        String info_toshow = String.format("<html>board: %s<br><h3>%s strategy</h3></html>",board_str_toshow,player_toshow);
+        text_info_panel.setContentType("text/html");
+        text_info_panel.setText(info_toshow);
     }
 
     private void setInfoTableWidths(float[] global_strategy) {
