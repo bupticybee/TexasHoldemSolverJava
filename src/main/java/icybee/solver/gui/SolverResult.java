@@ -263,10 +263,10 @@ public class SolverResult {
         setInfoTableWidths(global_strategy);
         global_info.updateUI();
 
-        String board_str_toshow = this.boardstr.replace('c','♣')
-                .replace('d','♦')
-                .replace('h','♥')
-                .replace('s','♠');
+        String board_str_toshow = this.boardstr.replace("c","<font color=\"black\">♣</font>")
+                .replace("d","<font color=\"red\">♦</font>")
+                .replace("h","<font color=\"red\">♥</font>")
+                .replace("s","<font color=\"black\">♠</font>");
         String player_toshow = player == 0? "IP":"OOP";
         String info_toshow = String.format("<html>board: %s<br><h3>%s strategy</h3></html>",board_str_toshow,player_toshow);
         text_info_panel.setContentType("text/html");
