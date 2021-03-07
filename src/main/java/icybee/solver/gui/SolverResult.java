@@ -31,6 +31,8 @@ public class SolverResult {
     private JScrollPane tree_panel;
     private JTabbedPane tabbedPane1;
     private JTable global_info;
+    private JTable table_url;
+    private JScrollPane detail_strategy_panel;
     private NodeDesc global_node_desc = null;
 
     GameTree game_tree;
@@ -54,6 +56,24 @@ public class SolverResult {
             this.node = node;
             this.last_action = last_action;
             this.action_ind = action_ind;
+        }
+
+        public Color getColor(){
+            if(this.last_action == null) {
+                return Color.ORANGE;
+            }else if(this.node.getParent() != null && this.node.getParent() instanceof  ActionNode){
+                ActionNode actionNode = ((ActionNode) this.node.getParent());
+                GameActions action = actionNode.getActions().get(this.action_ind);
+                if(action.getAction() == GameTreeNode.PokerActions.CALL || action.getAction() == GameTreeNode.PokerActions.CHECK){
+                    return Color.GREEN;
+                }else if(action.getAction() == GameTreeNode.PokerActions.BET || action.getAction() == GameTreeNode.PokerActions.RAISE){
+                    return Color.RED;
+                }else{
+                    return Color.GRAY;
+                }
+            }else{
+                return Color.YELLOW;
+            }
         }
 
         @Override
@@ -87,6 +107,7 @@ public class SolverResult {
 
                 /* if nothing is selected */
                 if (node == null) return;
+                update_url(node);
                 Object nodeInfoObject = node.getUserObject();
                 NodeDesc nodeinfo = (NodeDesc) nodeInfoObject;
                 global_node_desc = nodeinfo;
@@ -129,7 +150,7 @@ public class SolverResult {
                 if(detail_table.getRowCount() == 0)return;
                 detail_table.setRowHeight(26);
                 Dimension p = detail_table.getPreferredSize();
-                Dimension v = tree_panel.getViewportBorderBounds().getSize();
+                Dimension v = detail_strategy_panel.getViewportBorderBounds().getSize();
                 if (v.height > p.height)
                 {
                     int available = v.height -
@@ -157,6 +178,24 @@ public class SolverResult {
         global_info.setRowHeight(100);
     }
 
+    void update_url(DefaultMutableTreeNode node) {
+        List<String> strs = new ArrayList<String>();
+        ArrayList<Color> colors = new ArrayList<Color>();
+        while(node != null) {
+            Object nodeInfoObject = node.getUserObject();
+            NodeDesc nodeinfo = (NodeDesc) nodeInfoObject;
+            strs.add(0,nodeinfo.toString());
+            colors.add(0,nodeinfo.getColor());
+            node = (DefaultMutableTreeNode) node.getParent();
+        }
+        String[] urls = strs.toArray(new String[0]);
+        String[][] content = new String[][]{urls};
+        DefaultTableModel defaultTableModel = new DefaultTableModel(content,urls);
+        table_url.setModel(defaultTableModel);
+        table_url.setDefaultRenderer(Object.class,new UrlColorTableCellRenderer(colors));
+        table_url.updateUI();
+    }
+
     void update_global_strategy(NodeDesc desc){
         String[][] content = new String[1][];
 
@@ -179,7 +218,6 @@ public class SolverResult {
         float[] evs = dct.getEvs();
         float[] strategy = dct.getAverageStrategy();
         assert(evs.length == reach_probs.length);
-
 
         float total_sum = 0;
         int action_number = actionNode.getActions().size();
@@ -646,6 +684,19 @@ public class SolverResult {
                                                        boolean isSelected, boolean hasFocus, int row, int column) {
             GlobalStrategyCellRenderer cell_renderer = new GlobalStrategyCellRenderer(row,column,isSelected,this.actions.get(column),this.global_strategy[column],this.combos[column]);
             return cell_renderer.getTableCellRendererComponent(table, value, false,false, row, column);
+        }
+    }
+    class UrlColorTableCellRenderer extends DefaultTableCellRenderer
+    {
+        ArrayList<Color> colors;
+        public UrlColorTableCellRenderer(ArrayList<Color> colors) {
+            this.colors = colors;
+        }
+
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            setBackground(this.colors.get(column));
+            return super.getTableCellRendererComponent(table, value, false,false, row, column);
         }
     }
 }
