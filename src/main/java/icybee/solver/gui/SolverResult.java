@@ -616,7 +616,8 @@ public class SolverResult {
                     reach_prob3d[one_player][num / columnName.length][num % columnName.length] = reach_probs[one_player][i];
 
                     String card_infos = String.format("<html><h2 > %s </h2><br><h3>%.3f </h3></html>", one_private_card.toFormatString(), reach_probs[one_player][i]);
-                    detail_grid_names[num / columnName.length][num % columnName.length] = card_infos;
+                    if(showType == ShowType.IPRANGE && one_player == 0 || showType == ShowType.OOPRANGE && one_player == 1)
+                        detail_grid_names[num / columnName.length][num % columnName.length] = card_infos;
                     //System.out.println(String.format("%s %s %s %s", one_player, num / columnName.length, num % columnName.length, reach_probs[one_player][i]));
                     num += 1;
                 }
