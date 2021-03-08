@@ -21,6 +21,7 @@ import icybee.solver.solver.Solver;
 import icybee.solver.trainable.CfrPlusTrainable;
 import icybee.solver.trainable.DiscountedCfrTrainable;
 import icybee.solver.utils.PrivateRangeConverter;
+import icybee.solver.utils.Range;
 
 public class SolverGui {
 
@@ -300,5 +301,41 @@ public class SolverGui {
         });
         ooprange.setLineWrap(true);
         iprange.setLineWrap(true);
+        selectOOPRangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                RangeSelectorCallback rsc = new RangeSelectorCallback() {
+                    @Override
+                    void onFinish(String content) {
+                        ooprange.setText(content);
+                    }
+                };
+                JFrame frame = new JFrame("RangeSelector");
+                RangeSelector rr = new RangeSelector(rsc,ooprange.getText(),mode.getSelectedIndex() == 0? RangeSelector.RangeType.HOLDEM: RangeSelector.RangeType.SHORTDECK,frame);
+                frame.setContentPane(rr.range_selector_main_panel);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+
+            }
+        });
+
+        selectIPRangeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                RangeSelectorCallback rsc = new RangeSelectorCallback() {
+                    @Override
+                    void onFinish(String content) {
+                        iprange.setText(content);
+                    }
+                };
+                JFrame frame = new JFrame("RangeSelector");
+                RangeSelector rr = new RangeSelector(rsc,iprange.getText(),mode.getSelectedIndex() == 0? RangeSelector.RangeType.HOLDEM: RangeSelector.RangeType.SHORTDECK,frame);
+                frame.setContentPane(rr.range_selector_main_panel);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
     }
 }
