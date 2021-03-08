@@ -24,6 +24,7 @@ public class PrivateRangeConverter {
             if(cardstr_arr.size() == 2){
                 weight = Float.valueOf(cardstr_arr.get(1));
             }
+            if(weight == 0)continue;
 
             int range_len = one_range.length();
             if(range_len == 3){
