@@ -337,5 +337,22 @@ public class SolverGui {
                 frame.setVisible(true);
             }
         });
+        selectBoardCardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BoardSelectorCallback bsc = new BoardSelectorCallback() {
+                    @Override
+                    void onFinish(String content) {
+                        boardstr.setText(content);
+                    }
+                };
+                JFrame frame = new JFrame("BoardSelector");
+                BoardSelector br = new BoardSelector(bsc,boardstr.getText(),mode.getSelectedIndex() == 0? RangeSelector.RangeType.HOLDEM: RangeSelector.RangeType.SHORTDECK,frame);
+                frame.setContentPane(br.main_panel);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
     }
 }
