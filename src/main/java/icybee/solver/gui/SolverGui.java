@@ -53,6 +53,8 @@ public class SolverGui {
     private JCheckBox mc;
     private JComboBox algorithm;
     private JButton clearLogButton;
+    private JTextField flop_ip_bet;
+    private JTextField flop_ip_raise;
 
     private Compairer compairer_holdem = null;
     private Compairer compairer_shortdeck = null;
