@@ -38,13 +38,9 @@ public class SolverGui {
     private JButton buildTreeButton;
     private JButton showTreeButton;
     private JButton showResult;
-    private JTextField oop_commit;
-    private JTextField ip_commit;
     private JTextField bet_size;
     private JTextField raise_limit;
     private JCheckBox allin;
-    private JTextField sm_blind;
-    private JTextField big_blind;
     private JTextField stacks;
     private JComboBox mode;
     private JTextArea log;
@@ -52,6 +48,7 @@ public class SolverGui {
     private JTextField iteration;
     private JTextField exploitability;
     private JTextField log_interval;
+    private JTextField pot;
     private JTextField threads;
     private JCheckBox mc;
     private JComboBox algorithm;
@@ -131,25 +128,25 @@ public class SolverGui {
         if(mode == 0) {
             this.game_tree = SolverEnvironment.gameTreeFromParams(
                     this.holdem_deck,
-                    Float.valueOf(this.oop_commit.getText()),
-                    Float.valueOf(this.ip_commit.getText()),
+                    Float.valueOf(this.pot.getText()) / 2,
+                    Float.valueOf(this.pot.getText()) / 2,
                     round,
                     Integer.valueOf(raise_limit.getText()),
-                    Float.valueOf(this.sm_blind.getText()),
-                    Float.valueOf(this.big_blind.getText()),
-                    Float.valueOf(this.stacks.getText()),
+                    (float) 0.5,
+                    (float) 1.0,
+                    Float.valueOf(this.stacks.getText()) + Float.valueOf(this.pot.getText()) / 2,
                     bet_sizes
             );
         }else if(mode == 1){
             this.game_tree = SolverEnvironment.gameTreeFromParams(
                     this.shortdeck_deck,
-                    Float.valueOf(this.oop_commit.getText()),
-                    Float.valueOf(this.ip_commit.getText()),
+                    Float.valueOf(this.pot.getText()) / 2,
+                    Float.valueOf(this.pot.getText()) / 2,
                     round,
                     Integer.valueOf(raise_limit.getText()),
-                    Float.valueOf(this.sm_blind.getText()),
-                    Float.valueOf(this.big_blind.getText()),
-                    Float.valueOf(this.stacks.getText()),
+                    (float) 0.5,
+                    (float) 1.0,
+                    Float.valueOf(this.stacks.getText()) + Float.valueOf(this.pot.getText()) / 2,
                     bet_sizes
             );
         }else{

@@ -121,35 +121,7 @@
                   <alignmentY value="0.0"/>
                 </properties>
                 <border type="none"/>
-                <children>
-                  <component id="e172b" class="javax.swing.JLabel">
-                    <constraints/>
-                    <properties>
-                      <text value="commits:   OOP:"/>
-                    </properties>
-                  </component>
-                  <component id="fd935" class="javax.swing.JTextField" binding="oop_commit">
-                    <constraints/>
-                    <properties>
-                      <minimumSize width="64" height="30"/>
-                      <preferredSize width="64" height="30"/>
-                      <text value="5"/>
-                    </properties>
-                  </component>
-                  <component id="d0066" class="javax.swing.JLabel">
-                    <constraints/>
-                    <properties>
-                      <text value="IP:"/>
-                    </properties>
-                  </component>
-                  <component id="20794" class="javax.swing.JTextField" binding="ip_commit">
-                    <constraints/>
-                    <properties>
-                      <preferredSize width="64" height="30"/>
-                      <text value="5"/>
-                    </properties>
-                  </component>
-                </children>
+                <children/>
               </grid>
               <grid id="59e39" layout-manager="FlowLayout" hgap="5" vgap="0" flow-align="0">
                 <constraints>
@@ -220,30 +192,18 @@
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="14ef1" class="javax.swing.JLabel">
+                  <component id="e172b" class="javax.swing.JLabel">
                     <constraints/>
                     <properties>
-                      <text value=" small blind:"/>
+                      <text value="pot:"/>
                     </properties>
                   </component>
-                  <component id="ccf45" class="javax.swing.JTextField" binding="sm_blind">
+                  <component id="fd935" class="javax.swing.JTextField" binding="pot">
                     <constraints/>
                     <properties>
-                      <preferredSize width="50" height="30"/>
-                      <text value="0.5"/>
-                    </properties>
-                  </component>
-                  <component id="81f34" class="javax.swing.JLabel">
-                    <constraints/>
-                    <properties>
-                      <text value="big blind:"/>
-                    </properties>
-                  </component>
-                  <component id="3ab12" class="javax.swing.JTextField" binding="big_blind">
-                    <constraints/>
-                    <properties>
-                      <preferredSize width="50" height="30"/>
-                      <text value="1"/>
+                      <minimumSize width="64" height="30"/>
+                      <preferredSize width="64" height="30"/>
+                      <text value="20"/>
                     </properties>
                   </component>
                   <component id="7e662" class="javax.swing.JLabel">
