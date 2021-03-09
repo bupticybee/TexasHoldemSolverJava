@@ -1,4 +1,5 @@
 package icybee.solver.gui;
+import icybee.solver.nodes.ChanceNode;
 import icybee.solver.nodes.GameActions;
 import icybee.solver.nodes.GameTreeNode;
 
@@ -6,10 +7,20 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class RangeSelector {
@@ -31,6 +42,7 @@ public class RangeSelector {
     float[][] range_matrix;
     float global_range_num = 1;
     JFrame frame;
+    String range_file_root = "resources/ranges";
 
     public enum RangeType{
         HOLDEM,
@@ -128,6 +140,43 @@ public class RangeSelector {
 
         range_text.setText(convertRangeToText());
         range_text.updateUI();
+        Path path = Paths.get(this.range_file_root);
+        if(!Files.exists(path)){
+            this.range_file_root = "src/test/" + this.range_file_root;
+            path = Paths.get(this.range_file_root);
+        }
+        if(!Files.exists(path)) throw new RuntimeException("cannot find range folder");
+        File fileRoot = new File(this.range_file_root);
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(new FileNode(fileRoot));
+        DefaultTreeModel treeModel = new DefaultTreeModel(root);
+        file_tree.setModel(treeModel);
+        CreateChildNodes ccn =
+                new CreateChildNodes(fileRoot, root);
+        new Thread(ccn).start();
+
+
+        file_tree.addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent e) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+                        file_tree.getLastSelectedPathComponent();
+
+                /* if nothing is selected */
+                if (node == null) return;
+                FileNode nodeInfo = (FileNode) node.getUserObject();
+                if(nodeInfo.file.isFile()){
+                    try {
+                        String content = Files.readAllLines(nodeInfo.file.toPath()).get(0);
+                        processInputString(content);
+                        range_text.setText(content);
+                        range_text.updateUI();
+                        range_table.updateUI();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+
     }
 
     private String convertRangeToText(){
@@ -217,5 +266,59 @@ public class RangeSelector {
             return cell_renderer.getTableCellRendererComponent(table, value, false,false, row, column);
         }
     }
+
+    public class CreateChildNodes implements Runnable {
+
+        private DefaultMutableTreeNode root;
+
+        private File fileRoot;
+
+        public CreateChildNodes(File fileRoot,
+                                DefaultMutableTreeNode root) {
+            this.fileRoot = fileRoot;
+            this.root = root;
+        }
+
+        @Override
+        public void run() {
+            createChildren(fileRoot, root);
+        }
+
+        private void createChildren(File fileRoot,
+                                    DefaultMutableTreeNode node) {
+            File[] files = fileRoot.listFiles();
+            if (files == null) return;
+
+            for (File file : files) {
+                DefaultMutableTreeNode childNode =
+                        new DefaultMutableTreeNode(new FileNode(file));
+                node.add(childNode);
+                if (file.isDirectory()) {
+                    createChildren(file, childNode);
+                }
+            }
+        }
+
+    }
+
+    public class FileNode {
+
+        private File file;
+
+        public FileNode(File file) {
+            this.file = file;
+        }
+
+        @Override
+        public String toString() {
+            String name = file.getName();
+            if (name.equals("")) {
+                return file.getAbsolutePath();
+            } else {
+                return name;
+            }
+        }
+    }
+
 
 }
