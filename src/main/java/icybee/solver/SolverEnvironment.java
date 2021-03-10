@@ -2,6 +2,7 @@ package icybee.solver;
 
 import icybee.solver.compairer.Compairer;
 import icybee.solver.compairer.Dic5Compairer;
+import icybee.solver.solver.GameTreeBuildingSettings;
 
 import java.io.IOException;
 
@@ -60,10 +61,10 @@ public class SolverEnvironment {
             float small_blind,
             float big_blind,
             float stack,
-            String[] bet_sizes
+            GameTreeBuildingSettings gameTreeBuildingSettings
             ){
         try {
-            return new GameTree(deck,oop_commit,ip_commit,current_round,raise_limit,small_blind,big_blind,stack,bet_sizes);
+            return new GameTree(deck,oop_commit,ip_commit,current_round,raise_limit,small_blind,big_blind,stack,gameTreeBuildingSettings);
         }catch(IOException e){
             throw new RuntimeException();
         }

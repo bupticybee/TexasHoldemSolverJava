@@ -19,10 +19,21 @@ public class ChanceNode extends GameTreeNode{
 
     List<Card> cards;
 
+    boolean donk;
+
+    public ChanceNode(List<GameTreeNode> childrens, GameRound round, Double pot, GameTreeNode parent, List<Card> cards,boolean donk){
+        super(round,pot,parent);
+        this.childrens = childrens;
+        this.cards = cards;
+        this.donk = donk;
+        //if(childrens.size() != cards.size()) throw new RuntimeException("Card and childern length not match");
+    }
+
     public ChanceNode(List<GameTreeNode> childrens, GameRound round, Double pot, GameTreeNode parent, List<Card> cards){
         super(round,pot,parent);
         this.childrens = childrens;
         this.cards = cards;
+        this.donk = false;
         //if(childrens.size() != cards.size()) throw new RuntimeException("Card and childern length not match");
     }
 
@@ -53,6 +64,10 @@ public class ChanceNode extends GameTreeNode{
     @Override
     public GameTreeNodeType getType() {
         return GameTreeNodeType.CHANCE;
+    }
+
+    public boolean isDonk() {
+        return donk;
     }
 
 }

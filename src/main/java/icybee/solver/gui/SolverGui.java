@@ -14,10 +14,7 @@ import java.util.Map;
 import icybee.solver.*;
 import icybee.solver.compairer.Compairer;
 import icybee.solver.ranges.PrivateCards;
-import icybee.solver.solver.CfrPlusRiverSolver;
-import icybee.solver.solver.MonteCarolAlg;
-import icybee.solver.solver.ParallelCfrPlusSolver;
-import icybee.solver.solver.Solver;
+import icybee.solver.solver.*;
 import icybee.solver.trainable.CfrPlusTrainable;
 import icybee.solver.trainable.DiscountedCfrTrainable;
 import icybee.solver.utils.PrivateRangeConverter;
@@ -38,9 +35,7 @@ public class SolverGui {
     private JButton buildTreeButton;
     private JButton showTreeButton;
     private JButton showResult;
-    private JTextField bet_size;
     private JTextField raise_limit;
-    private JCheckBox allin;
     private JTextField stacks;
     private JComboBox mode;
     private JTextArea log;
@@ -55,6 +50,24 @@ public class SolverGui {
     private JButton clearLogButton;
     private JTextField flop_ip_bet;
     private JTextField flop_ip_raise;
+    private JCheckBox flop_ip_allin;
+    private JTextField turn_ip_bet;
+    private JTextField turn_ip_raise;
+    private JCheckBox turn_ip_allin;
+    private JTextField river_ip_bet;
+    private JTextField river_ip_raise;
+    private JCheckBox river_ip_allin;
+    private JTextField flop_oop_bet;
+    private JTextField flop_oop_raise;
+    private JCheckBox flop_oop_allin;
+    private JTextField turn_oop_bet;
+    private JTextField turn_oop_raise;
+    private JTextField turn_oop_donk;
+    private JCheckBox turn_oop_allin;
+    private JTextField river_oop_bet;
+    private JTextField river_oop_raise;
+    private JTextField river_oop_donk;
+    private JCheckBox river_oop_allin;
 
     private Compairer compairer_holdem = null;
     private Compairer compairer_shortdeck = null;
@@ -102,6 +115,65 @@ public class SolverGui {
         System.out.println("loading shortdeck compairer dictionary complete");
     }
 
+    float[] parseBetSizes(String betstr){
+        String[] bets_str = betstr.split(" ");
+        float[] bet_sizes = new float[bets_str.length];
+        for(int i = 0;i < bets_str.length;i ++){
+            String one_bet_str = bets_str[i];
+            if(one_bet_str.length() == 0)continue;
+            boolean multiplier = false;
+            if(one_bet_str.charAt(one_bet_str.length() - 1) == 'x'){
+                one_bet_str = one_bet_str.substring(0,one_bet_str.length() - 1);
+                multiplier = true;
+            }
+            if(multiplier) bet_sizes[i] = Float.parseFloat(one_bet_str) * 100;
+            else bet_sizes[i] = Float.parseFloat(one_bet_str);
+        }
+        return bet_sizes;
+    }
+
+    GameTreeBuildingSettings parseSettings(){
+        GameTreeBuildingSettings.StreetSetting flop_ip = new GameTreeBuildingSettings.StreetSetting(
+                parseBetSizes(flop_ip_bet.getText()),
+                parseBetSizes(flop_ip_raise.getText()),
+                null,
+                flop_ip_allin.isSelected()
+        );
+        GameTreeBuildingSettings.StreetSetting turn_ip = new GameTreeBuildingSettings.StreetSetting(
+                parseBetSizes(turn_ip_bet.getText()),
+                parseBetSizes(turn_ip_raise.getText()),
+                null,
+                turn_ip_allin.isSelected()
+        );
+        GameTreeBuildingSettings.StreetSetting river_ip = new GameTreeBuildingSettings.StreetSetting(
+                parseBetSizes(river_ip_bet.getText()),
+                parseBetSizes(river_ip_raise.getText()),
+                null,
+                river_ip_allin.isSelected()
+        );
+
+        GameTreeBuildingSettings.StreetSetting flop_oop = new GameTreeBuildingSettings.StreetSetting(
+                parseBetSizes(flop_oop_bet.getText()),
+                parseBetSizes(flop_oop_raise.getText()),
+                null,
+                flop_ip_allin.isSelected()
+        );
+        GameTreeBuildingSettings.StreetSetting turn_oop = new GameTreeBuildingSettings.StreetSetting(
+                parseBetSizes(turn_oop_bet.getText()),
+                parseBetSizes(turn_oop_raise.getText()),
+                parseBetSizes(turn_oop_donk.getText()),
+                flop_ip_allin.isSelected()
+        );
+        GameTreeBuildingSettings.StreetSetting river_oop = new GameTreeBuildingSettings.StreetSetting(
+                parseBetSizes(river_oop_bet.getText()),
+                parseBetSizes(river_oop_raise.getText()),
+                parseBetSizes(river_oop_donk.getText()),
+                flop_ip_allin.isSelected()
+        );
+        GameTreeBuildingSettings gameTreeBuildingSettings = new GameTreeBuildingSettings(flop_ip,turn_ip,river_ip,flop_oop,turn_oop,river_oop);
+        return gameTreeBuildingSettings;
+    }
+
     private void onBuildTree(){
         System.out.println("building tree...");
         int mode = this.mode.getSelectedIndex();
@@ -119,13 +191,6 @@ public class SolverGui {
             round = 4;
         }else throw new RuntimeException("board number not valid");
 
-        String[] bet_sizes = bet_size.getText().split(" ");
-        if(allin.isSelected()){
-            String[] new_bet_sizes = new String[bet_sizes.length + 1];
-            for(int i = 0;i < bet_sizes.length;i ++) new_bet_sizes[i] = bet_sizes[i];
-            new_bet_sizes[bet_sizes.length] = "all_in";
-            bet_sizes = new_bet_sizes;
-        }
 
         if(mode == 0) {
             this.game_tree = SolverEnvironment.gameTreeFromParams(
@@ -137,7 +202,7 @@ public class SolverGui {
                     (float) 0.5,
                     (float) 1.0,
                     Float.valueOf(this.stacks.getText()) + Float.valueOf(this.pot.getText()) / 2,
-                    bet_sizes
+                    parseSettings()
             );
         }else if(mode == 1){
             this.game_tree = SolverEnvironment.gameTreeFromParams(
@@ -149,7 +214,7 @@ public class SolverGui {
                     (float) 0.5,
                     (float) 1.0,
                     Float.valueOf(this.stacks.getText()) + Float.valueOf(this.pot.getText()) / 2,
-                    bet_sizes
+                    parseSettings()
             );
         }else{
             throw new RuntimeException("game mode unknown");

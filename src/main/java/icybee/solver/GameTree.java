@@ -7,6 +7,7 @@ import icybee.solver.exceptions.NodeLengthMismatchException;
 import icybee.solver.exceptions.NodeNotFoundException;
 import icybee.solver.exceptions.RoundNotFoundException;
 import icybee.solver.nodes.*;
+import icybee.solver.solver.GameTreeBuildingSettings;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -385,7 +386,7 @@ public class GameTree {
         float small_blind;
         float big_blind;
         float stack;
-        String[] bet_sizes;
+        GameTreeBuildingSettings build_settings;
         int[] players = new int[]{0,1};
         public Rule(
                 Deck deck,
@@ -396,7 +397,7 @@ public class GameTree {
                 float small_blind,
                 float big_blind,
                 float stack,
-                String[] bet_sizes
+                GameTreeBuildingSettings build_settings
         ) {
             this.deck = deck;
             this.oop_commit = oop_commit;
@@ -406,7 +407,7 @@ public class GameTree {
             this.small_blind = small_blind;
             this.big_blind = big_blind;
             this.stack = stack;
-            this.bet_sizes = bet_sizes;
+            this.build_settings = build_settings;
         }
 
         public Rule(
@@ -420,7 +421,7 @@ public class GameTree {
             this.small_blind = rule.small_blind;
             this.big_blind = rule.big_blind;
             this.stack = rule.stack;
-            this.bet_sizes = rule.bet_sizes;
+            this.build_settings = rule.build_settings;
         }
         public float get_pot(){
             return this.oop_commit + this.ip_commit;
@@ -440,7 +441,7 @@ public class GameTree {
                     float small_blind,
                     float big_blind,
                     float stack,
-                    String[] bet_sizes) throws IOException{
+                    GameTreeBuildingSettings buildingSettings) throws IOException{
         this.tree_json_dir = tree_json_dir;
         this.deck = deck;
         Rule rule = new Rule(deck,
@@ -451,7 +452,7 @@ public class GameTree {
             small_blind,
             big_blind,
             stack,
-            bet_sizes);
+            buildingSettings);
         this.root = this.buildTree(rule);
         this.recurrentSetDepth(this.root,0);
     }
@@ -597,7 +598,13 @@ public class GameTree {
                 actions.add(new GameActions(GameTreeNode.PokerActions.CHECK,0.0));
                 childrens.add(nextnode);
             }else if (action == "bet"){
-                List<Double> bet_sizes = this.get_possible_bets(root,player,nextplayer,rule);
+                BetType betType = BetType.BET;
+                // if it's a donk bet
+                if(root.getPlayer() == 1 && root.getParent() != null && root.getParent() instanceof ChanceNode){
+                    ChanceNode chanceNodeBeforeThis = (ChanceNode) root.getParent();
+                    if(chanceNodeBeforeThis.isDonk()) betType = BetType.DONK;
+                }
+                List<Double> bet_sizes = this.get_possible_bets(root,player,nextplayer,rule,betType);
                 for(Double one_betting_size:bet_sizes){
                     Rule nextrule = new Rule(rule);
                     if (player == 0) nextrule.ip_commit += one_betting_size;
@@ -632,7 +639,9 @@ public class GameTree {
                     nextnode = new ShowdownNode(tie_payoffs,payoffs,this.intToGameRound(rule.current_round),(double) rule.get_pot(),root);
                 }else{
                     nextrule.current_round += 1;
-                    nextnode = new ChanceNode(null,this.intToGameRound(rule.current_round + 1),(double) rule.get_pot(),root,rule.deck.getCards());
+                    boolean donk = false;
+                    if(player == 1) donk = true;
+                    nextnode = new ChanceNode(null,this.intToGameRound(rule.current_round + 1),(double) rule.get_pot(),root,rule.deck.getCards(),donk);
                 }
                 assert(nextrule.current_round <= 4);
                 this.__build(nextnode,nextrule,"call",0,0);
@@ -647,7 +656,7 @@ public class GameTree {
                 }
                 // 如果raise次数超出限制，则不可以继续raise
                 if(raise_times >= rule.raise_limit) continue;
-                List<Double> bet_sizes = this.get_possible_bets(root,player,nextplayer,rule);
+                List<Double> bet_sizes = this.get_possible_bets(root,player,nextplayer,rule,BetType.RAISE);
                 for(Double one_betting_size:bet_sizes){
                     Rule nextrule = new Rule(rule);
                     if (player == 0) nextrule.ip_commit += one_betting_size;
@@ -683,14 +692,24 @@ public class GameTree {
         return Math.round((number * round_num)) / round_num;
     }
 
-    List<Double> get_possible_bets(GameTreeNode root,int player,int next_player,Rule rule){
+    enum BetType{
+        BET,
+        DONK,
+        RAISE
+    }
+
+    List<Double> get_possible_bets(GameTreeNode root,int player,int next_player,Rule rule,BetType betType){
         assert(player == 1 - next_player);
-        String[] legal_bets = rule.bet_sizes;
+        GameTreeBuildingSettings.StreetSetting streetSetting = rule.build_settings.getSettings(root.getRound(),player);
         ArrayList<Double> bets_ratios = new ArrayList<Double>();
-        boolean all_in = false;
-        for(String one_bet:legal_bets){
-            if(one_bet.equals("all_in"))all_in = true;
-            else bets_ratios.add(Double.valueOf(one_bet) / 100);
+        boolean all_in = streetSetting.allin;
+        float[] bets_from_rule;
+        if(betType == BetType.BET)bets_from_rule = streetSetting.bet_sizes;
+        else if(betType == BetType.DONK)bets_from_rule = streetSetting.donk_sizes;
+        else if(betType == BetType.RAISE)bets_from_rule = streetSetting.raise_sizes;
+        else throw new RuntimeException("bet type unknown");
+        for(float one_bet:bets_from_rule){
+            bets_ratios.add((double) one_bet / 100);
         }
         float pot = rule.ip_commit + rule.oop_commit;
         List<Double> possible_amounts =  new ArrayList<Double>();
