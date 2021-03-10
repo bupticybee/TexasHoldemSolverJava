@@ -68,6 +68,7 @@ public class SolverGui {
     private JTextField river_oop_raise;
     private JTextField river_oop_donk;
     private JCheckBox river_oop_allin;
+    private JButton copy;
 
     private Compairer compairer_holdem = null;
     private Compairer compairer_shortdeck = null;
@@ -162,13 +163,13 @@ public class SolverGui {
                 parseBetSizes(turn_oop_bet.getText()),
                 parseBetSizes(turn_oop_raise.getText()),
                 parseBetSizes(turn_oop_donk.getText()),
-                flop_ip_allin.isSelected()
+                turn_ip_allin.isSelected()
         );
         GameTreeBuildingSettings.StreetSetting river_oop = new GameTreeBuildingSettings.StreetSetting(
                 parseBetSizes(river_oop_bet.getText()),
                 parseBetSizes(river_oop_raise.getText()),
                 parseBetSizes(river_oop_donk.getText()),
-                flop_ip_allin.isSelected()
+                river_ip_allin.isSelected()
         );
         GameTreeBuildingSettings gameTreeBuildingSettings = new GameTreeBuildingSettings(flop_ip,turn_ip,river_ip,flop_oop,turn_oop,river_oop);
         return gameTreeBuildingSettings;
@@ -416,6 +417,22 @@ public class SolverGui {
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
+            }
+        });
+        copy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                flop_oop_allin.setSelected(flop_ip_allin.isSelected());
+                flop_oop_raise.setText(flop_ip_raise.getText());
+                flop_oop_bet.setText(flop_ip_bet.getText());
+
+                turn_oop_allin.setSelected(turn_ip_allin.isSelected());
+                turn_oop_raise.setText(turn_ip_raise.getText());
+                turn_oop_bet.setText(turn_ip_bet.getText());
+
+                river_oop_allin.setSelected(river_ip_allin.isSelected());
+                river_oop_raise.setText(river_ip_raise.getText());
+                river_oop_bet.setText(river_ip_bet.getText());
             }
         });
     }
