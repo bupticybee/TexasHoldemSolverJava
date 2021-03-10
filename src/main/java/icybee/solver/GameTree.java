@@ -705,7 +705,7 @@ public class GameTree {
         boolean all_in = streetSetting.allin;
         float[] bets_from_rule;
         if(betType == BetType.BET)bets_from_rule = streetSetting.bet_sizes;
-        else if(betType == BetType.DONK)bets_from_rule = streetSetting.donk_sizes;
+        else if(betType == BetType.DONK){bets_from_rule = streetSetting.donk_sizes;all_in = false;}
         else if(betType == BetType.RAISE)bets_from_rule = streetSetting.raise_sizes;
         else throw new RuntimeException("bet type unknown");
         for(float one_bet:bets_from_rule){
