@@ -9,13 +9,13 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 一个完全开源，java实现的高效标准德州扑克和短牌solver, 看看这个 [介绍视频](https://www.bilibili.com/video/BV1s5411N7gf?from=search&seid=8860812381397878796) 了解更多.
 
-![algs](img/solving.gif)
+![algs](img/solvergui.gif)
 
 这是一个基于java的德州扑克solver,完全开源,支持跨语言调用(默认支持python和命令行调用),实现了标准德州扑克和德州扑克的一个变种-德州扑克短牌的solver,和piosolver等常见德州扑克solver类似，重点提供翻牌后情况的求解，solver求解结果结果和piosolver完全对齐。速度上在turn和river上比piosolver快一些，但是flop比piosolver慢。
 
 项目特性:
-- 高效,转牌和河牌计算速度超过piosolver
-- 准确，结果和piosolver相同
+- 高效,~~转牌和~~河牌计算速度超过piosolver
+- 准确，结果和piosolver几乎相同
 - 完全开源并且免费
 - 支持标准德州扑克和流行的变种玩法短牌
 - 主要聚焦在翻牌后求解

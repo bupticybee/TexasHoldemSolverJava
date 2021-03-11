@@ -10,7 +10,7 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 A open sourced, efficient Texas Hold'em and short deck solver. See this [Introduction video](https://www.youtube.com/watch?v=tf34v0fCvi0) for more.
 
-![algs](img/solving.gif)
+![algs](img/solvergui.gif)
 
 This is a java-based Texas Hold'em solver, fully open source, supports cross-language calls (supports python and command-line calls by default). Support standard Texas Hold'em and it's popular variant short-deck.
 
@@ -18,8 +18,8 @@ Similar to common commercial Texas Hold'ems solvers such as piosolver, TexasHold
 
 Features:
 
-- Efficient, turn and river calculation speed exceeds piosolver
-- Accurate, the results are the same as piosolver
+- Efficient, ~~turn and~~ river calculation speed exceeds piosolver
+- Accurate, the results are almost the same as piosolver
 - Fully open source and free
 - Support standard Texas Hold'em and it's popular variant short-deck
 - Focus on post-flop situations 
