@@ -157,19 +157,19 @@ public class SolverGui {
                 parseBetSizes(flop_oop_bet.getText()),
                 parseBetSizes(flop_oop_raise.getText()),
                 null,
-                flop_ip_allin.isSelected()
+                flop_oop_allin.isSelected()
         );
         GameTreeBuildingSettings.StreetSetting turn_oop = new GameTreeBuildingSettings.StreetSetting(
                 parseBetSizes(turn_oop_bet.getText()),
                 parseBetSizes(turn_oop_raise.getText()),
                 parseBetSizes(turn_oop_donk.getText()),
-                turn_ip_allin.isSelected()
+                turn_oop_allin.isSelected()
         );
         GameTreeBuildingSettings.StreetSetting river_oop = new GameTreeBuildingSettings.StreetSetting(
                 parseBetSizes(river_oop_bet.getText()),
                 parseBetSizes(river_oop_raise.getText()),
                 parseBetSizes(river_oop_donk.getText()),
-                river_ip_allin.isSelected()
+                river_oop_allin.isSelected()
         );
         GameTreeBuildingSettings gameTreeBuildingSettings = new GameTreeBuildingSettings(flop_ip,turn_ip,river_ip,flop_oop,turn_oop,river_oop);
         return gameTreeBuildingSettings;
