@@ -205,7 +205,12 @@ public class SolverResult {
         }
         String[] urls = strs.toArray(new String[0]);
         String[][] content = new String[][]{urls};
-        DefaultTableModel defaultTableModel = new DefaultTableModel(content,urls);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(content,urls){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         table_url.setModel(defaultTableModel);
         table_url.setDefaultRenderer(Object.class,new UrlColorTableCellRenderer(colors));
         table_url.updateUI();
@@ -256,7 +261,12 @@ public class SolverResult {
                     ,"%"
             );
         }
-        DefaultTableModel defaultTableModel = new DefaultTableModel(content,actions);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(content,actions){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         global_info.setModel(defaultTableModel);
         global_info.setTableHeader(null);
         GlobalStrategyColorTableCellRenderer gcr = new GlobalStrategyColorTableCellRenderer(actionNode.getActions(),global_strategy,combos);
@@ -318,7 +328,12 @@ public class SolverResult {
             }
         }
 
-        DefaultTableModel defaultTableModel = new DefaultTableModel(grid_names, columnName);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(grid_names, columnName){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         strategy_table.setModel(defaultTableModel);
         strategy_table.setTableHeader(null);
         strategy_table.setShowHorizontalLines(true);
@@ -597,7 +612,12 @@ public class SolverResult {
                 detail_grid_names[i / columnName.length][i % columnName.length] = infos.get(i).cards_name;
                 strategy2d[i / columnName.length][i % columnName.length] = infos.get(i);
             }
-            DefaultTableModel defaultTableModel = new DefaultTableModel(detail_grid_names, columnName);
+            DefaultTableModel defaultTableModel = new DefaultTableModel(detail_grid_names, columnName){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             TableCellRenderer tcr = new StrategyDetailColorTableCellRenderer(strategy2d,null);
             detail_table.setModel(defaultTableModel);
             detail_table.setDefaultRenderer(Object.class,tcr);
@@ -624,7 +644,12 @@ public class SolverResult {
             }
 
 
-            DefaultTableModel defaultTableModel = new DefaultTableModel(detail_grid_names, columnName);
+            DefaultTableModel defaultTableModel = new DefaultTableModel(detail_grid_names, columnName){
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             TableCellRenderer tcr = new StrategyDetailColorTableCellRenderer(null, reach_prob3d);
             detail_table.setModel(defaultTableModel);
             detail_table.setDefaultRenderer(Object.class,tcr);

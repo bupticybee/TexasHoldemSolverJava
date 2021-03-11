@@ -59,7 +59,12 @@ public class BoardSelector {
         }
 
 
-        DefaultTableModel defaultTableModel = new DefaultTableModel(grid_text, columnName);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(grid_text, columnName){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
         board_table.addComponentListener(new ComponentAdapter() {
             @Override
