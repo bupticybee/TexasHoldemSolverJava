@@ -233,11 +233,12 @@ public class ParallelCfrPlusSolver extends Solver{
                 forkJoinPool.invoke(task);
             }
             if(i % this.print_interval == 0) {
-                System.out.println("-------------------");
                 endtime = System.currentTimeMillis();
+                long time_ms = endtime - begintime;
+                System.out.println(String.format("time used: %.2fs",(float)time_ms / 1000));
+                System.out.println("-------------------");
                 float expliotibility = br.printExploitability(tree.getRoot(), i + 1, tree.getRoot().getPot().floatValue(), initial_board_long);
                 if(this.logfile != null){
-                    long time_ms = endtime - begintime;
                     JSONObject jo = new JSONObject();
                     jo.put("iteration",i);
                     jo.put("exploitibility",expliotibility);
@@ -245,9 +246,13 @@ public class ParallelCfrPlusSolver extends Solver{
                     if(this.logfile != null) fileWriter.write(String.format("%s\n",jo.toJSONString()));
                 }
                 if (stop_exploitibility > expliotibility) break;
-                begintime = System.currentTimeMillis();
+                //begintime = System.currentTimeMillis();
             }
         }
+        endtime = System.currentTimeMillis();
+        long time_ms = endtime - begintime;
+        System.out.println("++++++++++++++++");
+        System.out.println(String.format("solve finish, total time used: %.2fs",(float)time_ms / 1000));
         if(this.logfile != null) {
             fileWriter.flush();
             fileWriter.close();

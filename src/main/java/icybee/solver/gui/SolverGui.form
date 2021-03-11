@@ -162,7 +162,7 @@
                     <properties>
                       <minimumSize width="64" height="30"/>
                       <preferredSize width="64" height="20"/>
-                      <text value="20"/>
+                      <text value="180"/>
                     </properties>
                   </component>
                   <component id="7e662" class="javax.swing.JLabel">
@@ -175,7 +175,7 @@
                     <constraints/>
                     <properties>
                       <preferredSize width="100" height="20"/>
-                      <text value="100"/>
+                      <text value="910"/>
                     </properties>
                   </component>
                   <component id="73415" class="javax.swing.JLabel">
@@ -259,7 +259,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="30 70"/>
+                                  <text value="52"/>
                                 </properties>
                               </component>
                               <component id="d58e" class="javax.swing.JLabel">
@@ -289,7 +289,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="77"/>
+                                  <text value="45"/>
                                 </properties>
                               </component>
                               <component id="b837e" class="javax.swing.JLabel">
@@ -310,7 +310,8 @@
                               <component id="25e4e" class="javax.swing.JCheckBox" binding="flop_oop_allin">
                                 <constraints/>
                                 <properties>
-                                  <selected value="true"/>
+                                  <enabled value="true"/>
+                                  <selected value="false"/>
                                   <text value="add allin"/>
                                 </properties>
                               </component>
@@ -353,7 +354,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="30 70"/>
+                                  <text value="70"/>
                                 </properties>
                               </component>
                               <component id="63f14" class="javax.swing.JLabel">
@@ -383,7 +384,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="77"/>
+                                  <text value="45"/>
                                 </properties>
                               </component>
                               <component id="74739" class="javax.swing.JLabel">
@@ -404,7 +405,7 @@
                               <component id="4db7d" class="javax.swing.JCheckBox" binding="river_oop_allin">
                                 <constraints/>
                                 <properties>
-                                  <selected value="true"/>
+                                  <selected value="false"/>
                                   <text value="add allin"/>
                                 </properties>
                               </component>
@@ -429,7 +430,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="77"/>
+                                  <text value="70"/>
                                 </properties>
                               </component>
                               <component id="a651d" class="javax.swing.JLabel">
@@ -477,7 +478,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="30 70"/>
+                                  <text value="55"/>
                                 </properties>
                               </component>
                               <component id="2f0dd" class="javax.swing.JLabel">
@@ -507,7 +508,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="77"/>
+                                  <text value="45"/>
                                 </properties>
                               </component>
                               <component id="896e8" class="javax.swing.JLabel">
@@ -528,7 +529,7 @@
                               <component id="b4118" class="javax.swing.JCheckBox" binding="turn_oop_allin">
                                 <constraints/>
                                 <properties>
-                                  <selected value="true"/>
+                                  <selected value="false"/>
                                   <text value="add allin"/>
                                 </properties>
                               </component>
@@ -553,7 +554,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="77"/>
+                                  <text value="55"/>
                                 </properties>
                               </component>
                               <component id="b8403" class="javax.swing.JLabel">
@@ -579,7 +580,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="61430" class="javax.swing.JButton">
+                  <component id="61430" class="javax.swing.JButton" binding="copy">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -637,7 +638,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="30 70"/>
+                                  <text value="52"/>
                                 </properties>
                               </component>
                               <component id="be21b" class="javax.swing.JLabel">
@@ -667,7 +668,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="77"/>
+                                  <text value="45"/>
                                 </properties>
                               </component>
                               <component id="72db4" class="javax.swing.JLabel">
@@ -688,7 +689,7 @@
                               <component id="524d3" class="javax.swing.JCheckBox" binding="flop_ip_allin">
                                 <constraints/>
                                 <properties>
-                                  <selected value="true"/>
+                                  <selected value="false"/>
                                   <text value="add allin"/>
                                 </properties>
                               </component>
@@ -731,7 +732,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="30 70"/>
+                                  <text value="70"/>
                                 </properties>
                               </component>
                               <component id="30f81" class="javax.swing.JLabel">
@@ -761,7 +762,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="77"/>
+                                  <text value="45"/>
                                 </properties>
                               </component>
                               <component id="352dd" class="javax.swing.JLabel">
@@ -782,7 +783,7 @@
                               <component id="8175" class="javax.swing.JCheckBox" binding="river_ip_allin">
                                 <constraints/>
                                 <properties>
-                                  <selected value="true"/>
+                                  <selected value="false"/>
                                   <text value="add allin"/>
                                 </properties>
                               </component>
@@ -825,7 +826,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="30 70"/>
+                                  <text value="55"/>
                                 </properties>
                               </component>
                               <component id="a49e2" class="javax.swing.JLabel">
@@ -855,7 +856,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="77"/>
+                                  <text value="45"/>
                                 </properties>
                               </component>
                               <component id="ef7cc" class="javax.swing.JLabel">
@@ -876,7 +877,7 @@
                               <component id="21c7f" class="javax.swing.JCheckBox" binding="turn_ip_allin">
                                 <constraints/>
                                 <properties>
-                                  <selected value="true"/>
+                                  <selected value="false"/>
                                   <text value="add allin"/>
                                 </properties>
                               </component>
