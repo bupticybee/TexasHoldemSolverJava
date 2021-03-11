@@ -732,7 +732,7 @@
                                 <constraints/>
                                 <properties>
                                   <preferredSize width="100" height="20"/>
-                                  <text value="70"/>
+                                  <text value="70 100"/>
                                 </properties>
                               </component>
                               <component id="30f81" class="javax.swing.JLabel">

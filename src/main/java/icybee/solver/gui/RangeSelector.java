@@ -40,6 +40,7 @@ public class RangeSelector {
     String[] columnName;
     String[][] grid_names;
     float[][] range_matrix;
+    boolean[][] selected_matrix;
     float global_range_num = 1;
     JFrame frame;
     String range_file_root = "resources/ranges";
@@ -64,6 +65,7 @@ public class RangeSelector {
 
         grid_names = new String[columnName.length][columnName.length];
         range_matrix = new float[columnName.length][columnName.length];
+        selected_matrix = new boolean[columnName.length][columnName.length];
         for(int i = 0;i < columnName.length;i ++) {
             boolean s_start = false;
             for(int j = 0;j < columnName.length;j ++) {
@@ -127,13 +129,34 @@ public class RangeSelector {
                 range_text.setText(convertRangeToText());
                 range_text.updateUI();
                 super.mouseClicked(e);
+                clearSelection();
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                int row = range_table.getSelectedRow();
+                int colunm = range_table.getSelectedColumn();
+                int select_num = selectedNum();
+                if(select_num <= 2) {
+                    if (range_matrix[row][colunm] == global_range_num) {
+                        range_matrix[row][colunm] = 0;
+                    } else {
+                        range_matrix[row][colunm] = global_range_num;
+                    }
+                }else{
+                    for(int i = 0;i < columnName.length;i ++){
+                        for(int j = 0;j < columnName.length;j ++){
+                            if(selected_matrix[i][j]){
+                                range_matrix[i][j] = global_range_num;
+                            }
+                        }
+                    }
+                }
+                clearSelection();
                 range_text.setText(convertRangeToText());
                 range_text.updateUI();
                 super.mouseReleased(e);
+                range_table.updateUI();
             }
 
         });
@@ -177,6 +200,25 @@ public class RangeSelector {
             }
         });
 
+    }
+
+
+    private void clearSelection(){
+        for(int i = 0;i < columnName.length;i ++){
+            for(int j = 0;j < columnName.length;j ++){
+                selected_matrix[i][j] = false;
+            }
+        }
+    }
+
+    private int selectedNum(){
+        int retnum = 0;
+        for(int i = 0;i < columnName.length;i ++){
+            for(int j = 0;j < columnName.length;j ++){
+                if(selected_matrix[i][j]) retnum += 1;
+            }
+        }
+        return retnum;
     }
 
     private String convertRangeToText(){
@@ -231,7 +273,7 @@ public class RangeSelector {
             this.row = row;
             this.colunm = colunm;
             this.selected = selected;
-            if(this.selected) range_matrix[row][colunm] = global_range_num;
+            if(this.selected) selected_matrix[row][colunm] = true;
             this.node_range = range_matrix[row][colunm];
         }
 
