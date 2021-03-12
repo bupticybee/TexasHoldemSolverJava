@@ -12,15 +12,16 @@ A open sourced, efficient Texas Hold'em and short deck solver. See this [Introdu
 
 ![algs](img/solvergui.gif)
 
-This is a java-based Texas Hold'em solver, fully open source, supports cross-language calls (supports python and command-line calls by default). Support standard Texas Hold'em and it's popular variant short-deck.
+This is a java-based Texas Hold'em solver, fully open source, have a pio-solver-like gui and supports cross-language calls (supports python and command-line calls by default). Support standard Texas Hold'em and it's popular variant short-deck.
 
-Similar to common commercial Texas Hold'ems solvers such as piosolver, TexasHoldemSolverJava focusing on solving post-flop situations, and it's result is prefectly aligned with piosolver. On turn and river it's speed is even faster than piosolver, but on flop is slower than piosolver.
+Similar to common commercial Texas Hold'ems solvers such as piosolver, TexasHoldemSolverJava focusing on solving post-flop situations, and it's result is aligned with piosolver. On ~~turn and~~ river it's speed is even faster than piosolver, but on flop is slower than piosolver.
 
 Features:
 
 - Efficient, ~~turn and~~ river calculation speed exceeds piosolver
 - Accurate, the results are almost the same as piosolver
 - Fully open source and free
+- Have a simple gui
 - Support standard Texas Hold'em and it's popular variant short-deck
 - Focus on post-flop situations 
 - Supports command line and python calls
@@ -32,7 +33,9 @@ This project is suitable for:
 
 ## install
 
-download the [release package](https://github.com/bupticybee/TexasHoldemSolverJava/releases) unzip it, you will get a folder look like this:
+Install x86 [Java Runtime Environment](https://www.oracle.com/java/technologies/javase-jre8-downloads.html) first.
+
+Download the [release package](https://github.com/bupticybee/TexasHoldemSolverJava/releases) unzip it, you will get a folder look like this:
 
 ```
 --- Solver
@@ -41,6 +44,8 @@ download the [release package](https://github.com/bupticybee/TexasHoldemSolverJa
  |- RiverSolver.jar
  |- riversolver.sh
 ```
+
+Install is done. It's that simple.
 
 ```RiverSolver.jar``` is the solver program file,```java_interface.py``` is the sample code for calling solver trough python calls. It contains the following test cases:
 
@@ -56,6 +61,17 @@ after download the release package, run ```python3 java_interface.py``` to run a
 
 In addition to downloading the software itself, Texas Holdem solver Java also relies on JRE 11.0.2 as it's e runtime. Please install Java JRE 11.0.2 in advance.
 
+
+## Usage
+
+### gui
+
+Make sure the right version of java is installed in your computer(64bit,java 10.x / java 11.x)
+
+Double click the ```riversolver.jar``` to open gui.
+
+### python api
+
 Additional python requirements should also be installed through pip:
 
 ```bash
@@ -65,9 +81,6 @@ pip3 install yaml
 pip3 install networkx
 pip3 install matplotlib
 ```
-
-## Usage
-### python api
 
 Althrough written in java. TexasHoldemSolverJava is by default called through python.
 
@@ -223,6 +236,25 @@ However if you intend to modify this project, recompiling is required. TexasHold
 3. press build -> build project to compile the projet from source
 4. press build -> build artifacts -> all artifacts -> build to generate the release package
 5. the release package can be found in the ```out``` folder in project root
+
+## benchmarks
+
+The speed compair with piosolver listed below, turn and river's speed is comparable with piosolver , flop is much slower due to game tree and lack of optimization.
+
+|                       | flop sample | turn sample | river sample |
+| --------------------- | ----------- | ----------- | ------------ |
+| piosolver             | 7.91s       | 1.5s        | 0.56s        |
+| TexasHoldemSolverJava | 98s         | 4.21s       | 0.06s        |
+
+Input of the above benchmark and result compair with piosolver is listed below.
+
+|                | flop sample | turn sample | river sample |
+| -------------- | ----------- | ----------- | ------------ |
+| input (in text format)        |   [flop](benchmarks/benchmark_flop.txt)          | [turn](benchmarks/benchmark_turn.txt)            |        [river](benchmarks/benchmark_river.txt)      |
+| input (in image format)         |   ![flop](img/flop_setting.jpeg)          | ![turn](img/turn_setting.jpeg)            |       ![river](img/river_setting.jpeg)       | 
+| result compair         |   ![flop](img/flop_result.jpeg)          | ![turn](img/turn_result.jpeg)            |       ![river](img/river_result.jpeg)       | 
+
+The slight different between Piosolver and TexasHoldemSolverJava is due to different tree construction logic and insufficient CFR converge for both software.
 
 ## Algorithm
 As shown in the figure below, thanks to the implementation of the latest algorithm variant discounted CFR ++, algorithm used in this project can be a lot faster than traditional algorithms such as CFR +.
