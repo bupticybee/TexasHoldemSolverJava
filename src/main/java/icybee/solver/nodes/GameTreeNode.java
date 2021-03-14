@@ -35,6 +35,19 @@ public abstract class GameTreeNode {
     public int depth;
     public int subtree_size;
 
+    public static String gameRound2String(GameRound gameRound){
+        if(gameRound == GameRound.PREFLOP) {
+            return "preflop";
+        }else if(gameRound == GameRound.FLOP){
+            return "flop";
+        } else if(gameRound == GameRound.TURN) {
+            return "turn";
+        } else if(gameRound == GameRound.RIVER) {
+            return "river";
+        }
+        throw new RuntimeException("round not found");
+    }
+
     public static int gameRound2int(GameRound gameRound){
         if(gameRound == GameRound.PREFLOP) {
             return 0;

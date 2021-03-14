@@ -9,14 +9,15 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 一个完全开源，java实现的高效标准德州扑克和短牌solver, 看看这个 [介绍视频](https://www.bilibili.com/video/BV1s5411N7gf?from=search&seid=8860812381397878796) 了解更多.
 
-![algs](img/solving.gif)
+![algs](img/solvergui.gif)
 
-这是一个基于java的德州扑克solver,完全开源,支持跨语言调用(默认支持python和命令行调用),实现了标准德州扑克和德州扑克的一个变种-德州扑克短牌的solver,和piosolver等常见德州扑克solver类似，重点提供翻牌后情况的求解，solver求解结果结果和piosolver完全对齐。速度上在turn和river上比piosolver快一些，但是flop比piosolver慢。
+这是一个基于java的德州扑克solver,完全开源,支持跨语言调用(默认支持python和命令行调用),实现了标准德州扑克和德州扑克的一个变种-德州扑克短牌的solver,和piosolver等常见德州扑克solver类似，重点提供翻牌后情况的求解，solver求解结果结果和piosolver对齐。速度上在~~turn和~~river上比piosolver快一些，但是flop比piosolver慢。
 
 项目特性:
-- 高效,转牌和河牌计算速度超过piosolver
-- 准确，结果和piosolver相同
+- 高效,~~转牌和~~河牌计算速度超过piosolver
+- 准确，结果和piosolver几乎相同
 - 完全开源并且免费
+- 拥有一个简单易用的gui界面
 - 支持标准德州扑克和流行的变种玩法短牌
 - 主要聚焦在翻牌后求解
 - 支持命令行和python调用
@@ -27,6 +28,8 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 ## 安装
 
+首先需要安装 x86(64位) [Java Runtime Environment](https://www.oracle.com/java/technologies/javase-jre8-downloads.html).
+
 下载[release](https://github.com/bupticybee/TexasHoldemSolverJava/releases) 包,release包的结构如下：
 
 ```
@@ -36,6 +39,8 @@ README [English](README.md) | [中文](README.zh-CN.md)
  |- RiverSolver.jar
  |- riversolver.sh
 ```
+
+安装就这样完成了，就是这么简单!
 
 其中RiverSolver是德州扑克solver主体程序，```java_interface.py``` 是通过python调用solver的示例程序，其中的测试用例包含了
 - 短牌flop求解示例
@@ -50,6 +55,16 @@ riversolver.sh 包含了命令行调用solver的示例
 
 除了需要下载软件本身之外，TexasHoldemSolverJava 还依赖 JRE 11.0.2 作为运行库。如果电脑上没有请安装java JRE 11.0.2。
 
+
+## 使用
+### 图形界面
+
+确认你已经安装了正确版本的java(64bit,java 10.x / java 11.x)
+
+双击 ```riversolver.jar``` 打开gui.
+
+### python 调用方法
+
 虽然 TexasHoldemSolverJava 绝大部分逻辑代码由java撰写，但是默认提供的调用方式是python,所以需要安装额外的一些python依赖。
 使用python调用solver需要首先安装如下依赖：
 
@@ -60,9 +75,6 @@ pip3 install yaml
 pip3 install networkx
 pip3 install matplotlib
 ```
-
-## 使用
-### python 调用方法
 
 python 调用的所有代码均可在[release](https://github.com/bupticybee/TexasHoldemSolverJava/releases) 包中的 java_interface.py中找到。这里简单描述调用过程和一些参数设定。
 
@@ -211,6 +223,26 @@ actions:
 3. 菜单栏 build -> build project 编译项目
 4. 菜单栏 build -> build artifacts -> all artifacts -> build 生成release包
 5. 编译完成的release包可以在工程根目录下的out 路径中找到
+
+
+## 对照实验
+
+和piosolver的速度对比实验如下,同一个牌面下turn 和river的速度和piosolver仍处于接近水平, 但是flop比piosolver慢很多，由于flop的代码尚未很好的优化.
+
+|                       | flop sample | turn sample | river sample |
+| --------------------- | ----------- | ----------- | ------------ |
+| piosolver             | 7.91s       | 1.5s        | 0.56s        |
+| TexasHoldemSolverJava | 98s         | 4.21s       | 0.06s        |
+
+上面实验中的pio格式输入，和结果对比列在下面表格中，任何人均可复现：
+
+|                | flop sample | turn sample | river sample |
+| -------------- | ----------- | ----------- | ------------ |
+| 输入 (pio格式)        |   [flop](benchmarks/benchmark_flop.txt)          | [turn](benchmarks/benchmark_turn.txt)            |        [river](benchmarks/benchmark_river.txt)      |
+| 输入 (图片格式)         |   ![flop](img/flop_setting.jpeg)          | ![turn](img/turn_setting.jpeg)            |       ![river](img/river_setting.jpeg)       | 
+| 结果对比         |   ![flop](img/flop_result.jpeg)          | ![turn](img/turn_result.jpeg)            |       ![river](img/river_result.jpeg)       | 
+
+结果策略上和Piosolver的略微不同是由于TexasHoldemSolverJava采用了和Piosolver略微不同的游戏树构建算法，并且两个算法停止时均为完全收敛.
 
 ## 算法
 如图,得益于实现的最新算法的变种 discounted cfr++, 在算法上可以保证比cfr+等传统算法快得多的速度。

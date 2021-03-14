@@ -20,8 +20,18 @@ import org.paukov.combinatorics3.IGenerator;
 public class Dic5Compairer extends Compairer {
     //Map<Set<String>,Integer> cards2rank = (Map<Set<String>,Integer>)new HashMap<Set<String>,Integer>();
     Map<Long,Integer> cardslong2rank = (Map<Long,Integer>)new HashMap<Long,Integer>();
-    public Dic5Compairer(String dic_dir,int lines) throws IOException{
+
+    public Dic5Compairer(String dic_dir,int lines) throws IOException {
         super(dic_dir,lines);
+        this.load_compairer(dic_dir,lines,true);
+    }
+
+    public Dic5Compairer(String dic_dir,int lines,boolean verbose) throws IOException {
+        super(dic_dir,lines);
+        this.load_compairer(dic_dir,lines,verbose);
+    }
+
+    public void load_compairer(String dic_dir,int lines,boolean verbose) throws IOException{
 
         //cards2rank = (Map<Set<String>,Integer>)new Hashtable<Set<String>,Integer>(lines * 50);
         cardslong2rank = (Map<Long,Integer>)new Hashtable<Long,Integer>(lines * 50);
@@ -29,7 +39,7 @@ public class Dic5Compairer extends Compairer {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(dic_dir));
         String str;
         ProgressBar pb = new ProgressBar("Dic5Comapirer Load",lines);
-        pb.start();
+        if (verbose) pb.start();
         int ind = 0;
         while ((str = bufferedReader.readLine()) != null) {
             String[] linesp = str.trim().split(",");
@@ -54,7 +64,7 @@ public class Dic5Compairer extends Compairer {
             cardslong2rank.put(Card.boardCards2long(cards),rank);
             ind += 1;
             if(ind % 100 == 0) {
-                pb.stepBy(100);
+                if (verbose) pb.stepBy(100);
             }
         }
         pb.stop();

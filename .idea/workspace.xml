@@ -3,15 +3,21 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="RiverSolver:jar" />
-      <artifact name="bash" />
-      <artifact name="resources" />
     </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05519cf8-6074-4a2e-b2a8-c97eb2b26732" name="Default" comment=":new: 串联Poker树生成和求解">
+      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverResult.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/icybee/solver/gui/SolverGui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/outputs/outputs_log.txt" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,6 +28,20 @@
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="RiverSolver" />
@@ -43,12 +63,12 @@
   <component name="ProjectId" id="1SrHsHLRkbt1Qz7Ulm6mRfXvgWI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="222" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
@@ -60,10 +80,11 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -99,7 +120,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.TexasHoldemSolverTest.cfrTurnSolverTest">
+  <component name="RunManager" selected="Application.SolverGui">
     <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -217,6 +238,20 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="icybee.solver.runtime.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SolverGui" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="icybee.solver.gui.SolverGui" />
+      <module name="RiverSolver" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="icybee.solver.gui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -477,6 +512,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.CommandlineSolver" />
+      <item itemvalue="Application.SolverGui" />
       <item itemvalue="JUnit.testHoldemSolver" />
       <item itemvalue="JUnit.testShortDeckSolver" />
       <item itemvalue="JUnit.TexasHoldemSolverTest.cfrTurnSolverTest" />
@@ -485,10 +521,12 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SolverGui" />
         <item itemvalue="JUnit.TexasHoldemSolverTest.cfrTurnSolverTest" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -532,7 +570,12 @@
       <workItem from="1605709360037" duration="7301000" />
       <workItem from="1605719321107" duration="225000" />
       <workItem from="1613367522845" duration="20079000" />
-      <workItem from="1613456905034" duration="13510000" />
+      <workItem from="1613456905034" duration="22640000" />
+      <workItem from="1614394966662" duration="22345000" />
+      <workItem from="1614486248843" duration="2108000" />
+      <workItem from="1614490806048" duration="14806000" />
+      <workItem from="1614582462144" duration="554000" />
+      <workItem from="1614583544610" duration="3304000" />
     </task>
     <task id="LOCAL-00001" summary=":construction: writting cfr solver">
       <created>1572969628615</created>
@@ -783,7 +826,7 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -834,50 +877,20 @@
     <MESSAGE value=":bug: fix bug in pcs cfr" />
     <option name="LAST_COMMIT_MESSAGE" value=":bug: fix bug in pcs cfr" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605718706867">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605718706867" />
-    <state x="689" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605103119406">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="689" y="303" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605103119406" />
-    <state x="533" y="113" key="CommitChangelistDialog2" timestamp="1605719688760">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="533" y="113" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1605719688760" />
-    <state width="1877" height="410" key="GridCell.Tab.0.bottom" timestamp="1605718873646">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="410" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605718873646" />
-    <state width="1877" height="410" key="GridCell.Tab.0.center" timestamp="1605718873646">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="410" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605718873646" />
-    <state width="1877" height="410" key="GridCell.Tab.0.left" timestamp="1605718873646">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="410" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605718873646" />
-    <state width="1877" height="410" key="GridCell.Tab.0.right" timestamp="1605718873646">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="410" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605718873646" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1605719414015">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605719414015" />
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1605719642915">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605719642915" />
-    <state x="636" y="253" width="647" height="534" key="find.popup" timestamp="1605710669442">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="636" y="253" width="647" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605710669442" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/icybee/solver/GameTree.java</url>
+          <line>633</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/icybee/solver/GameTree.java</url>
+          <line>481</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint enabled="true" suspend="NONE" type="java-exception">
           <properties>
@@ -891,9 +904,5 @@
         <watch expression="player1Range[0]" />
       </configuration>
     </watches-manager>
-  </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
   </component>
 </project>

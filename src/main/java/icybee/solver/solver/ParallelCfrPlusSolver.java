@@ -10,6 +10,7 @@ import icybee.solver.nodes.*;
 import icybee.solver.ranges.PrivateCards;
 import icybee.solver.ranges.PrivateCardsManager;
 import icybee.solver.ranges.RiverCombs;
+import icybee.solver.trainable.DiscountedCfrTrainable;
 import icybee.solver.trainable.Trainable;
 
 import java.io.FileWriter;
@@ -186,6 +187,18 @@ public class ParallelCfrPlusSolver extends Solver{
 
     }
 
+    private Double getValue(Map<String,Object> meta,String key){
+        Object value = meta.get(key);
+        if(value instanceof Integer){
+            return ((Integer)value).doubleValue();
+        }else if(value instanceof Double){
+            return (Double)value;
+        }else{
+            return Double.valueOf(0);
+        }
+
+    }
+
     @Override
     public void train(Map training_config) throws Exception {
         setTrainable(tree.getRoot());
@@ -199,10 +212,13 @@ public class ParallelCfrPlusSolver extends Solver{
         br.printExploitability(tree.getRoot(), 0, tree.getRoot().getPot().floatValue(), initial_board_long);
 
         float[][] reach_probs = this.getReachProbs();
-        FileWriter fileWriter = new FileWriter(this.logfile);
+        FileWriter fileWriter = null;
+        if(this.logfile != null) fileWriter = new FileWriter(this.logfile);
 
         long begintime = System.currentTimeMillis();
         long endtime = System.currentTimeMillis();
+
+        Double stop_exploitibility = this.getValue(training_config,"stop_exploitibility");
         for(int i = 0;i < this.iteration_number;i++){
             for(int player_id = 0;player_id < this.player_number;player_id ++) {
                 if(this.debug){
@@ -217,22 +233,30 @@ public class ParallelCfrPlusSolver extends Solver{
                 forkJoinPool.invoke(task);
             }
             if(i % this.print_interval == 0) {
-                System.out.println("-------------------");
                 endtime = System.currentTimeMillis();
+                long time_ms = endtime - begintime;
+                System.out.println(String.format("time used: %.2fs",(float)time_ms / 1000));
+                System.out.println("-------------------");
                 float expliotibility = br.printExploitability(tree.getRoot(), i + 1, tree.getRoot().getPot().floatValue(), initial_board_long);
                 if(this.logfile != null){
-                    long time_ms = endtime - begintime;
                     JSONObject jo = new JSONObject();
                     jo.put("iteration",i);
                     jo.put("exploitibility",expliotibility);
                     jo.put("time_ms",time_ms);
-                    fileWriter.write(String.format("%s\n",jo.toJSONString()));
+                    if(this.logfile != null) fileWriter.write(String.format("%s\n",jo.toJSONString()));
                 }
-                begintime = System.currentTimeMillis();
+                if (stop_exploitibility > expliotibility) break;
+                //begintime = System.currentTimeMillis();
             }
         }
-        fileWriter.flush();
-        fileWriter.close();
+        endtime = System.currentTimeMillis();
+        long time_ms = endtime - begintime;
+        System.out.println("++++++++++++++++");
+        System.out.println(String.format("solve finish, total time used: %.2fs",(float)time_ms / 1000));
+        if(this.logfile != null) {
+            fileWriter.flush();
+            fileWriter.close();
+        }
         forkJoinPool.shutdown();
         // System.out.println(this.tree.dumps(false).toJSONString());
     }
@@ -535,6 +559,11 @@ public class ParallelCfrPlusSolver extends Solver{
                     }
                 }
                 trainable.updateRegrets(regrets, iter + 1, reach_probs[player]);
+                if(trainable instanceof DiscountedCfrTrainable){
+                    DiscountedCfrTrainable dct =  (DiscountedCfrTrainable) trainable;
+                    dct.setEvs(payoffs);
+                    dct.setReach_probs(reach_probs);
+                }
             }
             //if(this.solver_env.debug && player == node.getPlayer()) {
 

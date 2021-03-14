@@ -2,6 +2,7 @@ package icybee.solver;
 
 import icybee.solver.compairer.Compairer;
 import icybee.solver.compairer.Dic5Compairer;
+import icybee.solver.solver.GameTreeBuildingSettings;
 
 import java.io.IOException;
 
@@ -51,6 +52,24 @@ public class SolverEnvironment {
         }
     }
 
+    public static GameTree gameTreeFromParams(
+            Deck deck,
+            float oop_commit,
+            float ip_commit,
+            int current_round,
+            int raise_limit,
+            float small_blind,
+            float big_blind,
+            float stack,
+            GameTreeBuildingSettings gameTreeBuildingSettings
+            ){
+        try {
+            return new GameTree(deck,oop_commit,ip_commit,current_round,raise_limit,small_blind,big_blind,stack,gameTreeBuildingSettings);
+        }catch(IOException e){
+            throw new RuntimeException();
+        }
+    }
+
     public static GameTree gameTreeFromJson(String json_path,Deck deck){
         try {
             return new GameTree(json_path, deck);
@@ -73,6 +92,13 @@ public class SolverEnvironment {
     public static Compairer compairerFromConfig(Config config)throws IOException{
         if(config.compairer_type.equals("Dic5Compairer")) {
             return new Dic5Compairer(config.compairer_dic_dir,config.compairer_lines);
+        }else{
+            throw new RuntimeException();
+        }
+    }
+    public static Compairer compairerFromConfig(Config config,boolean verbose)throws IOException{
+        if(config.compairer_type.equals("Dic5Compairer")) {
+            return new Dic5Compairer(config.compairer_dic_dir,config.compairer_lines,verbose);
         }else{
             throw new RuntimeException();
         }

@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="icybee.solver.gui.SolverGui">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="156" y="63" width="1030" height="836"/>
+    </constraints>
+    <properties>
+      <maximumSize width="-1" height="-1"/>
+      <minimumSize width="-1" height="-1"/>
+      <preferredSize width="1080" height="720"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="d2fce" binding="left" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="4.0" weighty="1.0"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="5572f" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+            <border type="none" title="ranges"/>
+            <children>
+              <tabbedpane id="e8017" binding="tabbedPane1" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <minimum-size width="400" height="-1"/>
+                    <preferred-size width="200" height="200"/>
+                  </grid>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="bee6" layout-manager="GridBagLayout">
+                    <constraints>
+                      <tabbedpane title="OOP range"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="9a69b" class="javax.swing.JButton" binding="selectOOPRangeButton" default-binding="true">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag weightx="1.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <text value="Select OOP range"/>
+                        </properties>
+                      </component>
+                      <scrollpane id="62f6d">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                          <gridbag weightx="0.0" weighty="1.0"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="b86f0" class="javax.swing.JTextArea" binding="ooprange">
+                            <constraints/>
+                            <properties>
+                              <text value="AA,KK,AK,AQ,AJ,AT,A9"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                  <grid id="ed6f3" layout-manager="GridBagLayout">
+                    <constraints>
+                      <tabbedpane title="IP range"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="5ef26" class="javax.swing.JButton" binding="selectIPRangeButton" default-binding="true">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <gridbag weightx="1.0" weighty="0.0"/>
+                        </constraints>
+                        <properties>
+                          <text value="Select IP range"/>
+                        </properties>
+                      </component>
+                      <scrollpane id="51558">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                          <gridbag weightx="0.0" weighty="1.0"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <component id="4c918" class="javax.swing.JTextArea" binding="iprange">
+                            <constraints/>
+                            <properties>
+                              <text value="AA,KK,AK,AQ,AJ,AT,A9"/>
+                            </properties>
+                          </component>
+                        </children>
+                      </scrollpane>
+                    </children>
+                  </grid>
+                </children>
+              </tabbedpane>
+            </children>
+          </grid>
+          <grid id="5216d" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <alignmentX value="0.0"/>
+              <alignmentY value="0.0"/>
+            </properties>
+            <border type="none" title="game tree options"/>
+            <children>
+              <grid id="ed9a5" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties>
+                  <alignmentX value="0.5"/>
+                  <alignmentY value="0.0"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="9c985" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="raise limit"/>
+                    </properties>
+                  </component>
+                  <component id="64fa5" class="javax.swing.JTextField" binding="raise_limit">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="50" height="20"/>
+                      <text value="2"/>
+                    </properties>
+                  </component>
+                  <component id="ce7ee" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="times"/>
+                    </properties>
+                  </component>
+                  <component id="e172b" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="  pot:"/>
+                    </properties>
+                  </component>
+                  <component id="fd935" class="javax.swing.JTextField" binding="pot">
+                    <constraints/>
+                    <properties>
+                      <minimumSize width="64" height="30"/>
+                      <preferredSize width="64" height="20"/>
+                      <text value="180"/>
+                    </properties>
+                  </component>
+                  <component id="7e662" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="Effective stacks"/>
+                    </properties>
+                  </component>
+                  <component id="3323e" class="javax.swing.JTextField" binding="stacks">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="100" height="20"/>
+                      <text value="910"/>
+                    </properties>
+                  </component>
+                  <component id="73415" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="mode:"/>
+                    </properties>
+                  </component>
+                  <component id="8e17e" class="javax.swing.JComboBox" binding="mode">
+                    <constraints/>
+                    <properties>
+                      <model>
+                        <item value="texas holdem"/>
+                        <item value="shortdeck"/>
+                      </model>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="48fe9" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="20a22" class="javax.swing.JButton" binding="buildTreeButton">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="Build tree"/>
+                    </properties>
+                  </component>
+                  <component id="72ecf" class="javax.swing.JButton" binding="showTreeButton">
+                    <constraints border-constraint="East"/>
+                    <properties>
+                      <text value="show tree"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="74056" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="b8f1a" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="3" left="3" bottom="3" right="3"/>
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none" title="Flop OOP"/>
+                    <children>
+                      <grid id="a26e3" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="19828" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="39e67" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="bet sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="d162e" class="javax.swing.JTextField" binding="flop_oop_bet">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="52"/>
+                                </properties>
+                              </component>
+                              <component id="d58e" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="df3e6" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="6eee2" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="raise sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="ebb6f" class="javax.swing.JTextField" binding="flop_oop_raise">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="45"/>
+                                </properties>
+                              </component>
+                              <component id="b837e" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="c661c" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="25e4e" class="javax.swing.JCheckBox" binding="flop_oop_allin">
+                                <constraints/>
+                                <properties>
+                                  <enabled value="true"/>
+                                  <selected value="false"/>
+                                  <text value="add allin"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                  <grid id="15a2b" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="3" left="3" bottom="3" right="3"/>
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none" title="River OOP"/>
+                    <children>
+                      <grid id="f92" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="b21a3" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="6d1c0" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="bet sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="adf" class="javax.swing.JTextField" binding="river_oop_bet">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="70"/>
+                                </properties>
+                              </component>
+                              <component id="63f14" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="e39cb" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="f6080" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="raise sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="341b0" class="javax.swing.JTextField" binding="river_oop_raise">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="45"/>
+                                </properties>
+                              </component>
+                              <component id="74739" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="4c48a" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="4db7d" class="javax.swing.JCheckBox" binding="river_oop_allin">
+                                <constraints/>
+                                <properties>
+                                  <selected value="false"/>
+                                  <text value="add allin"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="4f34f" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="8a058" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="donk sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="f185b" class="javax.swing.JTextField" binding="river_oop_donk">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="70"/>
+                                </properties>
+                              </component>
+                              <component id="a651d" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                  <grid id="5204a" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="3" left="3" bottom="3" right="3"/>
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none" title="Turn OOP"/>
+                    <children>
+                      <grid id="b6778" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="60e2a" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="1cdf8" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="bet sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="75d94" class="javax.swing.JTextField" binding="turn_oop_bet">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="55"/>
+                                </properties>
+                              </component>
+                              <component id="2f0dd" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="33249" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="1105" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="raise sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="10a1e" class="javax.swing.JTextField" binding="turn_oop_raise">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="45"/>
+                                </properties>
+                              </component>
+                              <component id="896e8" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="cf5f2" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="b4118" class="javax.swing.JCheckBox" binding="turn_oop_allin">
+                                <constraints/>
+                                <properties>
+                                  <selected value="false"/>
+                                  <text value="add allin"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="517cb" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="d43d8" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="donk sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="a2c90" class="javax.swing.JTextField" binding="turn_oop_donk">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="55"/>
+                                </properties>
+                              </component>
+                              <component id="b8403" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+              <grid id="1bc29" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="2" left="2" bottom="2" right="2"/>
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="61430" class="javax.swing.JButton" binding="copy">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <alignmentY value="0.5"/>
+                      <text value="Copy from Ip to OOP"/>
+                    </properties>
+                  </component>
+                  <hspacer id="7de8a">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                </children>
+              </grid>
+              <grid id="2ca98" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="ac19e" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="3" left="3" bottom="3" right="3"/>
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none" title="Flop Ip"/>
+                    <children>
+                      <grid id="9ffd3" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="d3ee2" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="4dc37" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="bet sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="5b33b" class="javax.swing.JTextField" binding="flop_ip_bet">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="52"/>
+                                </properties>
+                              </component>
+                              <component id="be21b" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="ab519" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="e70a4" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="raise sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="e372e" class="javax.swing.JTextField" binding="flop_ip_raise">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="45"/>
+                                </properties>
+                              </component>
+                              <component id="72db4" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="1bb4" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="524d3" class="javax.swing.JCheckBox" binding="flop_ip_allin">
+                                <constraints/>
+                                <properties>
+                                  <selected value="false"/>
+                                  <text value="add allin"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                  <grid id="59a51" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="3" left="3" bottom="3" right="3"/>
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none" title="River Ip"/>
+                    <children>
+                      <grid id="197b8" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="3ae93" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="6fd5" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="bet sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="1dfff" class="javax.swing.JTextField" binding="river_ip_bet">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="70 100"/>
+                                </properties>
+                              </component>
+                              <component id="30f81" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="c7b0b" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="ea755" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="raise sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="d0cc9" class="javax.swing.JTextField" binding="river_ip_raise">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="45"/>
+                                </properties>
+                              </component>
+                              <component id="352dd" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="57a76" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="8175" class="javax.swing.JCheckBox" binding="river_ip_allin">
+                                <constraints/>
+                                <properties>
+                                  <selected value="false"/>
+                                  <text value="add allin"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                  <grid id="ebe02" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="3" left="3" bottom="3" right="3"/>
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none" title="Turn Ip"/>
+                    <children>
+                      <grid id="35b19" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties/>
+                        <border type="none"/>
+                        <children>
+                          <grid id="bb585" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="89ac8" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="bet sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="f2623" class="javax.swing.JTextField" binding="turn_ip_bet">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="55"/>
+                                </properties>
+                              </component>
+                              <component id="a49e2" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="863c5" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties>
+                              <alignmentY value="0.0"/>
+                            </properties>
+                            <border type="none"/>
+                            <children>
+                              <component id="3a37b" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="raise sizes:"/>
+                                </properties>
+                              </component>
+                              <component id="131d" class="javax.swing.JTextField" binding="turn_ip_raise">
+                                <constraints/>
+                                <properties>
+                                  <preferredSize width="100" height="20"/>
+                                  <text value="45"/>
+                                </properties>
+                              </component>
+                              <component id="ef7cc" class="javax.swing.JLabel">
+                                <constraints/>
+                                <properties>
+                                  <text value="%"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                          <grid id="21ba2" layout-manager="FlowLayout" hgap="0" vgap="0" flow-align="0">
+                            <constraints>
+                              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                            </constraints>
+                            <properties/>
+                            <border type="none"/>
+                            <children>
+                              <component id="21c7f" class="javax.swing.JCheckBox" binding="turn_ip_allin">
+                                <constraints/>
+                                <properties>
+                                  <selected value="false"/>
+                                  <text value="add allin"/>
+                                </properties>
+                              </component>
+                            </children>
+                          </grid>
+                        </children>
+                      </grid>
+                    </children>
+                  </grid>
+                </children>
+              </grid>
+            </children>
+          </grid>
+          <grid id="37749" binding="board" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+            <border type="none" title="board"/>
+            <children>
+              <component id="418f9" class="javax.swing.JTextArea" binding="boardstr">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties>
+                  <text value="Kd,Jd,Td,7s,8s"/>
+                </properties>
+              </component>
+              <component id="ab7e1" class="javax.swing.JButton" binding="selectBoardCardButton" default-binding="true">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="Select Board Card"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="fa3a8" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties/>
+            <border type="none" title="solver options"/>
+            <children>
+              <grid id="310b5" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="efa46" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="log interval:"/>
+                    </properties>
+                  </component>
+                  <component id="fe523" class="javax.swing.JTextField" binding="log_interval">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="50" height="20"/>
+                      <text value="10"/>
+                    </properties>
+                  </component>
+                  <component id="c6288" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="threads:"/>
+                    </properties>
+                  </component>
+                  <component id="e9009" class="javax.swing.JTextField" binding="threads">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="50" height="20"/>
+                      <text value="4"/>
+                    </properties>
+                  </component>
+                  <component id="66ea2" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="use monte coral"/>
+                    </properties>
+                  </component>
+                  <component id="73b0a" class="javax.swing.JCheckBox" binding="mc">
+                    <constraints/>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="f709b" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="algorithm"/>
+                    </properties>
+                  </component>
+                  <component id="96034" class="javax.swing.JComboBox" binding="algorithm">
+                    <constraints/>
+                    <properties>
+                      <model>
+                        <item value="discounted cfr"/>
+                        <item value="cfr+"/>
+                      </model>
+                      <preferredSize width="130" height="20"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="30c67" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="d96bc" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="iteration:"/>
+                    </properties>
+                  </component>
+                  <component id="d8e77" class="javax.swing.JTextField" binding="iteration">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="68" height="20"/>
+                      <text value="100"/>
+                    </properties>
+                  </component>
+                  <component id="9bff3" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="stop solving when reaching"/>
+                    </properties>
+                  </component>
+                  <component id="60f0e" class="javax.swing.JTextField" binding="exploitability">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="50" height="20"/>
+                      <text value="1"/>
+                    </properties>
+                  </component>
+                  <component id="d60ad" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="% exploitability"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="b3363" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="948cf" class="javax.swing.JButton" binding="startSolvingButton">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <text value="Start solving"/>
+                    </properties>
+                  </component>
+                  <component id="b47b1" class="javax.swing.JButton" binding="showResult">
+                    <constraints border-constraint="East"/>
+                    <properties>
+                      <autoscrolls value="false"/>
+                      <text value="show result"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="8393" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="2.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <autoscrolls value="false"/>
+          <minimumSize width="300" height="-1"/>
+        </properties>
+        <border type="none" title="log"/>
+        <children>
+          <scrollpane id="cf2e1">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="300" height="-1"/>
+              </grid>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <autoscrolls value="true"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="3cf9c" class="javax.swing.JTextArea" binding="log">
+                <constraints/>
+                <properties>
+                  <autoscrolls value="false"/>
+                  <minimumSize width="-1" height="19"/>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+          <component id="12133" class="javax.swing.JButton" binding="clearLogButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="clear log"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

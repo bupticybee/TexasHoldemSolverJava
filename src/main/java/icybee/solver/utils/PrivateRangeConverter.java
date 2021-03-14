@@ -24,6 +24,7 @@ public class PrivateRangeConverter {
             if(cardstr_arr.size() == 2){
                 weight = Float.valueOf(cardstr_arr.get(1));
             }
+            if(weight == 0)continue;
 
             int range_len = one_range.length();
             if(range_len == 3){
@@ -48,7 +49,7 @@ public class PrivateRangeConverter {
                         int begin_index = rank1 == rank2 ? i:0;
                         for(int j = begin_index;j < suits.length;j++){
                             String another_suit = suits[j];
-                            if(one_suit == another_suit && rank1 == rank2){
+                            if(one_suit == another_suit){
                                 continue;
                             }
                             int card1 = Card.strCard2int(rank1 + one_suit);

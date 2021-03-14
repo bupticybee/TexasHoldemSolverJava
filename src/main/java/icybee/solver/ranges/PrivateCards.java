@@ -49,6 +49,36 @@ public class PrivateCards {
         }
     }
 
+    public String toFormatString() {
+        if (card1 > card2) {
+            return Card.intCard2FormatStr(card1) + Card.intCard2FormatStr(card2);
+        }else{
+            return Card.intCard2FormatStr(card2) + Card.intCard2FormatStr(card1);
+        }
+    }
+
+    public String summary(){
+        String card_1 = Card.intCard2Str(card1);
+        String card_2 = Card.intCard2Str(card2);
+        boolean samecolor = (card_1.charAt(1) == card_2.charAt(1));
+        boolean samerank  = (card_1.charAt(0) == card_2.charAt(0));
+        if(samerank){
+            return String.format("%s%s",card_1.charAt(0),card_2.charAt(0));
+        }
+        String summary;
+        if (card1 > card2) {
+            summary = String.format("%s%s",card_1.charAt(0),card_2.charAt(0));
+        }else{
+            summary = String.format("%s%s",card_2.charAt(0),card_1.charAt(0));
+        }
+        if(samecolor) {
+            summary += "s";
+        }else{
+            summary += "o";
+        }
+        return summary;
+    }
+
     public int[] get_hands(){
         if (card1 > card2) {
             return new int[]{card1,card2};

@@ -412,7 +412,7 @@ public class TexasHoldemSolverTest
         System.out.println("solverTest");
 
         //String config_name = "yamls/rule_holdem_simple.yaml";
-        //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
+    //String config_name = "yamls/rule_shortdeck_turnriversolver.yaml";
         String config_name = "yamls/rule_shortdeck_turnsolver.yaml";
         //String config_name = "yamls/rule_shortdeck_turnsolver_withallin.yaml";
         //String config_name = "yamls/rule_shortdeck_flopsolver.yaml";
