@@ -252,9 +252,9 @@ actions:
 
 如果你觉得这个java版本还不够快，可以尝试一下我们的[c++版本](https://github.com/bupticybee/TexasSolver) ,c++版本在turn和river上会比java版本快，但是有两个缺点：
 
-- 仅支持Linux机器
-- 使用前必须重新编译
-- 没有很好的优化，在flop的计算上会占用数量惊人的内存空间
+- ~~仅支持Linux机器~~
+- ~~使用前必须重新编译~~
+- ~~没有很好的优化，~~ 在flop的计算上~~会占用数量惊人的内存空间~~ 比c++版本快5倍以上
 
 ## License
 
