@@ -264,9 +264,9 @@ As shown in the figure below, thanks to the implementation of the latest algorit
 
 If you somehow feel our java version is not fast enough,here is a ported [c++ version](https://github.com/bupticybee/TexasSolver) ,c++ version is faster than java version in turn and river, however still contains certain problems：
 
-- supports only Linux machine
-- manually compile is reqiured before use
-- c++ version's code is not well optimized, it's slower than the java version on flop.
+- ~~supports only Linux machine~~
+- ~~manually compile is reqiured before use~~
+- ~~c++ version's code is not well optimized~~, it's ~~slower~~ 5x faster than the java version on flop.
 
 ## License
 
