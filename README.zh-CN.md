@@ -28,7 +28,7 @@ README [English](README.md) | [中文](README.zh-CN.md)
 
 ## 安装
 
-首先需要安装 x86(64位) [Java Runtime Environment](https://www.oracle.com/java/technologies/javase-jre8-downloads.html).
+首先需要安装64位 [Java Runtime Environment](https://www.oracle.com/java/technologies/javase-jre8-downloads.html).
 
 下载[release](https://github.com/bupticybee/TexasHoldemSolverJava/releases) 包,release包的结构如下：
 
