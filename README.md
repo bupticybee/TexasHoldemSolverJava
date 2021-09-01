@@ -33,7 +33,7 @@ This project is suitable for:
 
 ## install
 
-Install x86 [Java Runtime Environment](https://www.oracle.com/java/technologies/javase-jre8-downloads.html) first.
+Install 64bit [Java Runtime Environment](https://www.oracle.com/java/technologies/javase-jre8-downloads.html) first.
 
 Download the [release package](https://github.com/bupticybee/TexasHoldemSolverJava/releases) unzip it, you will get a folder look like this:
 
