@@ -5,6 +5,7 @@
 
 README [English](README.md) | [中文](README.zh-CN.md)
 
+:rotating_light: This project still works but it's no longer maintained. Please check our latest C++ version [TexasSolver](https://github.com/bupticybee/TexasSolver).
 
 ## Introduction
 
